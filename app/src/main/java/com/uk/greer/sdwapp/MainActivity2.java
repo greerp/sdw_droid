@@ -19,7 +19,6 @@ package com.uk.greer.sdwapp;
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -29,9 +28,10 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
+
+import com.uk.greer.sdwapp.activity.present_tt.PresentListAdapter;
+import com.uk.greer.sdwapp.activity.present_tt.PresentSectionFragment;
 
 public class MainActivity2 extends FragmentActivity implements ActionBar.TabListener {
 
@@ -81,16 +81,9 @@ public class MainActivity2 extends FragmentActivity implements ActionBar.TabList
             }
         });
 
-        // For each of the sections in the app, add a tab to the action bar.
-        for (int i = 0; i < mAppSectionsPagerAdapter.getCount(); i++) {
-            // Create a tab with text corresponding to the page title defined by the adapter.
-            // Also specify this Activity object, which implements the TabListener interface, as the
-            // listener for when this tab is selected.
-            actionBar.addTab(
-                    actionBar.newTab()
-                            .setText(mAppSectionsPagerAdapter.getPageTitle(i))
-                            .setTabListener(this));
-        }
+          actionBar.addTab( actionBar.newTab().setText("Upcoming").setTabListener(this));
+          actionBar.addTab( actionBar.newTab().setText("Ended").setTabListener(this));
+          actionBar.addTab( actionBar.newTab().setText("Season").setTabListener(this));
     }
 
     @Override
@@ -121,6 +114,7 @@ public class MainActivity2 extends FragmentActivity implements ActionBar.TabList
         public Fragment getItem(int i) {
             switch (i) {
                 case 0:
+
                     // The first section of the app is the most interesting -- it offers
                     // a launchpad into the other demonstrations in this example application.
 /*
@@ -128,10 +122,11 @@ public class MainActivity2 extends FragmentActivity implements ActionBar.TabList
 */
                 default:
                     // The other sections of the app are dummy placeholders.
-                    Fragment fragment = new DummySectionFragment();
+                    Fragment fragment = new PresentSectionFragment();
+                    //TODO: :Look at whether bunbdle is the preferred mechansim to pass args
                     Bundle args = new Bundle();
-                    args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, i + 1);
-                    fragment.setArguments(args);
+                    //args.put(PresentSectionFragment.ARG_SECTION_NUMBER, i + 1);
+                    //fragment.setArguments(args);
                     return fragment;
             }
         }
@@ -147,52 +142,4 @@ public class MainActivity2 extends FragmentActivity implements ActionBar.TabList
         }
     }
 
-    /**
-     * A fragment that launches other parts of the demo application.
-     */
-
-    /**
-     * A dummy fragment representing a section of the app, but that simply displays dummy text.
-     */
-    public static class DummySectionFragment extends Fragment {
-
-        public static final String ARG_SECTION_NUMBER = "section_number";
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            //View rootView = inflater.inflate(R.layout.fragment_section_dummy, container, false);
-            //View rootView = inflater.inflate(R.layout.activity_future_tt, container, false);
-            ListView rootView = (ListView)inflater.inflate(R.layout.activity_future_tt, container, false);
-
-            //ListView listView = ((ListView) rootView.findViewById(android.R.id.list));
-
-            loadList(rootView);
-
-
-//            Bundle args = getArguments();
-//            ((TextView) rootView.findViewById(android.R.id.text1)).setText(
-//                    getString(R.string.dummy_section_text, args.getInt(ARG_SECTION_NUMBER)));
-            return rootView;
-        }
-
-        private void loadList(ListView view) {
-            String[] values = new String[] {
-                    "Sleeches/Mayfield",
-                    "Ladies Mile",
-                    "Sleeches/Wadhurst",
-                    "Ashdown Forest",
-                    "Sleeches/Mayfield",
-                    "Pollhill",
-                    "East Peckham",
-                    "Ladies Mile"
-            };
-
-            Context ctx = this.getActivity();
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                    ctx, android.R.layout.simple_list_item_1,values);
-
-            view.setAdapter(adapter);
-        }
-    }
 }
