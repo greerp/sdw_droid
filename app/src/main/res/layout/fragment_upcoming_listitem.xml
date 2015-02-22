@@ -13,40 +13,46 @@
         android:contentDescription="TODO"
         android:src="@drawable/ic_launcher" />
 
-    <TextView
-        android:id="@+id/secondLine"
-        android:layout_width="wrap_content"
-        android:layout_height="26dip"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@id/icon"
-        android:ellipsize="marquee"
-        android:singleLine="true"
-        android:text="Description"
-        android:textSize="12sp" />
 
     <TextView
-        android:id="@+id/firstLine"
+        android:id="@+id/ttName"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/secondLine"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_alignWithParentIfMissing="true"
         android:layout_toRightOf="@id/icon"
         android:gravity="center_vertical"
-        android:text="Example application"
+        android:text="TT Name"
         android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/ttDate"
         android:layout_width="wrap_content"
+        android:layout_weight="2"
         android:layout_height="26dip"
         android:ellipsize="marquee"
         android:singleLine="true"
-        android:text="Description"
+        android:text="Date"
         android:textSize="12sp"
         android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/firstLine"
-        android:layout_alignEnd="@+id/firstLine" />
+        android:layout_toRightOf="@id/icon"
+    />
+
+    <TextView
+        android:id="@+id/ttCourse"
+        android:layout_width="wrap_content"
+        android:layout_height="26dip"
+        android:layout_weight="1"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:text="Course"
+        android:textSize="12sp"
+    />
+
+
+
 
 </RelativeLayout> 

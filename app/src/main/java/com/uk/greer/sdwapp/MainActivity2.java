@@ -18,20 +18,14 @@ package com.uk.greer.sdwapp;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
 
-import com.uk.greer.sdwapp.activity.present_tt.PresentListAdapter;
-import com.uk.greer.sdwapp.activity.present_tt.PresentSectionFragment;
+import com.uk.greer.sdwapp.activity.upcoming.UpcomingSectionFragment;
 
 public class MainActivity2 extends FragmentActivity implements ActionBar.TabListener {
 
@@ -122,7 +116,7 @@ public class MainActivity2 extends FragmentActivity implements ActionBar.TabList
 */
                 default:
                     // The other sections of the app are dummy placeholders.
-                    Fragment fragment = new PresentSectionFragment();
+                    Fragment fragment = new UpcomingSectionFragment();
                     //TODO: :Look at whether bunbdle is the preferred mechansim to pass args
                     Bundle args = new Bundle();
                     //args.put(PresentSectionFragment.ARG_SECTION_NUMBER, i + 1);

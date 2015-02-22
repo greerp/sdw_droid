@@ -17,6 +17,7 @@ public class TimeTrial {
     private int maxEntries;
     private List<Participant> participants;
     private Double distance;
+    private long id;
 
     public String getName() {
         return name;
@@ -88,5 +89,13 @@ public class TimeTrial {
 
     public void setDistance(Double distance) {
         this.distance = distance;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }
