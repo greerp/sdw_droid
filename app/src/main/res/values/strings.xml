@@ -6,14 +6,15 @@
     <string name="edit_message">Enter a message</string>
     <string name="button_send">Send</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="title_activity_splash_screen">SplashScreen</string>
+    <string name="title_activity_splash_screen">SDW</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_future_tt">future_tt</string>
-    <string name="title_activity_main_activity2">TT Management</string>
+    <string name="title_activity_main_activity2">SDW TT Programme</string>
     <string name="dummy_section_text">Section %1d is just a dummy section.</string>
     <string name="demo_external_activity">Demo External Activity</string>
     <string name="demo_collection">Demo Collection</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_upcoming_event">UpcomingEvent</string>
+    <string name="title_activity_upcoming_event">Club Time Trial</string>
+    <string name="register_button_text">Register</string>
 
 </resources>

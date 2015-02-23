@@ -22,7 +22,7 @@ public class UpcomingListAdapter extends ArrayAdapter<TimeTrial> {
     private final List<TimeTrial> timeTrialList;
     private final SimpleDateFormat dateFormat;
 
-    static String DATE_FORMAT="E d-MMM HH:mm";
+    static String DATE_FORMAT="EEE d-MMM-yyyy HH:mm";
 
     public UpcomingListAdapter(Context context, List<TimeTrial> timeTrialList) {
         super(context, R.layout.fragment_upcoming_listitem, timeTrialList);
@@ -39,13 +39,16 @@ public class UpcomingListAdapter extends ArrayAdapter<TimeTrial> {
         TextView eventName = (TextView) rowView.findViewById(R.id.ttName);
         TextView eventCourse = (TextView) rowView.findViewById(R.id.ttCourse);
         TextView eventDate = (TextView) rowView.findViewById(R.id.ttDate);
+        TextView eventNo = (TextView) rowView.findViewById(R.id.ttEventNo);
         ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
 
         TimeTrial tt = timeTrialList.get(position);
         eventName.setText(tt.getName());
         eventCourse.setText(tt.getCourse());
         eventDate.setText(dateFormat.format(tt.getEventDate()));
-        imageView.setImageResource(R.drawable.ic_launcher);
+
+        eventNo.setText(String.valueOf(tt.getEventNo()));
+        imageView.setImageResource(R.drawable.tt);
 
         //TODO; This has to be a bug in the Android SDk, the OnItemClick delegate expects an INT
         rowView.setId((int)tt.getId());
