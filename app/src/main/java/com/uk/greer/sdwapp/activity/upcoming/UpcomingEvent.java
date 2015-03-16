@@ -3,7 +3,6 @@ package com.uk.greer.sdwapp.activity.upcoming;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -11,6 +10,8 @@ import android.widget.TextView;
 import com.uk.greer.sdwapp.R;
 import com.uk.greer.sdwapp.domain.TimeTrial;
 import com.uk.greer.sdwapp.service.TimeTrialEventService;
+import com.uk.greer.sdwapp.service.TimeTrialEventServiceFactory;
+import com.uk.greer.sdwapp.service.TimeTrialEventServiceLocal;
 
 public class UpcomingEvent extends ActionBarActivity {
 
@@ -30,7 +31,8 @@ public class UpcomingEvent extends ActionBarActivity {
         // Retrieve TT using ID passed in to activity
         long id = getIntent().getExtras().getLong("TT_ID", -1);
 
-        TimeTrialEventService trialEventService = TimeTrialEventService.getInstance();
+        TimeTrialEventService trialEventService
+                = TimeTrialEventServiceFactory.getInstance();
         TimeTrial tt = trialEventService.getTimeTrial(id);
         if ( tt!=null)
             showDetails(tt);

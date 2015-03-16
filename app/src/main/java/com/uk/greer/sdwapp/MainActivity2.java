@@ -19,6 +19,7 @@ package com.uk.greer.sdwapp;
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -45,6 +46,8 @@ public class MainActivity2 extends FragmentActivity implements ActionBar.TabList
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setUpStrictMode();
         setContentView(R.layout.activity_main_activity2);
 
         // Create the adapter that will return a fragment for each of the three primary sections
@@ -78,6 +81,22 @@ public class MainActivity2 extends FragmentActivity implements ActionBar.TabList
           actionBar.addTab( actionBar.newTab().setText("Upcoming").setTabListener(this));
           actionBar.addTab( actionBar.newTab().setText("Ended").setTabListener(this));
           actionBar.addTab( actionBar.newTab().setText("Season").setTabListener(this));
+    }
+
+    private void setUpStrictMode() {
+
+        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                .detectDiskReads()
+                .detectDiskWrites()
+                .detectNetwork()   // or .detectAll() for all detectable problems
+                .penaltyLog()
+                .build());
+        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                .detectLeakedSqlLiteObjects()
+                .detectLeakedClosableObjects()
+                .penaltyLog()
+                .penaltyDeath()
+                .build());
     }
 
     @Override

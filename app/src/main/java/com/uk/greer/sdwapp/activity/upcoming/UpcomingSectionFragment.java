@@ -11,6 +11,8 @@ import android.widget.ListView;
 
 import com.uk.greer.sdwapp.R;
 import com.uk.greer.sdwapp.service.TimeTrialEventService;
+import com.uk.greer.sdwapp.service.TimeTrialEventServiceFactory;
+import com.uk.greer.sdwapp.service.TimeTrialEventServiceLocal;
 
 /**
  * Created by greepau on 19/02/2015.
@@ -29,7 +31,7 @@ public class UpcomingSectionFragment extends Fragment {
                 false);
 
         TimeTrialEventService timeTrialEventService
-                = TimeTrialEventService.getInstance();
+                = TimeTrialEventServiceFactory.getInstance();
 
         UpcomingListAdapter upcomingListAdapter = new UpcomingListAdapter(
                 this.getActivity(),

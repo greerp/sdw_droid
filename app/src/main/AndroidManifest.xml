@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.uk.greer.sdwapp" >
 
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+
     <!-- android:theme="@style/AppTheme" > -->
     <application
         android:allowBackup="true"
