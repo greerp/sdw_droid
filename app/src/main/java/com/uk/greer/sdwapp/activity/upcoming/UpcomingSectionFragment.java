@@ -1,8 +1,10 @@
 package com.uk.greer.sdwapp.activity.upcoming;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import com.uk.greer.sdwapp.R;
 import com.uk.greer.sdwapp.service.TimeTrialEventService;
 import com.uk.greer.sdwapp.service.TimeTrialEventServiceFactory;
 import com.uk.greer.sdwapp.service.TimeTrialEventServiceLocal;
+import com.uk.greer.sdwapp.service.TimeTrialEventServiceNull;
 
 /**
  * Created by greepau on 19/02/2015.
@@ -30,8 +33,14 @@ public class UpcomingSectionFragment extends Fragment {
                 container,
                 false);
 
-        TimeTrialEventService timeTrialEventService
-                = TimeTrialEventServiceFactory.getInstance();
+        TimeTrialEventService timeTrialEventService;
+        try {
+            timeTrialEventService = TimeTrialEventServiceFactory.getInstance();
+        }
+        catch (Exception e){
+            Log.e("EXCEPTION", "Unable to create Time Trial Service, using default");
+            timeTrialEventService = new TimeTrialEventServiceNull();
+        }
 
         UpcomingListAdapter upcomingListAdapter = new UpcomingListAdapter(
                 this.getActivity(),

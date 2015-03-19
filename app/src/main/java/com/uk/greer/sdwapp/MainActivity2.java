@@ -18,6 +18,7 @@ package com.uk.greer.sdwapp;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
@@ -38,6 +39,12 @@ public class MainActivity2 extends FragmentActivity implements ActionBar.TabList
      */
     AppSectionsPagerAdapter mAppSectionsPagerAdapter;
 
+    private static Context context;
+
+    public static Context getContext(){
+        return context;
+    }
+
     /**
      * The {@link ViewPager} that will display the three primary sections of the app, one at a
      * time.
@@ -46,6 +53,8 @@ public class MainActivity2 extends FragmentActivity implements ActionBar.TabList
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        context = this.getApplicationContext();
 
         setUpStrictMode();
         setContentView(R.layout.activity_main_activity2);
