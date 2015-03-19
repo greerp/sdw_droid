@@ -12,9 +12,11 @@ import com.uk.greer.sdwapp.R;
 import com.uk.greer.sdwapp.domain.TimeTrial;
 import com.uk.greer.sdwapp.service.TimeTrialEventService;
 import com.uk.greer.sdwapp.service.TimeTrialEventServiceFactory;
-import com.uk.greer.sdwapp.service.TimeTrialEventServiceLocal;
 import com.uk.greer.sdwapp.service.TimeTrialEventServiceNull;
 
+/**
+ * Dispplays the details for a specific TT event
+ */
 public class UpcomingEvent extends ActionBarActivity {
 
     @Override
@@ -35,14 +37,13 @@ public class UpcomingEvent extends ActionBarActivity {
 
         try {
             trialEventService = TimeTrialEventServiceFactory.getInstance();
-        }
-        catch (Exception e){
-            Log.e("EXCEPTION","Unable to create Time Trial Service, using default");
+        } catch (Exception e) {
+            Log.e("EXCEPTION", "Unable to create Time Trial Service, using default");
             trialEventService = new TimeTrialEventServiceNull();
         }
 
         TimeTrial tt = trialEventService.getTimeTrial(id);
-        if ( tt!=null)
+        if (tt != null)
             showDetails(tt);
     }
 

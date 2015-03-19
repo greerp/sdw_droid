@@ -16,5 +16,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_upcoming_event">Club Time Trial</string>
     <string name="register_button_text">Register</string>
+    <string name="refreshing_data">Data is being retrieved</string>
+
 
 </resources>

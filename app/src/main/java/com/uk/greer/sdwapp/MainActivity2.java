@@ -19,6 +19,7 @@ package com.uk.greer.sdwapp;
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
@@ -27,9 +28,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
+import com.uk.greer.sdwapp.activity.upcoming.UpcomingRefreshFragment;
 import com.uk.greer.sdwapp.activity.upcoming.UpcomingSectionFragment;
 
-public class MainActivity2 extends FragmentActivity implements ActionBar.TabListener {
+public class MainActivity2 extends FragmentActivity
+        implements ActionBar.TabListener,
+                   UpcomingRefreshFragment.OnFragmentInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide fragments for each of the
@@ -122,14 +126,25 @@ public class MainActivity2 extends FragmentActivity implements ActionBar.TabList
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
     }
 
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+    }
+
+
+
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to one of the primary
      * sections of the app.
      */
     public static class AppSectionsPagerAdapter extends FragmentPagerAdapter {
 
+        private final FragmentManager mFragmentManager;
+        private Fragment fragmentAtUpcomingPosition;
+
         public AppSectionsPagerAdapter(FragmentManager fm) {
             super(fm);
+            mFragmentManager = fm;
         }
 
         @Override
@@ -137,19 +152,21 @@ public class MainActivity2 extends FragmentActivity implements ActionBar.TabList
             switch (i) {
                 case 0:
 
-                    // The first section of the app is the most interesting -- it offers
-                    // a launchpad into the other demonstrations in this example application.
-/*
-                    return new LaunchpadSectionFragment();
-*/
+                // The first section of the app is the most interesting -- it offers
+                // a launchpad into the other demonstrations in this example application.
+
                 default:
-                    // The other sections of the app are dummy placeholders.
-                    Fragment fragment = new UpcomingSectionFragment();
-                    //TODO: :Look at whether bunbdle is the preferred mechansim to pass args
-                    Bundle args = new Bundle();
-                    //args.put(PresentSectionFragment.ARG_SECTION_NUMBER, i + 1);
-                    //fragment.setArguments(args);
-                    return fragment;
+                    fragmentAtUpcomingPosition = UpcomingRefreshFragment.newInstance(new UpcomingRefreshFragment.OnDataReadyListener() {
+                        @Override
+                        public void OnDataReady() {
+                            // Example: http://stackoverflow.com/questions/7723964/replace-fragment-inside-a-viewpager
+                            mFragmentManager.beginTransaction().remove(fragmentAtUpcomingPosition).commit();
+
+                            fragmentAtUpcomingPosition = UpcomingSectionFragment.newInstance("","");
+                            notifyDataSetChanged();
+                        }
+                    });
+                    return fragmentAtUpcomingPosition;
             }
         }
 

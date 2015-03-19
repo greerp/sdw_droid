@@ -25,6 +25,7 @@ public class UpcomingListAdapter extends ArrayAdapter<TimeTrial> {
     static String DATE_FORMAT="EEE d-MMM-yyyy HH:mm";
 
     public UpcomingListAdapter(Context context, List<TimeTrial> timeTrialList) {
+
         super(context, R.layout.fragment_upcoming_listitem, timeTrialList);
         this.context = context;
         this.timeTrialList = timeTrialList;
@@ -33,6 +34,7 @@ public class UpcomingListAdapter extends ArrayAdapter<TimeTrial> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.fragment_upcoming_listitem, parent, false);
