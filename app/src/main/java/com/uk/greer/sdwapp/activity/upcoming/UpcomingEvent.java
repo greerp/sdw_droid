@@ -1,5 +1,7 @@
 package com.uk.greer.sdwapp.activity.upcoming;
 
+import android.content.Intent;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -19,6 +21,8 @@ import com.uk.greer.sdwapp.service.TimeTrialEventServiceNull;
  */
 public class UpcomingEvent extends ActionBarActivity {
 
+    private long ttId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,8 +34,7 @@ public class UpcomingEvent extends ActionBarActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         // Retrieve TT using ID passed in to activity
-        long id = getIntent().getExtras().getLong("TT_ID", -1);
-
+        ttId = getIntent().getExtras().getLong("TT_ID", -1);
 
         TimeTrialEventService trialEventService;
 
@@ -42,14 +45,21 @@ public class UpcomingEvent extends ActionBarActivity {
             trialEventService = new TimeTrialEventServiceNull();
         }
 
-        TimeTrial tt = trialEventService.getTimeTrial(id);
+        TimeTrial tt = trialEventService.getTimeTrial(ttId);
         if (tt != null)
             showDetails(tt);
     }
 
-    private void showDetails(TimeTrial timeTrial) {
-        //R.layout
+    @Override
+    public Intent getSupportParentActivityIntent() {
+        // We return the TT ID that was selected so that when the parent is recreated it
+        // can obtain the ID of the event and reinstate the position on the list
+        Intent intent=super.getSupportParentActivityIntent();
+        intent.putExtra("TT_ID", ttId);
+        return intent;
+    }
 
+    private void showDetails(TimeTrial timeTrial) {
         TextView eventName = (TextView) findViewById(R.id.event_name);
         eventName.setText(timeTrial.getName());
     }
@@ -73,6 +83,15 @@ public class UpcomingEvent extends ActionBarActivity {
         if (id == R.id.action_settings) {
             return true;
         }
+
+//        if ( id == R.id.home ) {
+//            Intent intent = NavUtils.getParentActivityIntent(this);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//            NavUtils.navigateUpTo(this, intent);
+//            return true;
+//        }
+
+
 
         return super.onOptionsItemSelected(item);
     }

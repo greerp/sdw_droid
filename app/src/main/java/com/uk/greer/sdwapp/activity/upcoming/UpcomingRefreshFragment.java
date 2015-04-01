@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 
 import com.uk.greer.sdwapp.R;
 
+import java.net.URI;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,12 +25,10 @@ public class UpcomingRefreshFragment extends Fragment {
 
     private OnFragmentInteractionListener fragmentInteractionListener;
 
-    private OnDataReadyListener dataReadyListener;
 
-    public static UpcomingRefreshFragment newInstance( OnDataReadyListener listener) {
+    public static UpcomingRefreshFragment newInstance() {
 
         UpcomingRefreshFragment fragment = new UpcomingRefreshFragment();
-        fragment.dataReadyListener = listener;
         return fragment;
     }
 
@@ -39,9 +39,6 @@ public class UpcomingRefreshFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        //TODO: Create some timer to call listener after a few seconds;
-
 
         return inflater.inflate(R.layout.fragment_upcoming_refresh, container, false);
     }
@@ -55,6 +52,12 @@ public class UpcomingRefreshFragment extends Fragment {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+    }
+
+    public void DataReady(){
+
+        //TODO: This method is invoked by a Receiever from a data service it then calls back to the activity
+        fragmentInteractionListener.onFragmentInteraction(null);
     }
 
     @Override
@@ -77,13 +80,5 @@ public class UpcomingRefreshFragment extends Fragment {
         // When data is ready call back to MainActivity to swap
         public void onFragmentInteraction(Uri uri);
     }
-
-    public interface OnDataReadyListener{
-        public void OnDataReady();
-    }
-
-
-
-
 
 }

@@ -45,16 +45,20 @@ public class UpcomingListAdapter extends ArrayAdapter<TimeTrial> {
         ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
 
         TimeTrial tt = timeTrialList.get(position);
-        eventName.setText(tt.getName());
-        eventCourse.setText(tt.getCourse());
-        eventDate.setText(dateFormat.format(tt.getEventDate()));
+        if ( tt!=null ) {
+            eventName.setText(tt.getName());
+            eventCourse.setText(tt.getCourse());
+            if (tt.getEventDate() != null)
+                eventDate.setText(dateFormat.format(tt.getEventDate()));
+            else
+                eventDate.setText("");
 
-        eventNo.setText(String.valueOf(tt.getEventNo()));
-        imageView.setImageResource(R.drawable.tt);
+            eventNo.setText(String.valueOf(tt.getEventNo()));
+            imageView.setImageResource(R.drawable.tt);
 
-        //TODO; This has to be a bug in the Android SDk, the OnItemClick delegate expects an INT
-        rowView.setId((int)tt.getId());
-
+            //TODO; This has to be a bug in the Android SDk, the OnItemClick delegate expects an INT
+            rowView.setId((int) tt.getId());
+        }
         return rowView;
     }
 }

@@ -20,7 +20,7 @@ public class LocalDataStore extends SQLiteOpenHelper {
 
     public LocalDataStore(Context context) {
         super(context,
-                ApplicationProperty.get("LOCALDB","sdw"), null, DATABASE_VERSION);
+                ApplicationProperty.get("LOCALDB","sdw.db"), null, DATABASE_VERSION);
         this.context = context;
     }
 
@@ -36,6 +36,7 @@ public class LocalDataStore extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     }
+
 
 
 }

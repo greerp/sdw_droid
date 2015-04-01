@@ -29,7 +29,7 @@ public class TableDefinition {
             "id INT, " +
             "name TEXT, " +           // Default text
             "eventdate DATETIME, " +
-            "courseid int" +
+            "courseid int," +
             "eventurl TEXT, " +       // Event Web Site URL
             "maxentries INT, " +      // Max number of Participants
             "eventoutcome TEXT, " +   // Canceled, Complete, Shortened, Abandoned

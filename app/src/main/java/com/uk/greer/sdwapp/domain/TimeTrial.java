@@ -20,6 +20,18 @@ public class TimeTrial {
     private long id;
     private int eventNo;
 
+    public static TimeTrial newInstance(int id, int eventNo, String name, Date eventDate, String course, boolean onLineEntry){
+        TimeTrial tt = new TimeTrial();
+        tt.setId(id);
+        tt.setEventNo(eventNo);
+        tt.setName(name);
+        tt.setEventDate(eventDate);
+        tt.setCourse(course);
+        tt.setOnlineEntry(onLineEntry);
+        return tt;
+    }
+
+
     public String getName() {
         return name;
     }
