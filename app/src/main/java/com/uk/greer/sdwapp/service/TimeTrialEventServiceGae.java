@@ -1,5 +1,6 @@
 package com.uk.greer.sdwapp.service;
 
+import com.uk.greer.sdwapp.domain.Participant;
 import com.uk.greer.sdwapp.domain.TimeTrial;
 
 import java.util.List;
@@ -24,6 +25,11 @@ public class TimeTrialEventServiceGae implements TimeTrialEventService {
 
 
     @Override
+    public List<TimeTrial> getCompletedEvents() {
+        return null;
+    }
+
+    @Override
     public List<TimeTrial> getUpcomingEvents() {
 
         return service.getUpcomingEvents();
@@ -33,5 +39,10 @@ public class TimeTrialEventServiceGae implements TimeTrialEventService {
     @Override
     public TimeTrial getTimeTrial(long id) {
         return service.getTimeTrial(id);
+    }
+
+    @Override
+    public List<Participant> getEntrees(long ttId) {
+        return null;
     }
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.util.Log;
 
+import com.uk.greer.sdwapp.AppManager;
 import com.uk.greer.sdwapp.MainActivity2;
 
 import java.util.Properties;
@@ -22,7 +23,8 @@ public class ApplicationProperty {
 
     private static Properties getInstance() {
         if (!initialized) {
-            AssetsPropertyReader assetsPropertyReader = new AssetsPropertyReader(MainActivity2.getContext());
+            //AssetsPropertyReader assetsPropertyReader = new AssetsPropertyReader(MainActivity2.getContext());
+            AssetsPropertyReader assetsPropertyReader = new AssetsPropertyReader(AppManager.getContext());
             properties = assetsPropertyReader.getProperties("sdw.properties");
             initialized = true;
         }

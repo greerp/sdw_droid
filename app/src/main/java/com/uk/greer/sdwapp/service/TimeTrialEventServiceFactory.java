@@ -3,6 +3,7 @@ package com.uk.greer.sdwapp.service;
 import android.content.Context;
 import android.util.Log;
 
+import com.uk.greer.sdwapp.AppManager;
 import com.uk.greer.sdwapp.MainActivity2;
 import com.uk.greer.sdwapp.config.ApplicationProperty;
 
@@ -17,7 +18,8 @@ public class TimeTrialEventServiceFactory {
 
         if (ttService == null) {
 
-            Context context = MainActivity2.getContext().getApplicationContext();
+            //Context context = MainActivity2.getContext().getApplicationContext();
+            Context context = AppManager.getContext();
 
             String serviceToUse = ApplicationProperty.get("ttservice");
             Log.d("CONFIG", "Service to use: " + serviceToUse);

@@ -1,5 +1,6 @@
 package com.uk.greer.sdwapp.service;
 
+import com.uk.greer.sdwapp.domain.Participant;
 import com.uk.greer.sdwapp.domain.TimeTrial;
 
 import java.util.ArrayList;
@@ -10,6 +11,11 @@ import java.util.List;
  * Created by greepau on 18/03/2015.
  */
 public class TimeTrialEventServiceNull implements TimeTrialEventService {
+    @Override
+    public List<TimeTrial> getCompletedEvents() {
+        return null;
+    }
+
     @Override
     public List<TimeTrial> getUpcomingEvents() {
 
@@ -37,5 +43,10 @@ public class TimeTrialEventServiceNull implements TimeTrialEventService {
     @Override
     public TimeTrial getTimeTrial(long id) {
         return getTimeTrial();
+    }
+
+    @Override
+    public List<Participant> getEntrees(long ttId) {
+        return null;
     }
 }

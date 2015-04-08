@@ -19,8 +19,9 @@ public class TimeTrial {
     private Double distance;
     private long id;
     private int eventNo;
+    private String notes;
 
-    public static TimeTrial newInstance(int id, int eventNo, String name, Date eventDate, String course, boolean onLineEntry){
+    public static TimeTrial newInstance(int id, int eventNo, String name, Date eventDate, String course, boolean onLineEntry, String notes){
         TimeTrial tt = new TimeTrial();
         tt.setId(id);
         tt.setEventNo(eventNo);
@@ -28,6 +29,7 @@ public class TimeTrial {
         tt.setEventDate(eventDate);
         tt.setCourse(course);
         tt.setOnlineEntry(onLineEntry);
+        tt.setNotes(notes);
         return tt;
     }
 
@@ -88,14 +90,6 @@ public class TimeTrial {
         this.maxEntries = maxEntries;
     }
 
-    public List<Participant> getParticipants() {
-        return participants;
-    }
-
-    public void setParticipants(List<Participant> participants) {
-        this.participants = participants;
-    }
-
     public Double getDistance() {
         return distance;
     }
@@ -118,5 +112,13 @@ public class TimeTrial {
 
     public int getEventNo() {
         return eventNo;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 }

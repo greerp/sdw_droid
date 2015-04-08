@@ -15,7 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
- * Created by greepau on 19/02/2015.
+ * Shows the individual List Items - Referenced in UpcomingListFragment
  */
 public class UpcomingListAdapter extends ArrayAdapter<TimeTrial> {
     private final Context context;

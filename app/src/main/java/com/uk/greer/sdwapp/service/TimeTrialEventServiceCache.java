@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.uk.greer.sdwapp.AppManager;
 import com.uk.greer.sdwapp.R;
+import com.uk.greer.sdwapp.domain.Participant;
 import com.uk.greer.sdwapp.domain.TimeTrial;
 import com.uk.greer.sdwapp.persist.LocalDataStore;
 
@@ -50,12 +51,17 @@ public class TimeTrialEventServiceCache implements TimeTrialEventService {
     }
     @Override
     public TimeTrial getTimeTrial(long id) {
-        List<TimeTrial> l = getTimeTrialList("eventid = ?", new String[]{Long.toString(id)}, "eventdate");
+        List<TimeTrial> l = getTimeTrialList("id = ?", new String[]{Long.toString(id)}, "eventdate");
 
         if ( l.size()>0)
             return l.get(0);
         else
             return null;
+    }
+
+    @Override
+    public List<Participant> getEntrees(long ttId) {
+        return null;
     }
 
 
@@ -85,9 +91,9 @@ public class TimeTrialEventServiceCache implements TimeTrialEventService {
                     TimeTrial tt;
 
                     if (s.getString(5) == null | s.getString(5).isEmpty())
-                        tt = TimeTrial.newInstance( s.getInt(0), ++eventNo, s.getString(2), eventDate, s.getString(3), true);
+                        tt = TimeTrial.newInstance( s.getInt(0), ++eventNo, s.getString(2), eventDate, s.getString(3), true, s.getString(6));
                     else
-                        tt = TimeTrial.newInstance( s.getInt(0), ++eventNo, s.getString(5), eventDate, s.getString(3), true);
+                        tt = TimeTrial.newInstance( s.getInt(0), ++eventNo, s.getString(5), eventDate, s.getString(3), true, s.getString(6));
 
                     ttList.add(tt);
                     s.moveToNext();

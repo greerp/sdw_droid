@@ -1,5 +1,6 @@
 package com.uk.greer.sdwapp.activity.upcoming;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,10 +16,14 @@ import android.widget.ListView;
 
 import com.uk.greer.sdwapp.OnDataReady;
 import com.uk.greer.sdwapp.R;
+import com.uk.greer.sdwapp.domain.TimeTrial;
 import com.uk.greer.sdwapp.service.CacheCoordinator;
 import com.uk.greer.sdwapp.service.TimeTrialEventService;
 import com.uk.greer.sdwapp.service.TimeTrialEventServiceFactory;
 import com.uk.greer.sdwapp.service.TimeTrialEventServiceNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Sets up the list view of events
@@ -65,14 +70,20 @@ public class UpcomingListFragment extends Fragment implements OnDataReady {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-
-        ListView listView = (ListView) this.getView().findViewById(R.id.eventListView);
-
-        outState.putInt("POSITION", listView.getFirstVisiblePosition());
-        //TODO: Get the last item clicked
-        int i = outState.getInt("POSITION");
         super.onSaveInstanceState(outState);
-        Log.i("INFO","UpcomingListFragment.OnSaveInstanceStatePosition:" + Integer.toString(i));
+
+        ListView listView=null;
+        try {
+            listView = (ListView) getView().findViewById(R.id.eventListView);
+            int position = listView.getFirstVisiblePosition();
+            // Save the position o fthe first item so we know where to restore to
+            outState.putInt("POSITION", position);
+        }
+        catch (Exception x) {
+            Log.i("ERROR", "Unable to find view and save position");
+
+        }
+
     }
 
     @Override
@@ -110,10 +121,19 @@ public class UpcomingListFragment extends Fragment implements OnDataReady {
             timeTrialEventService = new TimeTrialEventServiceNull();
         }
 
+        Bundle args = this.getArguments();
+        int viewId = args.getInt(this.ARG_PARAM1);
+
+        List<TimeTrial> events=new ArrayList<>();
+        if ( viewId==0)
+            events = timeTrialEventService.getUpcomingEvents();
+        else if ( viewId==1)
+            events = timeTrialEventService.getCompletedEvents();
+
         // Create the list adapter that takes the list and populates the list items
         UpcomingListAdapter upcomingListAdapter = new UpcomingListAdapter(
-                this.getActivity(),
-                timeTrialEventService.getUpcomingEvents());
+            this.getActivity(),
+            events);
 
         ListView upcomingListView = (ListView) fl.findViewById(R.id.eventListView);
 

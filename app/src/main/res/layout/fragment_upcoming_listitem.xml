@@ -23,9 +23,14 @@
         android:layout_toRightOf="@id/icon"
         android:gravity="center_vertical"
         android:text="TT Name"
+        android:singleLine="true"
         android:textSize="16sp"
         android:layout_toLeftOf="@+id/ttCourse"
-        android:layout_toStartOf="@+id/ttCourse" />
+        android:layout_toStartOf="@+id/ttCourse"
+        android:ellipsize="end"/>
+
+    <!--android:inputType="text"-->
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -36,10 +41,9 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:textAlignment="textEnd"
+        android:layout_gravity="end"
         android:layout_alignParentTop="true"
         android:layout_alignBottom="@+id/ttName" />
-
-
 
     <TextView
         android:id="@+id/ttDate"

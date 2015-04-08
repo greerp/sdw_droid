@@ -30,6 +30,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -49,18 +51,12 @@ public class MainActivity2 extends FragmentActivity
         implements ActionBar.TabListener, UpcomingRefreshFragment.OnFragmentInteractionListener {
 
     AppSectionsPagerAdapter mAppSectionsPagerAdapter;
-
-    private static Context context;
     ViewPager mViewPager;
 
     protected SpiceManager spiceManager
             = new SpiceManager(JacksonSpringAndroidSpiceService.class);
     private Intent intent;
 
-
-    public static Context getContext() {
-        return context;
-    }
 
     @Override
     protected void onStart() {
@@ -74,33 +70,27 @@ public class MainActivity2 extends FragmentActivity
         super.onStop();
     }
 
+
     private void performRequest(String user) {
 
         spiceManager.execute(new SpiceRequest<String>(String.class) {
             @Override
             public String loadDataFromNetwork() throws Exception {
-
-                //CacheCoordinator.getInstance().setCacheStatus("events",false);
-
                 Thread.sleep(2000);
                 return "finished";
             }
         }, new RequestListener<String>() {
             @Override
             public void onRequestFailure(SpiceException spiceException) {
-
             }
 
             @Override
             public void onRequestSuccess(String o) {
-
-                CacheCoordinator.getInstance().setCacheStatus("events",true);
+                CacheCoordinator.getInstance().setCacheStatus("events", true);
                 List<Fragment> fl = getSupportFragmentManager().getFragments();
                 for (Fragment f : fl) {
-
                     ((OnDataReady) f).Notify();
                 }
-
             }
         });
     }
@@ -109,41 +99,30 @@ public class MainActivity2 extends FragmentActivity
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         Log.i("INFO", "MainActivity2 - Configuration Changed");
-
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-
         //TODO: Save position in list - Test with a configuratino change - Ctrl 11 in emulatro
-
-//        String r = Double.toString(Math.random());
-//        outState.putString("RANDOM", r);
-//        Log.i("INFO", "Saving " + r + " to activity state");
         super.onSaveInstanceState(outState);
     }
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        long ttId = getIntent().getLongExtra("TT_ID", -1);
+        Log.i("INFO", "TT ID: " + Long.toString(ttId));
 
-        long ttId = getIntent().getLongExtra("TT_ID",-1);
-        Log.i("INFO","TT ID: " + Long.toString(ttId));
-
-        context = this.getApplicationContext();
         setContentView(R.layout.activity_main_activity2);
 
-        // Create the adapter that will return a fragment for each of the three primary sections
-        // of the app.
-
+        // Create the adapter that will return a fragment for each of the three primary sections of the app.
         FragmentManager fm = getSupportFragmentManager();
         mAppSectionsPagerAdapter = new AppSectionsPagerAdapter(fm);
 
         // Set up the action bar.
         final ActionBar actionBar = getActionBar();
 
-        // Specify that the Home/Up button should not be enabled, since there is no hierarchical
-        // parent.
+        // Specify that the Home/Up button should not be enabled, since there is no hierarchical parent.
         actionBar.setHomeButtonEnabled(false);
 
         // Specify that we will be displaying tabs in the action bar.
@@ -163,10 +142,9 @@ public class MainActivity2 extends FragmentActivity
             }
         });
 
-        actionBar.addTab(actionBar.newTab().setText("Upcoming").setTabListener(this));
-        actionBar.addTab(actionBar.newTab().setText("Completed").setTabListener(this));
-        actionBar.addTab(actionBar.newTab().setText("Standings").setTabListener(this));
-
+        actionBar.addTab(actionBar.newTab().setText(getResources().getString(R.string.page_upcoming)).setTabListener(this));
+        actionBar.addTab(actionBar.newTab().setText(getResources().getString(R.string.page_completed)).setTabListener(this));
+        actionBar.addTab(actionBar.newTab().setText(getResources().getString(R.string.page_standings)).setTabListener(this));
         performRequest("");
     }
 
@@ -178,19 +156,15 @@ public class MainActivity2 extends FragmentActivity
 
     @Override
     public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
-
     }
 
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
-
     }
 
     @Override
     public void onFragmentInteraction(Uri uri) {
-
     }
-
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to one of the primary
@@ -206,15 +180,19 @@ public class MainActivity2 extends FragmentActivity
         public Fragment getItem(int i) {
             switch (i) {
                 case 0:
-                    return UpcomingListFragment.newInstance(i, getPageTitle(i).toString());
+                    return UpcomingListFragment.newInstance(i,
+                            getResources().getString(R.string.page_upcoming));
                 case 1:
-                    return UpcomingListFragment.newInstance(i, getPageTitle(i).toString());
+                    return UpcomingListFragment.newInstance(i,
+                            getResources().getString(R.string.page_completed));
                 case 2:
-                    return UpcomingListFragment.newInstance(i, "");
+                    return UpcomingListFragment.newInstance(i,
+                            getResources().getString(R.string.page_standings));
                 default:
                     return null;
             }
         }
+
         @Override
         public int getCount() {
             return 3;
@@ -224,7 +202,5 @@ public class MainActivity2 extends FragmentActivity
         public CharSequence getPageTitle(int position) {
             return "Section " + (position);
         }
-
     }
-
 }

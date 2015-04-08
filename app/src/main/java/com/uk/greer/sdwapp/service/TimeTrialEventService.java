@@ -1,5 +1,6 @@
 package com.uk.greer.sdwapp.service;
 
+import com.uk.greer.sdwapp.domain.Participant;
 import com.uk.greer.sdwapp.domain.TimeTrial;
 
 import java.util.List;
@@ -11,6 +12,8 @@ import retrofit.http.GET;
  */
 public interface TimeTrialEventService {
 
+    @GET("/completedtt")
+    List<TimeTrial> getCompletedEvents();
 
     @GET("/upcomingtt")
     List<TimeTrial> getUpcomingEvents();
@@ -19,5 +22,6 @@ public interface TimeTrialEventService {
     TimeTrial getTimeTrial(long id);
 
 
-
+    @GET("/getentrees/{id}")
+    List<Participant> getEntrees(long ttId);
 }
