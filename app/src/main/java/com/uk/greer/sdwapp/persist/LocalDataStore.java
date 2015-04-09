@@ -30,6 +30,7 @@ public class LocalDataStore extends SQLiteOpenHelper {
         db.execSQL(TableDefinition.EVENTRESULTS_TABLE);
         db.execSQL(TableDefinition.EVENTS_TABLE);
         db.execSQL(TableDefinition.PARTICIPANTS_TABLE);
+        db.execSQL(TableDefinition.USERS_TABLE);
         // We need to send a trigger to populate the database
     }
 

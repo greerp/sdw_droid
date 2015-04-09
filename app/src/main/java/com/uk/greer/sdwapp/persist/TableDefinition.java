@@ -7,13 +7,6 @@ public class TableDefinition {
 
     // These tablke definitions should replicate those on the GAE Server
 
-    public static String COURSES_TABLE="create table courses(" +
-            "id INT, " +
-            "name TEXT, " +
-            "coursecode TEXT," +
-            "coursemapurl TEXT," +
-            "coursenotes TEXT," +
-            "distance DOUBLE)";
 
 
     public static String COURSE_TABLE="courses";
@@ -24,6 +17,15 @@ public class TableDefinition {
     public static String COURSE_MAPURL="coursemapurl";
     public static String COURSE_NOTES="coursenotes";
     public static String COURSE_DISTANCE="distance";
+
+    public static String COURSES_TABLE="create table courses(" +
+            "id INT, " +
+            "name TEXT, " +
+            "coursecode TEXT," +
+            "coursemapurl TEXT," +
+            "coursenotes TEXT," +
+            "distance DOUBLE)";
+
 
     public static String EVENTS_TABLE="create table events(" +
             "id INT, " +
@@ -37,9 +39,15 @@ public class TableDefinition {
             "countsforpb BOOLEAN )";  // Flag to indicate whether the event had circumstanaces that would prevent it being counted in PB's for the course
 
 
+    public static String USERS_TABLE="create table users(" +
+            "id INT," +
+            "username TEXT)";
+
+
     public static String PARTICIPANTS_TABLE="create table participants(" +
             "id INT, " +
             "eventid INT, " +
+            "userid INT," +
             "signondate DATETIME, " +
             "signonmethod TEXT, " +
             "handicap DOUBLE )";

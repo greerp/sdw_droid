@@ -145,6 +145,11 @@ public class MainActivity2 extends FragmentActivity
         actionBar.addTab(actionBar.newTab().setText(getResources().getString(R.string.page_upcoming)).setTabListener(this));
         actionBar.addTab(actionBar.newTab().setText(getResources().getString(R.string.page_completed)).setTabListener(this));
         actionBar.addTab(actionBar.newTab().setText(getResources().getString(R.string.page_standings)).setTabListener(this));
+        actionBar.addTab(actionBar.newTab().setText(getResources().getString(R.string.page_goride)).setTabListener(this));
+        actionBar.addTab(actionBar.newTab().setText(getResources().getString(R.string.page_opens)).setTabListener(this));
+        actionBar.addTab(actionBar.newTab().setText(getResources().getString(R.string.page_social)).setTabListener(this));
+
+
         performRequest("");
     }
 

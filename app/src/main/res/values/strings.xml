@@ -23,6 +23,9 @@
     <string name="page_upcoming">Forthcoming</string>
     <string name="page_completed">Finished</string>
     <string name="page_standings">Standings</string>
+    <string name="page_goride">Go-Ride</string>
+    <string name="page_opens">Opens</string>
+    <string name="page_social">Social</string>
 
     <string name="LONG_DATE_FORMAT">EEE d-MMM-yyyy HH:mm</string>
 
