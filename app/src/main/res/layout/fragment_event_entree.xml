@@ -1,0 +1,24 @@
+<TableRow
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/entreeTableRow">
+
+    <TextView
+            android:id="@+id/entreeUserName"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:layout_weight=".7"
+            android:width="0dp"/>
+
+    <TextView
+            android:id="@+id/entreeDate"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:layout_weight=".3"
+            android:width="0dp"/>
+</TableRow>
+

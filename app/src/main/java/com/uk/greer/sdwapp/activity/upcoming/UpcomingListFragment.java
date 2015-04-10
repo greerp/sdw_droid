@@ -1,6 +1,7 @@
 package com.uk.greer.sdwapp.activity.upcoming;
 
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
@@ -34,6 +34,7 @@ public class UpcomingListFragment extends Fragment implements OnDataReady {
 
     private static final String ARG_PARAM1 = "tabPosition";
     private static final String ARG_PARAM2 = "tabFunction";
+    private static final String TT_ID = "tt_id";
     private int listItemselected;
 
     public static UpcomingListFragment newInstance(int tabPosition, String tabFunction) {
@@ -122,7 +123,7 @@ public class UpcomingListFragment extends Fragment implements OnDataReady {
         }
 
         Bundle args = this.getArguments();
-        int viewId = args.getInt(this.ARG_PARAM1);
+        int viewId = args.getInt(this.TT_ID);
 
         List<TimeTrial> events=new ArrayList<>();
         if ( viewId==0)
@@ -146,8 +147,7 @@ public class UpcomingListFragment extends Fragment implements OnDataReady {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 listItemselected = position;
                 Intent intent = new Intent(getActivity(), UpcomingEvent.class);
-                long eventId = view.getId();
-                intent.putExtra("TT_ID", eventId);
+                intent.putExtra(TT_ID, view.getId());
                 getActivity().startActivity(intent);
             }
         });
