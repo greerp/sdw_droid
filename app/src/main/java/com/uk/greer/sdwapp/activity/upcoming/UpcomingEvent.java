@@ -1,6 +1,8 @@
 package com.uk.greer.sdwapp.activity.upcoming;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,6 +10,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.text.SpannableString;
+import android.text.style.ImageSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -40,11 +44,16 @@ public class UpcomingEvent extends ActionBarActivity {
         // Give the SlidingTabLayout the ViewPager, this must be done AFTER the ViewPager has had
         // it's PagerAdapter set.
         SlidingTabLayout slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
+        // Set a custom tab item
+        //slidingTabLayout.setCustomTabView(R.layout.tab_title, R.id.tabtext);
         slidingTabLayout.setDistributeEvenly(true);
         slidingTabLayout.setViewPager(viewPager);
+
+        // Update the tabs setting their icons
+
+//        for (int i;)
+//        viewPager.getAdapter().getCount();
     }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -72,7 +81,7 @@ public class UpcomingEvent extends ActionBarActivity {
     public class ViewPagerAdapter extends FragmentPagerAdapter {
 
         final int PAGE_COUNT = 4;
-        private String tabtitles[] = new String[]{"Summary","Entrees", "PBs", "Records"};
+        private String tabtitles[] = new String[]{"DETAIL", "ENTREES", "PB","RECORDS"};
 
         public ViewPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -92,6 +101,8 @@ public class UpcomingEvent extends ActionBarActivity {
                     return fragmenttab1;
             }
         }
+
+
 
         @Override
         public CharSequence getPageTitle(int position) {

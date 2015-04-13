@@ -4,13 +4,13 @@
     xmlns:sdw="http://schemas.android.com/apk/res-auto"
     tools:context="com.uk.greer.sdwapp.activity.upcoming.UpcomingEvent">
 
-<!--
+
     <item android:id="@+id/action_settings"
         android:title="@string/action_settings"
         android:orderInCategory="100"
         app:showAsAction="never" />
--->
 
+<!--
     <item android:id="@+id/action_search"
         android:icon="@drawable/ic_menu_myplaces"
         android:title="@string/action_event_performance"
@@ -25,6 +25,6 @@
         android:icon="@drawable/trophy"
         android:title="@string/action_event_records"
         sdw:showAsAction="ifRoom"/>
-
+-->
 
 </menu>
