@@ -1,4 +1,4 @@
-package com.uk.greer.sdwapp.activity.upcoming;
+package com.uk.greer.sdwapp.activity.completed;
 
 
 
@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * Sets up the list view of events
  */
-public class UpcomingListFragment extends Fragment implements OnDataReady {
+public class CompletedListFragment extends Fragment implements OnDataReady {
 
     public static final String ARG_SECTION_NUMBER = "section_number";
 
@@ -37,10 +37,10 @@ public class UpcomingListFragment extends Fragment implements OnDataReady {
     private static final String TT_ID = "tt_id";
     private int listItemselected;
 
-    public static UpcomingListFragment newInstance(int tabPosition, String tabFunction) {
+    public static CompletedListFragment newInstance(int tabPosition, String tabFunction) {
 
         Log.i("INFO", "Creating newInstance of: " + tabFunction);
-        UpcomingListFragment fragment = new UpcomingListFragment();
+        CompletedListFragment fragment = new CompletedListFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_PARAM1, tabPosition);
         args.putString(ARG_PARAM2, tabFunction);
@@ -53,7 +53,7 @@ public class UpcomingListFragment extends Fragment implements OnDataReady {
                              Bundle savedInstanceState) {
 
         FrameLayout fl = (FrameLayout) inflater.inflate(
-                R.layout.main_upcoming_list_fragment,
+                R.layout.main_completed_list_fragment,
                 container,
                 false);
 
@@ -125,24 +125,24 @@ public class UpcomingListFragment extends Fragment implements OnDataReady {
         Bundle args = this.getArguments();
         int viewId = args.getInt(this.TT_ID);
 
-        List<TimeTrial> events=timeTrialEventService.getUpcomingEvents();
+        List<TimeTrial> events=timeTrialEventService.getCompletedEvents();
 
         // Create the list adapter that takes the list and populates the list items
-        UpcomingListAdapter upcomingListAdapter = new UpcomingListAdapter(
+        CompletedListAdapter completedListAdapter = new CompletedListAdapter(
             this.getActivity(),
             events);
 
-        ListView upcomingListView = (ListView) fl.findViewById(R.id.eventListView);
+        ListView completedListView = (ListView) fl.findViewById(R.id.eventListView);
 
         // Set the listView to use the adapter
-        upcomingListView.setAdapter(upcomingListAdapter);
+        completedListView.setAdapter(completedListAdapter);
 
         // Create delegate that handles clicking on the list event
-        upcomingListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        completedListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 listItemselected = position;
-                Intent intent = new Intent(getActivity(), UpcomingEvent.class);
+                Intent intent = new Intent(getActivity(), CompletedEvent.class);
                 intent.putExtra(TT_ID, view.getId());
                 getActivity().startActivity(intent);
             }

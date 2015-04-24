@@ -35,6 +35,7 @@ import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.SpiceRequest;
 import com.octo.android.robospice.request.listener.RequestListener;
+import com.uk.greer.sdwapp.activity.completed.CompletedListFragment;
 import com.uk.greer.sdwapp.activity.upcoming.UpcomingListFragment;
 import com.uk.greer.sdwapp.activity.upcoming.UpcomingRefreshFragment;
 import com.uk.greer.sdwapp.service.CacheCoordinator;
@@ -151,7 +152,7 @@ public class Main extends FragmentActivity
                 case 0:
                     return UpcomingListFragment.newInstance(i,tabtitles[i]);
                 case 1:
-                    return UpcomingListFragment.newInstance(i,tabtitles[i]);
+                    return CompletedListFragment.newInstance(i, tabtitles[i]);
                 case 2:
                     return UpcomingListFragment.newInstance(i,tabtitles[i]);
                 default:
