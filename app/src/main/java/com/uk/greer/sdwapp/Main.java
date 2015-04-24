@@ -29,6 +29,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 
+import com.google.samples.apps.iosched.ui.widget.SlidingTabLayout;
 import com.octo.android.robospice.JacksonSpringAndroidSpiceService;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
@@ -42,10 +43,7 @@ import java.util.List;
 
 
 public class Main extends FragmentActivity
-        implements ActionBar.TabListener, UpcomingRefreshFragment.OnFragmentInteractionListener {
-
-    AppSectionsPagerAdapter mAppSectionsPagerAdapter;
-    ViewPager mViewPager;
+        implements UpcomingRefreshFragment.OnFragmentInteractionListener {
 
     protected SpiceManager spiceManager
             = new SpiceManager(JacksonSpringAndroidSpiceService.class);
@@ -65,7 +63,7 @@ public class Main extends FragmentActivity
     }
 
 
-    private void performRequest(String user) {
+    private void performRequest() {
 
         spiceManager.execute(new SpiceRequest<String>(String.class) {
             @Override
@@ -92,7 +90,7 @@ public class Main extends FragmentActivity
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        Log.i("INFO", "MainActivity2 - Configuration Changed");
+        Log.i("INFO", "Configuration Changed");
     }
 
     @Override
@@ -111,65 +109,37 @@ public class Main extends FragmentActivity
 
         // Create the adapter that will return a fragment for each of the three primary sections of the app.
         FragmentManager fm = getSupportFragmentManager();
-        mAppSectionsPagerAdapter = new AppSectionsPagerAdapter(fm);
-
-        // Set up the action bar.
-        final ActionBar actionBar = getActionBar();
+        AppSectionsPagerAdapter pagerAdapter = new AppSectionsPagerAdapter(fm);
 
         // Specify that the Home/Up button should not be enabled, since there is no hierarchical parent.
-        actionBar.setHomeButtonEnabled(false);
+        getActionBar().setHomeButtonEnabled(false);
 
-        // Specify that we will be displaying tabs in the action bar.
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPager.setAdapter(new AppSectionsPagerAdapter(getSupportFragmentManager()));
+        SlidingTabLayout slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
+        slidingTabLayout.setDistributeEvenly(true);
+        slidingTabLayout.setViewPager(viewPager);
+        performRequest();
 
-        // Set up the ViewPager, attaching the adapter and setting up a listener for when the
-        // user swipes between sections.
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setAdapter(mAppSectionsPagerAdapter);
-        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-                // When swiping between different app sections, select the corresponding tab.
-                // We can also use ActionBar.Tab#select() to do this if we have a reference to the
-                // Tab.
-                actionBar.setSelectedNavigationItem(position);
-            }
-        });
-
-        actionBar.addTab(actionBar.newTab().setText(getResources().getString(R.string.page_upcoming)).setTabListener(this));
-        actionBar.addTab(actionBar.newTab().setText(getResources().getString(R.string.page_completed)).setTabListener(this));
-        actionBar.addTab(actionBar.newTab().setText(getResources().getString(R.string.page_standings)).setTabListener(this));
-        actionBar.addTab(actionBar.newTab().setText(getResources().getString(R.string.page_goride)).setTabListener(this));
-        actionBar.addTab(actionBar.newTab().setText(getResources().getString(R.string.page_opens)).setTabListener(this));
-        actionBar.addTab(actionBar.newTab().setText(getResources().getString(R.string.page_social)).setTabListener(this));
-
-
-        performRequest("");
-    }
-
-    @Override
-    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-        // When the given tab is selected, switch to the corresponding page in the ViewPager.
-        mViewPager.setCurrentItem(tab.getPosition());
-    }
-
-    @Override
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
-    }
-
-    @Override
-    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
     }
 
     @Override
     public void onFragmentInteraction(Uri uri) {
+
     }
+
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to one of the primary
      * sections of the app.
      */
     public class AppSectionsPagerAdapter extends FragmentPagerAdapter {
+
+        private String tabtitles[] = new String[] {
+            getResources().getString(R.string.page_upcoming),
+            getResources().getString(R.string.page_completed),
+            getResources().getString(R.string.page_standings)
+        };
 
         public AppSectionsPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -179,14 +149,11 @@ public class Main extends FragmentActivity
         public Fragment getItem(int i) {
             switch (i) {
                 case 0:
-                    return UpcomingListFragment.newInstance(i,
-                            getResources().getString(R.string.page_upcoming));
+                    return UpcomingListFragment.newInstance(i,tabtitles[i]);
                 case 1:
-                    return UpcomingListFragment.newInstance(i,
-                            getResources().getString(R.string.page_completed));
+                    return UpcomingListFragment.newInstance(i,tabtitles[i]);
                 case 2:
-                    return UpcomingListFragment.newInstance(i,
-                            getResources().getString(R.string.page_standings));
+                    return UpcomingListFragment.newInstance(i,tabtitles[i]);
                 default:
                     return null;
             }
@@ -194,12 +161,12 @@ public class Main extends FragmentActivity
 
         @Override
         public int getCount() {
-            return 3;
+            return tabtitles.length;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return "Section " + (position);
+            return tabtitles[position];
         }
     }
 }

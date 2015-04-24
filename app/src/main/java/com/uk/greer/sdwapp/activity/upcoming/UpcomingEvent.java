@@ -35,7 +35,6 @@ public class UpcomingEvent extends ActionBarActivity {
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));
 
-
         // Give the SlidingTabLayout the ViewPager, this must be done AFTER the ViewPager has had
         // it's PagerAdapter set.
         SlidingTabLayout slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
@@ -44,11 +43,6 @@ public class UpcomingEvent extends ActionBarActivity {
         //slidingTabLayout.canScrollHorizontally(View.TEXT_DIRECTION_ANY_RTL);
         slidingTabLayout.setDistributeEvenly(true);
         slidingTabLayout.setViewPager(viewPager);
-
-        // Update the tabs setting their icons
-
-//        for (int i;)
-//        viewPager.getAdapter().getCount();
     }
 
     @Override
@@ -104,15 +98,10 @@ public class UpcomingEvent extends ActionBarActivity {
                     return EventPBsFragment.newInstance(ttId);
             }
         }
-
-
-
         @Override
         public CharSequence getPageTitle(int position) {
 
             return tabtitles[position];
-
-
         }
     }
 }
