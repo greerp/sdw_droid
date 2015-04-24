@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.uk.greer.sdwapp.config.ApplicationProperty;
 import com.uk.greer.sdwapp.service.CacheService;
 
+import java.io.IOException;
 import java.util.Date;
 
 /**
@@ -19,18 +20,21 @@ public class LocalDataStore extends SQLiteOpenHelper {
     private Context context;
 
     public LocalDataStore(Context context) {
+
         super(context,
-                ApplicationProperty.get("LOCALDB","sdw.db"), null, DATABASE_VERSION);
+                ApplicationProperty.get("LOCALDB", "sdw.db"), null, DATABASE_VERSION);
         this.context = context;
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        db.execSQL(TableDefinition.CONFIG_TABLE);
         db.execSQL(TableDefinition.COURSES_TABLE);
         db.execSQL(TableDefinition.EVENTRESULTS_TABLE);
         db.execSQL(TableDefinition.EVENTS_TABLE);
         db.execSQL(TableDefinition.PARTICIPANTS_TABLE);
         db.execSQL(TableDefinition.USERS_TABLE);
+        db.execSQL(TableDefinition.TIMETRIALS_VIEW);
         // We need to send a trigger to populate the database
     }
 

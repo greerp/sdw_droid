@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.uk.greer.sdwapp.AppManager;
-import com.uk.greer.sdwapp.persist.LocalDataStore;
 import com.uk.greer.sdwapp.persist.TableDefinition;
 
 /**
@@ -44,7 +43,7 @@ public class CacheService {
                     TableDefinition.COURSE_NOTES,
                     TableDefinition.COURSE_DISTANCE};
 
-            Cursor c = db.query(TableDefinition.COURSE_TABLE,
+            Cursor c = db.query(TableDefinition.COURSE,
                     courseFields,
                     "id=?",
                     new String[]{Integer.toString(id)},
@@ -64,7 +63,7 @@ public class CacheService {
 
                     long newRowId;
                     newRowId = db.insert(
-                            TableDefinition.COURSE_TABLE,
+                            TableDefinition.COURSE,
                             null,
                             values);
                 } else {

@@ -9,7 +9,6 @@ import com.uk.greer.sdwapp.AppManager;
 import com.uk.greer.sdwapp.R;
 import com.uk.greer.sdwapp.domain.Participant;
 import com.uk.greer.sdwapp.domain.TimeTrial;
-import com.uk.greer.sdwapp.persist.LocalDataStore;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -28,7 +27,7 @@ public class TimeTrialEventServiceCache implements TimeTrialEventService {
 
     public TimeTrialEventServiceCache(Context context) {
         String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
-        dateFormat = new SimpleDateFormat(DATE_FORMAT);
+        this.dateFormat = new SimpleDateFormat(DATE_FORMAT);
         this.context = context;
     }
 
@@ -60,8 +59,45 @@ public class TimeTrialEventServiceCache implements TimeTrialEventService {
     }
 
     @Override
-    public List<Participant> getEntrees(long ttId) {
-        return null;
+    public List<Participant> getEntries(long ttId) {
+        List<Participant> participants = new ArrayList<>();
+        SQLiteDatabase readOnlyDb = null;
+        Cursor s = null;
+        try {
+            readOnlyDb = getReadableDatabase();
+
+            String[] fields = new String[]{
+                    "id", "username", "firstname","lastname","signondate", "signonmethod", "handicap"};
+
+            s = readOnlyDb.query("v_ttentries",
+                    fields,"eventid = ?", new String[]{Long.toString(ttId)},null,null,"signondate");
+
+            if (s.getCount() > 0) {
+                s.moveToFirst();
+                int eventNo = 0;
+                do {
+                    Date eventDate = null;
+                    try {
+                        String d = s.getString(4);
+                        eventDate = dateFormat.parse(d);
+                    } catch (ParseException e) {
+                        Log.e("EXCEPTION","Unable to parse date:"+ s.getString(1));
+                    }
+                    Participant participant =
+                          Participant.newInstance(
+                                  s.getInt(0), s.getString(1), s.getString(2),s.getString(3), eventDate);
+                    participants.add(participant);
+                    s.moveToNext();
+                } while (!s.isAfterLast());
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            closeCursor(s);
+            closeDB(readOnlyDb);
+        }
+        return participants;
     }
 
 
@@ -72,7 +108,10 @@ public class TimeTrialEventServiceCache implements TimeTrialEventService {
         try {
             readOnlyDb = getReadableDatabase();
 
-            s = readOnlyDb.query("v_timetrials", null, where, selectionArgs, null, null, orderBy);
+            String[] fields = new String[]{
+                    "id", "eventdate", "coursename", "coursecode", "distance", "eventname","coursenotes"};
+
+            s = readOnlyDb.query("v_timetrials", fields, where, selectionArgs, null, null, orderBy);
 
             int i = s.getCount();
             if (i <= 0) {
@@ -118,96 +157,5 @@ public class TimeTrialEventServiceCache implements TimeTrialEventService {
             s.close();
     }
 
-//    @Override
-//    public List<TimeTrial> getUpcomingEvents1() {
-//
-//        final String sql = "select events.id, events.eventdate, courses.name, " +
-//                "courses.coursecode, courses.distance, events.name " +
-//                "from events join courses on events.courseid=courses.id " +
-//                "where events.eventdate > ? order by events.eventdate";
-//
-//        SQLiteDatabase readOnlyDb = null;
-//        Cursor s=null;
-//        try {
-//            readOnlyDb = getReadableDatabase();
-//            List<TimeTrial> ttList = new ArrayList<>();
-//
-//            String queryDate = dateFormat.format(new Date());
-//            s = readOnlyDb.rawQuery(sql, new String[]{queryDate});
-//
-//            int i = s.getCount();
-//            if (i <= 0) {
-//                Log.i("INITIALIZATION", "Refreshing database ");
-//                //refreshdb();
-//            } else {
-//                s.moveToFirst();
-//                int eventNo = 0;
-//                do {
-//                    Date eventDate = null;
-//                    try {
-//                        eventDate = dateFormat.parse(s.getString(1));
-//                    } catch (ParseException e) {
-//                        e.printStackTrace();
-//                    }
-//                    String name=s.getString(5)==null?s.getString(2):s.getString(5);
-//                    TimeTrial tt = TimeTrial.newInstance(
-//                            s.getInt(0), ++eventNo, name, eventDate, s.getString(3), true);
-//                    ttList.add(tt);
-//                    s.moveToNext();
-//
-//                } while (!s.isAfterLast());
-//            }
-//            return ttList;
-//        }
-//         catch (Exception e){
-//             e.printStackTrace();
-//         }
-//        finally {
-//            closeCursor(s);
-//
-//            closeDB(readOnlyDb);
-//        }
-//        return new ArrayList<>();
-//    }
-
-
-//    @Override
-//    public TimeTrial getTimeTrial(long id) {
-//        final String sql = "select events.id, events.eventdate, courses.name, " +
-//                "courses.coursecode, courses.distance " +
-//                "from events join courses on events.courseid=courses.id " +
-//                "where events.id = ?";
-//
-//        SQLiteDatabase readOnlyDb=null;
-//        Cursor s = null;
-//        try {
-//            readOnlyDb = getReadableDatabase();
-//            s = readOnlyDb.rawQuery(sql, new String[]{Long.toString(id)});
-//            int i = s.getCount();
-//            if (i <= 0) {
-//                return null;
-//            } else {
-//                s.moveToFirst();
-//                int eventNo = 0;
-//                Date eventDate = null;
-//                try {
-//                    eventDate = dateFormat.parse(s.getString(1));
-//                } catch (ParseException e) {
-//                    e.printStackTrace();
-//                }
-//                TimeTrial tt = TimeTrial.newInstance(
-//                        s.getInt(0), ++eventNo, s.getString(2), eventDate, s.getString(3), true);
-//                return tt;
-//            }
-//        }
-//        catch (Exception ex){
-//            ex.printStackTrace();
-//        }
-//        finally {
-//            closeCursor(s);
-//            closeDB(readOnlyDb);
-//        }
-//        return null;
-//    }
 
 }

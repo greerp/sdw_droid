@@ -10,8 +10,6 @@ import android.view.ViewGroup;
 
 import com.uk.greer.sdwapp.R;
 
-import java.net.URI;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,7 +38,7 @@ public class UpcomingRefreshFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.fragment_upcoming_refresh, container, false);
+        return inflater.inflate(R.layout.upcoming_event_refresh, container, false);
     }
 
     @Override

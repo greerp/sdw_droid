@@ -3,21 +3,35 @@ package com.uk.greer.sdwapp;
 import android.app.Application;
 import android.content.Context;
 import android.content.res.Resources;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.drawable.Drawable;
 import android.os.StrictMode;
 
+import com.uk.greer.sdwapp.persist.DatabaseHelper;
 import com.uk.greer.sdwapp.persist.LocalDataStore;
+
+import java.io.IOException;
 
 /**
  * Created by greepau on 18/03/2015.
  */
 public class AppManager extends Application {
 
-    private LocalDataStore localDataStore;
+    private SQLiteOpenHelper localDataStore;
     private static Context ctx;
 
-    public LocalDataStore getLocalDataStore(){
+    public SQLiteOpenHelper getLocalDataStore(){
         if ( localDataStore==null){
-            localDataStore = new LocalDataStore(this);
+
+            DatabaseHelper dbh = new DatabaseHelper(this);
+            try {
+                dbh.createDataBase();
+                localDataStore = new LocalDataStore(this);
+
+                //localDataStore = dbh;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return localDataStore;
     }
@@ -35,6 +49,8 @@ public class AppManager extends Application {
         }
         return defaultValue;
     }
+
+
 
     @Override
     public void onCreate() {

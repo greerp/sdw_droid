@@ -7,16 +7,19 @@ public class TableDefinition {
 
     // These tablke definitions should replicate those on the GAE Server
 
+    public static String CONFIG ="config";
 
-
-    public static String COURSE_TABLE="courses";
-
+    public static String COURSE ="courses";
     public static String COURSE_ID="id";
     public static String COURSE_NAME="name";
     public static String COURSE_CODE="coursecode";
     public static String COURSE_MAPURL="coursemapurl";
     public static String COURSE_NOTES="coursenotes";
     public static String COURSE_DISTANCE="distance";
+
+
+    public static String CONFIG_TABLE = "create table config(name TEXT, value TEXT)";
+
 
     public static String COURSES_TABLE="create table courses(" +
             "id INT, " +
@@ -41,8 +44,9 @@ public class TableDefinition {
 
     public static String USERS_TABLE="create table users(" +
             "id INT," +
-            "username TEXT)";
-
+            "username TEXT," +
+            "firstname TEXT," +
+            "lastname TEXT)";
 
     public static String PARTICIPANTS_TABLE="create table participants(" +
             "id INT, " +
@@ -61,6 +65,11 @@ public class TableDefinition {
             "time INT, " +
             "status TEXT )";
 
+
+    public static String TIMETRIALS_VIEW="CREATE VIEW v_timetrials as select events.id, events.eventdate, " +
+            "courses.name as coursename, courses.coursecode, courses.distance, " +
+            "events.name as eventname, coursenotes from events join courses " +
+            "on events.courseid=courses.id order by events.eventdate";
 
 
 

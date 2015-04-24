@@ -32,7 +32,7 @@
         </activity>
 
         <activity
-            android:name=".MainActivity2"
+            android:name=".Main"
             android:label="@string/title_activity_main_activity2"
             android:launchMode="standard">
         </activity>
@@ -40,11 +40,11 @@
         <activity
             android:name=".activity.upcoming.UpcomingEvent"
             android:label="@string/title_activity_upcoming_event"
-            android:parentActivityName=".MainActivity2"
+            android:parentActivityName=".Main"
             android:theme="@style/Theme.AppCompat">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity2"/>
+                android:value=".Main"/>
         </activity>
 
     </application>

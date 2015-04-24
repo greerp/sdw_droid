@@ -1,8 +1,6 @@
 package com.uk.greer.sdwapp.activity.upcoming;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,8 +8,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
-import android.text.SpannableString;
-import android.text.style.ImageSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -35,10 +31,9 @@ public class UpcomingEvent extends ActionBarActivity {
         if (bundle != null) {
             ttId = bundle.getInt(TT_ID);
         }
-        setContentView(R.layout.activity_upcoming_event);
+        setContentView(R.layout.upcoming_event);
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));
-
 
 
         // Give the SlidingTabLayout the ViewPager, this must be done AFTER the ViewPager has had
@@ -46,6 +41,7 @@ public class UpcomingEvent extends ActionBarActivity {
         SlidingTabLayout slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
         // Set a custom tab item
         //slidingTabLayout.setCustomTabView(R.layout.tab_title, R.id.tabtext);
+        //slidingTabLayout.canScrollHorizontally(View.TEXT_DIRECTION_ANY_RTL);
         slidingTabLayout.setDistributeEvenly(true);
         slidingTabLayout.setViewPager(viewPager);
 
@@ -81,7 +77,8 @@ public class UpcomingEvent extends ActionBarActivity {
     public class ViewPagerAdapter extends FragmentPagerAdapter {
 
         final int PAGE_COUNT = 4;
-        private String tabtitles[] = new String[]{"DETAIL", "ENTREES", "PB","RECORDS"};
+        private String tabtitles[] = new String[]
+                {"INFO", "ENTRIES", "Me","RECORDS"};
 
         public ViewPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -96,9 +93,15 @@ public class UpcomingEvent extends ActionBarActivity {
         public Fragment getItem(int position) {
             switch (position) {
 
+                case 0:
+                    return EventInfoFragment.newInstance(ttId);
+
+                case 1:
+                    return EventEntriesFragment.newInstance(ttId);
+
+
                 default:
-                    EventSummaryFragment fragmenttab1 = EventSummaryFragment.newInstance(ttId);
-                    return fragmenttab1;
+                    return EventPBsFragment.newInstance(ttId);
             }
         }
 
@@ -106,7 +109,10 @@ public class UpcomingEvent extends ActionBarActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
+
             return tabtitles[position];
+
+
         }
     }
 }

@@ -42,7 +42,8 @@ public class TimeTrialEventServiceGae implements TimeTrialEventService {
     }
 
     @Override
-    public List<Participant> getEntrees(long ttId) {
+    public List<Participant> getEntries(long ttId) {
         return null;
     }
+
 }

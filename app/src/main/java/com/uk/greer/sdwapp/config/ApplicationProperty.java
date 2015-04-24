@@ -1,12 +1,8 @@
 package com.uk.greer.sdwapp.config;
 
-import android.app.Application;
-import android.content.Context;
-import android.content.pm.ApplicationInfo;
 import android.util.Log;
 
 import com.uk.greer.sdwapp.AppManager;
-import com.uk.greer.sdwapp.MainActivity2;
 
 import java.util.Properties;
 

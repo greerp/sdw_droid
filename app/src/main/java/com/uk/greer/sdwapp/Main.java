@@ -41,7 +41,7 @@ import com.uk.greer.sdwapp.service.CacheCoordinator;
 import java.util.List;
 
 
-public class MainActivity2 extends FragmentActivity
+public class Main extends FragmentActivity
         implements ActionBar.TabListener, UpcomingRefreshFragment.OnFragmentInteractionListener {
 
     AppSectionsPagerAdapter mAppSectionsPagerAdapter;
@@ -107,7 +107,7 @@ public class MainActivity2 extends FragmentActivity
         long ttId = getIntent().getLongExtra("TT_ID", -1);
         Log.i("INFO", "TT ID: " + Long.toString(ttId));
 
-        setContentView(R.layout.activity_main_activity2);
+        setContentView(R.layout.main);
 
         // Create the adapter that will return a fragment for each of the three primary sections of the app.
         FragmentManager fm = getSupportFragmentManager();

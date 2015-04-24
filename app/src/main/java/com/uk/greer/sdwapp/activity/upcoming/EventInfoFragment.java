@@ -1,7 +1,9 @@
 package com.uk.greer.sdwapp.activity.upcoming;
 
-import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -11,13 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TableLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.google.samples.apps.iosched.ui.widget.SlidingTabLayout;
 import com.uk.greer.sdwapp.AppManager;
 import com.uk.greer.sdwapp.R;
-import com.uk.greer.sdwapp.domain.Participant;
 import com.uk.greer.sdwapp.domain.TimeTrial;
 import com.uk.greer.sdwapp.service.TimeTrialEventService;
 import com.uk.greer.sdwapp.service.TimeTrialEventServiceFactory;
@@ -25,18 +26,17 @@ import com.uk.greer.sdwapp.service.TimeTrialEventServiceNull;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
-public class EventSummaryFragment extends Fragment {
+public class EventInfoFragment extends Fragment {
     private static final String TT_ID = "tt_id";
     private final SimpleDateFormat dateFormat;
     private SlidingTabLayout mSlidingTabLayout;
 
     private ViewPager mViewPager;
 
-    public static EventSummaryFragment newInstance(int ttId){
+    public static EventInfoFragment newInstance(int ttId){
 
-        EventSummaryFragment fragment = new EventSummaryFragment();
+        EventInfoFragment fragment = new EventInfoFragment();
 
         Bundle args = new Bundle();
         args.putInt(TT_ID, ttId);
@@ -44,7 +44,7 @@ public class EventSummaryFragment extends Fragment {
         return fragment;
     }
 
-    public EventSummaryFragment(){
+    public EventInfoFragment(){
         String dateFormat =
                 AppManager.getStringResource(R.string.LONG_DATE_FORMAT, "dd MMM yyyy");
         this.dateFormat = new SimpleDateFormat(dateFormat);
@@ -54,7 +54,8 @@ public class EventSummaryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_event_summary, container, false);
+        View v = inflater.inflate(R.layout.upcoming_event_info_fragment, container, false);
+
 
         Bundle args = this.getArguments();
         if ( args!=null) {
@@ -70,10 +71,9 @@ public class EventSummaryFragment extends Fragment {
             }
 
             TimeTrial tt = trialEventService.getTimeTrial(ttId);
-            List<Participant> entrees = trialEventService.getEntrees(ttId);
 
             if (tt != null)
-                showDetails(v, tt, entrees);
+                showDetails(v, tt);
         }
         else {
             Log.e("ERROR", "No arguments, instance may have been created directly an dnot through newInstance");
@@ -104,7 +104,7 @@ public class EventSummaryFragment extends Fragment {
     }
     */
 
-    private void showDetails(View v, TimeTrial timeTrial, List<Participant> entrees) {
+    private void showDetails(View v, TimeTrial timeTrial) {
 
         // Set the width of the button - This is necessary if the date is empty
         int width = getScreenWidth();
@@ -126,23 +126,7 @@ public class EventSummaryFragment extends Fragment {
         else
             fldEventDate.setText("");
 
-        /****************** Display Entrees *********************/
-        LayoutInflater inflater = (LayoutInflater) getActivity()
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        TableLayout table = (TableLayout) v.findViewById(R.id.entreesTableLayout);
-
-        if ( entrees != null ) {
-            table.removeViewAt(1);
-            for (Participant entrant : entrees) {
-                View rowView = inflater.inflate(R.layout.fragment_event_entree, null, false);
-                TextView userName = (TextView) rowView.findViewById(R.id.entreeUserName);
-                TextView date = (TextView) rowView.findViewById(R.id.entreeDate);
-                userName.setText(entrant.getUserName());
-                date.setText(dateFormat.format(entrant.getSignUpDate()));
-                table.addView(rowView);
-            }
-        }
     }
 
 }

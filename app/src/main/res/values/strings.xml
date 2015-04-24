@@ -28,11 +28,13 @@
     <string name="page_social">Social</string>
 
     <string name="LONG_DATE_FORMAT">EEE d-MMM-yyyy HH:mm</string>
+    <string name="SHORT_DATE_FORMAT">d-MMM HH:mm</string>
 
     <string name="action_event_records">Records</string>
     <string name="action_event_performance">Me</string>
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="no_tt_entries">No Entries Yet!</string>
 
 </resources>

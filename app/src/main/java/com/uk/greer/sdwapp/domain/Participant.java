@@ -10,6 +10,20 @@ public class Participant {
     private String firstName;
     private String lastName;
     private Date signUpDate;
+    private int handicap;
+    private String signOnMethod;
+    private int id;
+
+    public static Participant newInstance(int id, String userName, String firstName, String lastName,
+                                        Date signUpDate ){
+        Participant p = new Participant();
+        p.setId(id);
+        p.setFirstName(firstName);
+        p.setLastName(lastName);
+        p.setUserName(userName);
+        p.setSignUpDate(signUpDate);
+        return p;
+    }
 
     public String getUserName() {
         return userName;
@@ -41,5 +55,13 @@ public class Participant {
 
     public void setSignUpDate(Date signUpDate) {
         this.signUpDate = signUpDate;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

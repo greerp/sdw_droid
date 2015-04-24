@@ -26,7 +26,7 @@ public class UpcomingListAdapter extends ArrayAdapter<TimeTrial> {
 
     public UpcomingListAdapter(Context context, List<TimeTrial> timeTrialList) {
 
-        super(context, R.layout.fragment_upcoming_listitem, timeTrialList);
+        super(context, R.layout.main_upcoming_listitem_fragment, timeTrialList);
         this.context = context;
         this.timeTrialList = timeTrialList;
         this.dateFormat = new SimpleDateFormat(DATE_FORMAT);
@@ -37,7 +37,7 @@ public class UpcomingListAdapter extends ArrayAdapter<TimeTrial> {
 
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View rowView = inflater.inflate(R.layout.fragment_upcoming_listitem, parent, false);
+        View rowView = inflater.inflate(R.layout.main_upcoming_listitem_fragment, parent, false);
         TextView eventName = (TextView) rowView.findViewById(R.id.ttName);
         TextView eventCourse = (TextView) rowView.findViewById(R.id.ttCourse);
         TextView eventDate = (TextView) rowView.findViewById(R.id.ttDate);

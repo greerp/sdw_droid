@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.Log;
 
 import com.uk.greer.sdwapp.AppManager;
-import com.uk.greer.sdwapp.MainActivity2;
 import com.uk.greer.sdwapp.config.ApplicationProperty;
 
 /**

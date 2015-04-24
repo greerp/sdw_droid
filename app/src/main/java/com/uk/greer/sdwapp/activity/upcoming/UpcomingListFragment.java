@@ -53,7 +53,7 @@ public class UpcomingListFragment extends Fragment implements OnDataReady {
                              Bundle savedInstanceState) {
 
         FrameLayout fl = (FrameLayout) inflater.inflate(
-                R.layout.fragment_upcoming_list,
+                R.layout.main_upcoming_list_fragment,
                 container,
                 false);
 
