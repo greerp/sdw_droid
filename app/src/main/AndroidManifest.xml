@@ -44,6 +44,7 @@
                 android:value=".Main" />
         </activity>
 
+
         <activity
             android:name=".activity.completed.CompletedEvent"
             android:label="@string/title_activity_completed_event"

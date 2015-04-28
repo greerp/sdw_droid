@@ -3,6 +3,7 @@ package com.uk.greer.sdwapp.service;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
 import com.uk.greer.sdwapp.AppManager;
@@ -98,6 +99,25 @@ public class TimeTrialEventServiceCache implements TimeTrialEventService {
             closeDB(readOnlyDb);
         }
         return participants;
+    }
+
+    @Override
+    public int getEntryCount(long ttId) {
+
+        SQLiteDatabase mDb = getReadableDatabase();
+        try {
+            final SQLiteStatement stmt = mDb
+                    .compileStatement("SELECT count(id) FROM entries where eventid="+ ttId);
+
+            return (int) stmt.simpleQueryForLong();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            if ( mDb!=null)
+                closeDB(mDb);
+        }
+        return 0;
     }
 
 

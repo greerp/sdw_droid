@@ -49,4 +49,9 @@ public class TimeTrialEventServiceNull implements TimeTrialEventService {
     public List<Participant> getEntries(long ttId) {
         return null;
     }
+
+    @Override
+    public int getEntryCount(long ttId) {
+        return 0;
+    }
 }

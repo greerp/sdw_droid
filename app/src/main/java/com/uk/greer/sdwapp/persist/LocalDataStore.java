@@ -1,15 +1,11 @@
 package com.uk.greer.sdwapp.persist;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.uk.greer.sdwapp.config.ApplicationProperty;
-import com.uk.greer.sdwapp.service.CacheService;
-
-import java.io.IOException;
-import java.util.Date;
 
 /**
  * Created by greepau on 16/03/2015.
@@ -28,13 +24,17 @@ public class LocalDataStore extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(TableDefinition.CONFIG_TABLE);
-        db.execSQL(TableDefinition.COURSES_TABLE);
-        db.execSQL(TableDefinition.EVENTRESULTS_TABLE);
-        db.execSQL(TableDefinition.EVENTS_TABLE);
-        db.execSQL(TableDefinition.PARTICIPANTS_TABLE);
-        db.execSQL(TableDefinition.USERS_TABLE);
-        db.execSQL(TableDefinition.TIMETRIALS_VIEW);
+
+        // TODO: 27-4-15 - Create the database in here from the assets folder
+
+        Log.i("DATABASE", "In OnCreate");
+//        db.execSQL(TableDefinition.CONFIG_TABLE);
+//        db.execSQL(TableDefinition.COURSES_TABLE);
+//        db.execSQL(TableDefinition.EVENTS_TABLE);
+//        db.execSQL(TableDefinition.ENTRIES_TABLE);
+//        db.execSQL(TableDefinition.USERS_TABLE);
+//        db.execSQL(TableDefinition.TIMETRIALS_VIEW);
+//        db.execSQL(TableDefinition.ENTRIES_VIEW);
         // We need to send a trigger to populate the database
     }
 

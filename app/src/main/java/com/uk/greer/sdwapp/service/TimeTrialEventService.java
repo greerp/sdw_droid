@@ -21,8 +21,9 @@ public interface TimeTrialEventService {
     @GET("/gettt/{id}")
     TimeTrial getTimeTrial(long id);
 
-
     @GET("/getentrees/{id}")
     List<Participant> getEntries(long ttId);
+
+    int getEntryCount(long ttId);
 
 }

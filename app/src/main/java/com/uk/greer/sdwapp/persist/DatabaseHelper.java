@@ -100,7 +100,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
+        Log.i("DATABASE", "In OnCreate");
     }
 
     @Override

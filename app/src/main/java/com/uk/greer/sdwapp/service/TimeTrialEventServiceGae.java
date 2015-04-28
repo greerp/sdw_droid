@@ -46,4 +46,9 @@ public class TimeTrialEventServiceGae implements TimeTrialEventService {
         return null;
     }
 
+    @Override
+    public int getEntryCount(long ttId) {
+        return 0;
+    }
+
 }

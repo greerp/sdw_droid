@@ -48,22 +48,18 @@ public class TableDefinition {
             "firstname TEXT," +
             "lastname TEXT)";
 
-    public static String PARTICIPANTS_TABLE="create table participants(" +
+    // Time is stored in seconds
+    // Status - Complete, DNF, DNS
+    public static String ENTRIES_TABLE ="create table entries(" +
             "id INT, " +
             "eventid INT, " +
             "userid INT," +
             "signondate DATETIME, " +
             "signonmethod TEXT, " +
-            "handicap DOUBLE )";
-
-    // Time is stored in seconds
-    // Status - Complete, DNF, DNS
-    public static String EVENTRESULTS_TABLE="create table results(" +
-            "id INT, " +
-            "eventid INT, " +
-            "participantid INT, " +
-            "time INT, " +
-            "status TEXT )";
+            "handicap DOUBLE, " +
+            "startno INT," +
+            "time INT," +
+            "status TEXT)";
 
 
     public static String TIMETRIALS_VIEW="CREATE VIEW v_timetrials as select events.id, events.eventdate, " +
@@ -72,5 +68,9 @@ public class TableDefinition {
             "on events.courseid=courses.id order by events.eventdate";
 
 
+    public static String ENTRIES_VIEW="create view v_ttentries as select participants.id, participants.eventid, " +
+            "participants.userid, users.username, users.firstname," +
+            "users.lastname, participants.signondate, participants.signonmethod, participants.handicap " +
+            "from participants join users on participants.userid=users.id;";
 
 }

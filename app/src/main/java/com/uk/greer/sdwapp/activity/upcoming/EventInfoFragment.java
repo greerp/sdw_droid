@@ -71,9 +71,11 @@ public class EventInfoFragment extends Fragment {
             }
 
             TimeTrial tt = trialEventService.getTimeTrial(ttId);
+            int entryCount = trialEventService.getEntryCount(ttId);
+
 
             if (tt != null)
-                showDetails(v, tt);
+                showDetails(v, tt, entryCount);
         }
         else {
             Log.e("ERROR", "No arguments, instance may have been created directly an dnot through newInstance");
@@ -104,7 +106,7 @@ public class EventInfoFragment extends Fragment {
     }
     */
 
-    private void showDetails(View v, TimeTrial timeTrial) {
+    private void showDetails(View v, TimeTrial timeTrial, int entryCount) {
 
         // Set the width of the button - This is necessary if the date is empty
         int width = getScreenWidth();
@@ -126,6 +128,8 @@ public class EventInfoFragment extends Fragment {
         else
             fldEventDate.setText("");
 
+        TextView fldEntryCount = (TextView) v.findViewById(R.id.course_entrants_info);
+        fldEntryCount.setText(entryCount + " riders have pre-entered on-line");
 
     }
 

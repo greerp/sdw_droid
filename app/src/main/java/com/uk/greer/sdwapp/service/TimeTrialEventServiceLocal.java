@@ -62,6 +62,10 @@ public class TimeTrialEventServiceLocal implements TimeTrialEventService {
         return null;
     }
 
+    @Override
+    public int getEntryCount(long ttId) {
+        return 0;
+    }
 
 
 }

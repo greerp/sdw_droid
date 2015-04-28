@@ -54,7 +54,7 @@ public class CompletedListAdapter extends ArrayAdapter<TimeTrial> {
                 eventDate.setText("");
 
             eventNo.setText(String.valueOf(tt.getEventNo()));
-            imageView.setImageResource(R.drawable.tt);
+            imageView.setImageResource(R.drawable.tt_green);
 
             //TODO; This has to be a bug in the Android SDk, the OnItemClick delegate expects an INT
             rowView.setId((int) tt.getId());
