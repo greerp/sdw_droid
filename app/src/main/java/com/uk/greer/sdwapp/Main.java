@@ -16,8 +16,6 @@
 
 package com.uk.greer.sdwapp;
 
-import android.app.ActionBar;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
@@ -28,14 +26,18 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.Menu;
 
 import com.google.samples.apps.iosched.ui.widget.SlidingTabLayout;
+import com.inqbarna.tablefixheaders.samples.FamilyTable;
 import com.octo.android.robospice.JacksonSpringAndroidSpiceService;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.SpiceRequest;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uk.greer.sdwapp.activity.completed.CompletedListFragment;
+import com.uk.greer.sdwapp.activity.standing.SeasonStanding;
+import com.uk.greer.sdwapp.activity.standing.SeasonStandingListFragment;
 import com.uk.greer.sdwapp.activity.upcoming.UpcomingListFragment;
 import com.uk.greer.sdwapp.activity.upcoming.UpcomingRefreshFragment;
 import com.uk.greer.sdwapp.service.CacheCoordinator;
@@ -80,6 +82,7 @@ public class Main extends FragmentActivity
             @Override
             public void onRequestSuccess(String o) {
                 CacheCoordinator.getInstance().setCacheStatus("events", true);
+                CacheCoordinator.getInstance().setCacheStatus("standings", true);
                 List<Fragment> fl = getSupportFragmentManager().getFragments();
                 for (Fragment f : fl) {
                     ((OnDataReady) f).Notify();
@@ -100,6 +103,12 @@ public class Main extends FragmentActivity
         super.onSaveInstanceState(outState);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        super.onCreateOptionsMenu(menu);
+        return true;
+    }
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -117,6 +126,7 @@ public class Main extends FragmentActivity
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(new AppSectionsPagerAdapter(getSupportFragmentManager()));
+
         SlidingTabLayout slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
         slidingTabLayout.setDistributeEvenly(true);
         slidingTabLayout.setViewPager(viewPager);
@@ -154,7 +164,7 @@ public class Main extends FragmentActivity
                 case 1:
                     return CompletedListFragment.newInstance(i, tabtitles[i]);
                 case 2:
-                    return UpcomingListFragment.newInstance(i,tabtitles[i]);
+                    return SeasonStandingListFragment.newInstance(i,tabtitles[i]);
                 default:
                     return null;
             }

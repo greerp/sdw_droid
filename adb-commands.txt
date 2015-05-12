@@ -1,0 +1,33 @@
+With emultaor running 
+
+
+To copy files onto emulator from PC
+-----------------------------------
+cd \dev\Android\sdk\platform-tools
+adb push C:\Users\greepau\AndroidStudioProjects\sdw_droid\courses.csv /data/data/com.uk.greer.sdwapp/sql/courses.csv
+adb push C:\Users\greepau\AndroidStudioProjects\sdw_droid\events.csv /data/data/com.uk.greer.sdwapp/sql/events.csv
+
+
+Import CSV into SQLite Table
+----------------------------
+adb -s emulator-5554 shell
+cd /data/data/com.uk.greer.sdwapp/databases
+sqlite3 sdw.db
+.mode csv
+.import /data/data/com.uk.greer.sdwapp/sql/courses.csv courses
+.import /data/data/com.uk.greer.sdwapp/sql/events.csv events
+
+
+CREATE VIEW v_timetrials as select events.id, events.eventdate, courses.name as coursename, courses.coursecode, courses.
+distance, events.name as eventname, coursenotes from events join courses on events.courseid=courses.id order by events.e
+ventdate;
+
+
+create view v_ttentries as select participants.id, participants.eventid, participants.userid, users.username, users.firstname, 
+users.lastname, participants.signondate, participants.signonmethod, participants.handicap 
+from participants join users on participants.userid=users.id;
+
+
+Export the Database from the emulator
+=====================================
+adb pull/data/data/com.uk.greer.sdwapp/databases/sdw.db c:\users\greepau\AndroidStudioProjects\sdw_droid\app\src\main\assets

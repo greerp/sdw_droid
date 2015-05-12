@@ -35,10 +35,11 @@ public class UpcomingListAdapter extends ArrayAdapter<TimeTrial> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
+
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.main_upcoming_listitem_fragment, parent, false);
-        TextView eventName = (TextView) rowView.findViewById(R.id.ttName);
+        TextView eventName = (TextView) rowView.findViewById(R.id.stdName);
         TextView eventCourse = (TextView) rowView.findViewById(R.id.ttCourse);
         TextView eventDate = (TextView) rowView.findViewById(R.id.ttDate);
         TextView eventNo = (TextView) rowView.findViewById(R.id.ttEventNo);

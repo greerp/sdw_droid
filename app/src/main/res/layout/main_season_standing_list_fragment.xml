@@ -1,0 +1,70 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" tools:context="com.uk.greer.sdwapp.activity.standing.SeasonStandingListFragment"
+    android:id="@+id/seasonStandingListLayout"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+<!-- TODO: Update blank fragment layout -->
+
+    <TableLayout
+        android:id="@+id/button_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+    >
+
+        <TableRow android:layout_height="wrap_content"
+            android:layout_width="fill_parent">
+            <Button android:text="Scratch"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5" />
+            <Button android:text="Handicap"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5" />
+        </TableRow>
+
+    </TableLayout>
+<!--
+    <ListView
+        android:id="@+id/standingListView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@id/button_bar"/>
+-->
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/frameLayout"
+        android:layout_above="@+id/button_bar">
+
+        <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/standingListView"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"/>
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/waitingProgressBar"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:layout_width="166dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/refreshing_data"
+            android:id="@+id/waitingMessage"
+            android:layout_gravity="bottom|center_horizontal"
+            android:gravity="center"
+            android:paddingBottom="20dp" />
+    </FrameLayout>
+
+
+
+
+</RelativeLayout>

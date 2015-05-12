@@ -15,7 +15,7 @@
 
 
     <TextView
-        android:id="@+id/ttName"
+        android:id="@+id/stdName"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -43,7 +43,7 @@
         android:textAlignment="textEnd"
         android:layout_gravity="end"
         android:layout_alignParentTop="true"
-        android:layout_alignBottom="@+id/ttName" />
+        android:layout_alignBottom="@+id/stdName" />
 
     <TextView
         android:id="@+id/ttDate"

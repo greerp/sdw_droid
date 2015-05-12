@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Table Fixed Headers</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="simple_adapter">Simple adapter</string>
+    <string name="style_adapter">Style adapter</string>
+    <string name="family_adapter">Family adapter</string>
+</resources>

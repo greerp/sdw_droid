@@ -37,8 +37,11 @@
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="no_tt_entries">No Entries Yet!</string>
-
+    <string name="title_activity_season_standing">SeasonStanding</string>
 
     <string name="hello_world">Hello world!</string>
+
+
+
 
 </resources>

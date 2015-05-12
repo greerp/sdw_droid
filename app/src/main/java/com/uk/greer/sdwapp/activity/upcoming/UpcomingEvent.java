@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.samples.apps.iosched.ui.widget.SlidingTabLayout;
+import com.inqbarna.tablefixheaders.samples.FamilyTable;
 import com.uk.greer.sdwapp.R;
 
 /**
@@ -92,7 +93,6 @@ public class UpcomingEvent extends ActionBarActivity {
 
                 case 1:
                     return EventEntriesFragment.newInstance(ttId);
-
 
                 default:
                     return EventPBsFragment.newInstance(ttId);

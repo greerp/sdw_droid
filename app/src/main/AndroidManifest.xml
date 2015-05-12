@@ -33,7 +33,6 @@
             android:label="@string/title_activity_main_activity2"
             android:launchMode="standard" >
         </activity>
-
         <activity
             android:name=".activity.upcoming.UpcomingEvent"
             android:label="@string/title_activity_upcoming_event"
@@ -43,8 +42,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Main" />
         </activity>
-
-
         <activity
             android:name=".activity.completed.CompletedEvent"
             android:label="@string/title_activity_completed_event"
@@ -54,7 +51,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Main" />
         </activity>
-
+        <activity
+            android:name=".activity.standing.SeasonStanding"
+            android:label="@string/title_activity_season_standing" >
+        </activity>
     </application>
 
 </manifest>

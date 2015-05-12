@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/sdw_droid.iml" filepath="$PROJECT_DIR$/sdw_droid.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tablefixheaders/tablefixheaders.iml" filepath="$PROJECT_DIR$/tablefixheaders/tablefixheaders.iml" />
     </modules>
   </component>
 </project>
