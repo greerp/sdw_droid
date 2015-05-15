@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.uk.greer.sdwapp.AppManager;
 import com.uk.greer.sdwapp.R;
-import com.uk.greer.sdwapp.domain.Participant;
+import com.uk.greer.sdwapp.domain.Entry;
 import com.uk.greer.sdwapp.service.TimeTrialEventService;
 import com.uk.greer.sdwapp.service.TimeTrialEventServiceFactory;
 import com.uk.greer.sdwapp.service.TimeTrialEventServiceNull;
@@ -62,7 +62,7 @@ public class EventEntriesFragment extends Fragment {
                 trialEventService = new TimeTrialEventServiceNull();
             }
 
-            List<Participant> entries = trialEventService.getEntries(ttId);
+            List<Entry> entries = trialEventService.getEntries(ttId);
 
             if (entries != null)
                 showEntries(v, entries);
@@ -74,7 +74,7 @@ public class EventEntriesFragment extends Fragment {
     }
 
 
-    private void showEntries(View v,  List<Participant> entries){
+    private void showEntries(View v,  List<Entry> entries){
         /****************** Display Entrees *********************/
         LayoutInflater inflater = (LayoutInflater) getActivity()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -83,7 +83,7 @@ public class EventEntriesFragment extends Fragment {
 
         if ( entries != null && entries.size()>0) {
             table.removeViewAt(0);
-            for (Participant entrant : entries) {
+            for (Entry entrant : entries) {
                 View rowView = inflater.inflate(R.layout.fragment_event_entree, null, false);
                 TextView userName = (TextView) rowView.findViewById(R.id.entreeUserName);
                 TextView date = (TextView) rowView.findViewById(R.id.entreeDate);

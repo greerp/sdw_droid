@@ -1,6 +1,7 @@
 package com.uk.greer.sdwapp.service;
 
-import com.uk.greer.sdwapp.domain.Participant;
+import com.uk.greer.sdwapp.domain.Entry;
+import com.uk.greer.sdwapp.domain.Standing;
 import com.uk.greer.sdwapp.domain.TimeTrial;
 
 import java.util.List;
@@ -21,9 +22,12 @@ public interface TimeTrialEventService {
     @GET("/gettt/{id}")
     TimeTrial getTimeTrial(long id);
 
-    @GET("/getentrees/{id}")
-    List<Participant> getEntries(long ttId);
+    @GET("/getentries/{id}")
+    List<Entry> getEntries(long ttId);
 
     int getEntryCount(long ttId);
+
+    @GET("/getstandings/{id}")
+    List<Standing> getStandings(long seriesId);
 
 }

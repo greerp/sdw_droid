@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Created by greepau on 18/02/2015.
  */
-public class Participant {
+public class Entry {
     private String userName;
     private String firstName;
     private String lastName;
@@ -14,9 +14,9 @@ public class Participant {
     private String signOnMethod;
     private int id;
 
-    public static Participant newInstance(int id, String userName, String firstName, String lastName,
+    public static Entry newInstance(int id, String userName, String firstName, String lastName,
                                         Date signUpDate ){
-        Participant p = new Participant();
+        Entry p = new Entry();
         p.setId(id);
         p.setFirstName(firstName);
         p.setLastName(lastName);

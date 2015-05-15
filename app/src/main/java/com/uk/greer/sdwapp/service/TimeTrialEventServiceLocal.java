@@ -1,6 +1,7 @@
 package com.uk.greer.sdwapp.service;
 
-import com.uk.greer.sdwapp.domain.Participant;
+import com.uk.greer.sdwapp.domain.Entry;
+import com.uk.greer.sdwapp.domain.Standing;
 import com.uk.greer.sdwapp.domain.TimeTrial;
 
 import java.util.ArrayList;
@@ -58,13 +59,18 @@ public class TimeTrialEventServiceLocal implements TimeTrialEventService {
     }
 
     @Override
-    public List<Participant> getEntries(long ttId) {
+    public List<Entry> getEntries(long ttId) {
         return null;
     }
 
     @Override
     public int getEntryCount(long ttId) {
         return 0;
+    }
+
+    @Override
+    public List<Standing> getStandings(long ttId) {
+        return null;
     }
 
 

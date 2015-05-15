@@ -9,13 +9,14 @@ import java.util.List;
 public class TimeTrial {
 
     private String name;
+    private Series series;
     private Date eventDate;
     private String course;
     private String eventType;
     private boolean onlineEntry;
     private String eventUrl;
     private int maxEntries;
-    private List<Participant> participants;
+    private List<Entry> entries;
     private Double distance;
     private long id;
     private int eventNo;
@@ -120,5 +121,13 @@ public class TimeTrial {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public Series getSeries() {
+        return series;
+    }
+
+    public void setSeries(Series series) {
+        this.series = series;
     }
 }
