@@ -1,8 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="?android:attr/listPreferredItemHeight"
-    android:padding="6dip" >
-
+    android:layout_height="fill_parent"
+    android:padding="6dp">
+<!--
     <ImageView
         android:id="@+id/icon"
         android:layout_width="wrap_content"
@@ -12,46 +12,50 @@
         android:layout_marginRight="6dip"
         android:contentDescription="TODO"
         android:src="@drawable/tt" />
+-->
+    <!--android:layout_toRightOf="@id/icon"-->
 
-        <LinearLayout
-            android:id="@+id/stdDetailTop"
-            android:layout_toRightOf="@id/icon"
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
+    <LinearLayout
+        android:id="@+id/stdDetailTop"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp">
 
-            <TextView
-                android:id="@+id/stdName"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:gravity="center_vertical"
-                android:text="Paul Greer"
-                android:layout_width="0dp"
-                android:layout_weight="7"
-                android:singleLine="true"
-                android:textSize="18sp"
-                android:ellipsize="end"/>
+        <TextView
+            android:id="@+id/stdName"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:gravity="center_vertical"
+            android:text="Paul Greer"
+            android:layout_width="0dp"
+            android:layout_weight="7"
+            android:singleLine="true"
+            android:ellipsize="end"/>
 
-            <TextView
-                android:id="@+id/stdScratchPts"
-                android:layout_width="0dp"
-                android:layout_weight="2"
-                android:layout_height="wrap_content"
-                android:text="24"
-                android:textSize="18sp"
-                android:layout_alignParentTop="true"
-                />
-            <TextView
-                android:id="@+id/stdHandicapPts"
-                android:layout_width="0dp"
-                android:layout_weight="2"
-                android:layout_height="wrap_content"
-                android:text="19"
-                android:textSize="18sp"
-                android:layout_alignParentTop="true"
-                 />
-        </LinearLayout>
-
+        <TextView
+            android:id="@+id/stdScratchPts"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:text="XXX"
+            android:textAlignment="textEnd"
+            android:layout_alignParentTop="true"
+            android:gravity="right"
+            android:layout_marginRight="10dp" />
+        <TextView
+            android:id="@+id/stdHandicapPts"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:textAlignment="textEnd"
+            android:text="XXX"
+            android:layout_alignParentTop="true"
+            android:gravity="right"
+            android:layout_marginRight="10dp" />
+    </LinearLayout>
+<!--
     <LinearLayout
         android:id="@+id/stdDetailBottom"
         android:layout_toRightOf="@id/icon"
@@ -101,7 +105,7 @@
             />
 
     </LinearLayout>
-
+-->
 
 
 

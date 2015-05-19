@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Created by greepau on 14/05/2015.
  */
-public class Series {
+public class Series implements DomainObject {
 
     private int id;
     private String name;
@@ -23,6 +23,16 @@ public class Series {
         return series;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if ( o instanceof Integer ){
+            int i = (Integer)o;
+            if ( this.id==i){
+                return true;
+            }
+        }
+        return super.equals(o);
+    }
 
     public int getId() {
         return id;

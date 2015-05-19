@@ -11,6 +11,7 @@ foreach ( $f in $files){
     $pathPart = $f.DirectoryName.Split("\\")[-1];
 
     $destination = "$destPath\$pathPart"
+    Write-Host "Attempting to copy $f to $destination"
     if ( Test-Path -Path $destination ){
         Copy-Item $f $destination
     }

@@ -44,6 +44,11 @@ create table entries(
     scrpts INT,
     hcppts INT);
 
+ create index coursesidx1 on courses(id);
+ create index eventsidx1 on events(id);
+ create index usersidx1 on users(id);	
+ create index entriesidx1 on entries(id);	
+	
 
 CREATE VIEW v_timetrials as select events.id, events.eventdate, 
 				courses.name as coursename, courses.coursecode, courses.distance, 
@@ -70,9 +75,3 @@ CREATE VIEW v_ttstandings as
 		where entries.status in ('FIN','DNS','DNF') 
 		group by entries.userid, users.username, users.firstname,users.lastname,events.seriesid;
 
-
-
-
-
-
-				

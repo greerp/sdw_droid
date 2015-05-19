@@ -3,14 +3,14 @@ package com.uk.greer.sdwapp.domain;
 /**
  * Created by greepau on 13/05/2015.
  */
-public class Standing {
+public class Standing implements DomainObject{
 
     private long userId;
     private String userName;
     private String firstName;
     private String lastName;
-    private long scrpts;
-    private long hcppts;
+    private int scrpts;
+    private int hcppts;
     private int entered;
     private int fin;
     private int dnf;
@@ -19,7 +19,7 @@ public class Standing {
 
 
     public static Standing newInstance(long userId, String userName, String firstName, String lastName,
-                                    long scrpts, long hcppts, int entered, int fin, int dnf, int dns, Series series ){
+                                    int scrpts, int hcppts, int entered, int fin, int dnf, int dns, Series series ){
 
         Standing standing = new Standing();
         standing.setUserName(userName);
@@ -69,19 +69,19 @@ public class Standing {
         this.lastName = lastName;
     }
 
-    public long getScrpts() {
+    public int getScrpts() {
         return scrpts;
     }
 
-    public void setScrpts(long scrpts) {
+    public void setScrpts(int scrpts) {
         this.scrpts = scrpts;
     }
 
-    public long getHcppts() {
+    public int getHcppts() {
         return hcppts;
     }
 
-    public void setHcppts(long hcppts) {
+    public void setHcppts(int hcppts) {
         this.hcppts = hcppts;
     }
 
@@ -124,5 +124,10 @@ public class Standing {
 
     public void setSeries(Series series) {
         this.series = series;
+    }
+
+    @Override
+    public int getId() {
+        return 0;
     }
 }

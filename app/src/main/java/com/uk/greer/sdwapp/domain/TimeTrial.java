@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by greepau on 18/02/2015.
  */
-public class TimeTrial {
+public class TimeTrial implements DomainObject{
 
     private String name;
     private Series series;
@@ -18,7 +18,7 @@ public class TimeTrial {
     private int maxEntries;
     private List<Entry> entries;
     private Double distance;
-    private long id;
+    private int id;
     private int eventNo;
     private String notes;
 
@@ -99,11 +99,11 @@ public class TimeTrial {
         this.distance = distance;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

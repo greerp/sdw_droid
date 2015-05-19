@@ -40,8 +40,9 @@
     <string name="title_activity_season_standing">SeasonStanding</string>
 
     <string name="hello_world">Hello world!</string>
-
-
+    <string name="std_scratch_button">Scr</string>
+    <string name="std_name_button">Name</string>
+    <string name="std_handicap_button">Hcp</string>
 
 
 </resources>

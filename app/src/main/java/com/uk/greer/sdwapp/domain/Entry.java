@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Created by greepau on 18/02/2015.
  */
-public class Entry {
+public class Entry implements DomainObject {
     private String userName;
     private String firstName;
     private String lastName;

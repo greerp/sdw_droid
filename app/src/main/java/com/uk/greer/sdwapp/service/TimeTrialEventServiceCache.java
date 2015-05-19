@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
 import com.uk.greer.sdwapp.AppManager;
+import com.uk.greer.sdwapp.domain.DataAccess;
 import com.uk.greer.sdwapp.domain.Entry;
 import com.uk.greer.sdwapp.domain.Series;
 import com.uk.greer.sdwapp.domain.Standing;
@@ -134,8 +135,8 @@ public class TimeTrialEventServiceCache implements TimeTrialEventService {
         DataSetService ds = new DataSetService<Series>("series", Series_Fields, null, null, null, null, "id") {
             @Override
             void addDataItem(Cursor s, List<Series> list) {
-                    list.add(s.getInt(0), Series.newInstance(s.getInt(0), s.getString(1),
-                            convertSqlStrToDate(s.getString(3)), convertSqlStrToDate(s.getString(3))));
+                list.add(Series.newInstance(s.getInt(0), s.getString(1),
+                         convertSqlStrToDate(s.getString(3)), convertSqlStrToDate(s.getString(3))));
             }
         };
         List series = ds.execute();
@@ -143,19 +144,24 @@ public class TimeTrialEventServiceCache implements TimeTrialEventService {
     }
 
     @Override
-    public List<Standing> getStandings(long seriesId) {
+    public List<Standing> getStandings(final long seriesId) {
         final List<Series>seriesList = getSeries();
         DataSetService ds = new DataSetService<Standing>("v_ttstandings", Standing_fields,"seriesid=?",
                 new String[]{String.valueOf(seriesId)},null,null,"scrpts") {
             @Override
             void addDataItem(Cursor s, List<Standing> list) {
 
-                Series series=seriesList.get(s.getInt(0));
-                Standing standing =
-                        Standing.newInstance(s.getInt(0), s.getString(1), s.getString(2), s.getString(3),
-                                             s.getLong(4),s.getLong(5),s.getInt(6),s.getInt(7), s.getInt(8),
-                                             s.getInt(9), series );
-                list.add(standing);
+                try {
+                    Series series = DataAccess.findById(s.getInt(10), seriesList);
+                    Standing standing =
+                            Standing.newInstance(s.getInt(0), s.getString(1), s.getString(2), s.getString(3),
+                                    s.getInt(4), s.getInt(5), s.getInt(6), s.getInt(7), s.getInt(8),
+                                    s.getInt(9), series);
+                    list.add(standing);
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
             }
         };
         List<Standing> series = ds.execute();
@@ -254,8 +260,10 @@ public class TimeTrialEventServiceCache implements TimeTrialEventService {
                 s = readOnlyDb.query(table, fields, selection, selectionArgs, groupBy, having, orderBy);
 
                 if (s.getCount() > 0) {
+                    s.moveToFirst();
                     do {
                         addDataItem(s, series);
+                        s.moveToNext();
                     } while (!s.isAfterLast());
                 }
             }

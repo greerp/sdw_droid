@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.uk.greer.sdwapp.R;
+import com.uk.greer.sdwapp.domain.Standing;
 import com.uk.greer.sdwapp.domain.TimeTrial;
 
 import java.text.SimpleDateFormat;
@@ -17,19 +18,15 @@ import java.util.List;
 /**
  * Shows the individual List Items - Referenced in UpcomingListFragment
  */
-public class SeasonStandingListAdapter extends ArrayAdapter<TimeTrial> {
+public class SeasonStandingListAdapter extends ArrayAdapter<Standing> {
     private final Context context;
-    private final List<TimeTrial> timeTrialList;
-    private final SimpleDateFormat dateFormat;
+    private final List<Standing> standingsList;
 
-    static String DATE_FORMAT="EEE d-MMM-yyyy HH:mm";
+    public SeasonStandingListAdapter(Context context, List<Standing> standingList) {
 
-    public SeasonStandingListAdapter(Context context, List<TimeTrial> timeTrialList) {
-
-        super(context, R.layout.main_season_standing_listitem_fragment, timeTrialList);
+        super(context, R.layout.main_season_standing_listitem_fragment, standingList);
         this.context = context;
-        this.timeTrialList = timeTrialList;
-        this.dateFormat = new SimpleDateFormat(DATE_FORMAT);
+        this.standingsList = standingList;
     }
 
     @Override
@@ -38,26 +35,30 @@ public class SeasonStandingListAdapter extends ArrayAdapter<TimeTrial> {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.main_season_standing_listitem_fragment, parent, false);
-        TextView eventName = (TextView) rowView.findViewById(R.id.stdName);
-        TextView eventCourse = (TextView) rowView.findViewById(R.id.ttCourse);
-        TextView eventDate = (TextView) rowView.findViewById(R.id.ttDate);
-        TextView eventNo = (TextView) rowView.findViewById(R.id.ttEventNo);
-        ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
 
-        TimeTrial tt = timeTrialList.get(position);
-        if ( tt!=null ) {
-            eventName.setText(tt.getName());
-            eventCourse.setText(tt.getCourse());
-            if (tt.getEventDate() != null)
-                eventDate.setText(dateFormat.format(tt.getEventDate()));
-            else
-                eventDate.setText("");
+        Standing std = standingsList.get(position);
+        if ( std!=null ) {
+            TextView stdName = (TextView) rowView.findViewById(R.id.stdName);
+            TextView stdHCap = (TextView) rowView.findViewById(R.id.stdHandicapPts);
+            TextView stdScr = (TextView) rowView.findViewById(R.id.stdScratchPts);
+//            TextView stdDnf = (TextView) rowView.findViewById(R.id.stdDnf);
+//            TextView stdEnt = (TextView) rowView.findViewById(R.id.stdEntered);
+//            TextView stdDns = (TextView) rowView.findViewById(R.id.stdDns);
+//            TextView stdFin = (TextView) rowView.findViewById(R.id.stdFinished);
+//            ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
 
-            eventNo.setText(String.valueOf(tt.getEventNo()));
-            imageView.setImageResource(R.drawable.tt_green);
+//            imageView.setImageResource(R.drawable.ic_action_user);
+            rowView.setId((int) std.getUserId());
 
-            //TODO; This has to be a bug in the Android SDk, the OnItemClick delegate expects an INT
-            rowView.setId((int) tt.getId());
+            stdName.setText(std.getFirstName() + " " + std.getLastName());
+//            stdScr.setText( "Scr:"+String.valueOf(std.getScrpts()));
+//            stdHCap.setText("Hcp:"+String.valueOf(std.getHcppts()));
+            stdScr.setText( String.valueOf(std.getScrpts()));
+            stdHCap.setText(String.valueOf(std.getHcppts()));
+//            stdEnt.setText("Ent:"+String.valueOf(std.getEntered()));
+//            stdFin.setText("Fin:"+String.valueOf(std.getFin()));
+//            stdDns.setText("Dns:"+String.valueOf(std.getDns()));
+//            stdDnf.setText("Dnf:"+String.valueOf(std.getDnf()));
         }
         return rowView;
     }
