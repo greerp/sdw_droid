@@ -1,16 +1,17 @@
 package com.uk.greer.sdwapp.activity.standing;
 
-import android.app.FragmentManager;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.view.View;
 
 import com.inqbarna.tablefixheaders.samples.FamilyTable;
+import com.inqbarna.tablefixheaders.samples.SimpleTable;
+import com.inqbarna.tablefixheaders.samples.StyleTable;
 import com.uk.greer.sdwapp.R;
 
 public class SeasonStanding extends ActionBarActivity {
@@ -21,7 +22,8 @@ public class SeasonStanding extends ActionBarActivity {
                 {"Paul Greer","23:45","23:27","12-Sep"}
         };
 
-        return FamilyTable.newInstance(data);
+        return SimpleTable.newInstance(data);
+        //return FamilyTable.newInstance(data);
     }
 
 
@@ -30,20 +32,10 @@ public class SeasonStanding extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.season_standing);
-
-//        RelativeLayout viewPager = (RelativeLayout) findViewById(R.id.standings_container);
-//
-//        LinearLayout fragmentsLayout = (LinearLayout) findViewById(R.id.standings_container);
-//        FragmentManager fragMan = getFragmentManager();
-//        FragmentTransaction fragTransaction = fragMan.beginTransaction();
-
-//        Fragment myFrag= new ImageFragment();
-//        fragTransaction.add(R.id.foodItemActvity_linearLayout_fragments, myFrag , "fragment" + fragCount);
-//        fragTransaction.commit();
-
-
-
-        //standings_container
+        FragmentManager fragMan = getSupportFragmentManager();
+        FragmentTransaction fragTrx = fragMan.beginTransaction();
+        fragTrx.add(R.id.standings_container, newInstance());
+        fragTrx.commit();
 
     }
 

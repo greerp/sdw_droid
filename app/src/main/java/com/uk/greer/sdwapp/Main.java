@@ -164,7 +164,7 @@ public class Main extends FragmentActivity
                 case 1:
                     return CompletedListFragment.newInstance(i, tabtitles[i]);
                 case 2:
-                    return SeasonStandingListFragment.newInstance(i,tabtitles[i]);
+                    return SeasonStandingListFragment.newInstance(i,tabtitles[i],3);
                 default:
                     return null;
             }

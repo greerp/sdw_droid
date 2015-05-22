@@ -18,7 +18,7 @@ import android.widget.RelativeLayout;
 
 import com.uk.greer.sdwapp.OnDataReady;
 import com.uk.greer.sdwapp.R;
-import com.uk.greer.sdwapp.activity.completed.CompletedEvent;
+import com.uk.greer.sdwapp.config.BundleProperty;
 import com.uk.greer.sdwapp.domain.Standing;
 import com.uk.greer.sdwapp.service.CacheCoordinator;
 import com.uk.greer.sdwapp.service.TimeTrialEventService;
@@ -35,19 +35,18 @@ public class SeasonStandingListFragment extends Fragment implements OnDataReady 
 
     public static final String ARG_SECTION_NUMBER = "section_number";
 
-    private static final String ARG_PARAM1 = "tabPosition";
-    private static final String ARG_PARAM2 = "tabFunction";
-    private static final String TT_ID = "tt_id";
-    private int listItemselected;
     private SortColumn sortColumn = new SortColumn();
 
-    public static SeasonStandingListFragment newInstance(int tabPosition, String tabFunction) {
+    public static SeasonStandingListFragment newInstance(int tabPosition, String tabFunction, int season) {
+
+
 
         Log.i("INFO", "Creating newInstance of: " + tabFunction);
         SeasonStandingListFragment fragment = new SeasonStandingListFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_PARAM1, tabPosition);
-        args.putString(ARG_PARAM2, tabFunction);
+        args.putInt(BundleProperty.TAB_POSITION, tabPosition);
+        args.putString(BundleProperty.TAB_FUNCTION, tabFunction);
+        args.putInt(BundleProperty.SEASON_ID, season);
         fragment.setArguments(args);
         return fragment;
     }
@@ -88,29 +87,15 @@ public class SeasonStandingListFragment extends Fragment implements OnDataReady 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+
+
         RelativeLayout fl = (RelativeLayout) inflater.inflate(
                 R.layout.main_season_standing_list_fragment,
                 container,
                 false);
 
-        fl.findViewById(R.id.stdHeaderNameBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ClickListener(v);
-            }
-        });
-        fl.findViewById(R.id.stdHeaderScratchPtsBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ClickListener(v);
-            }
-        });
-        fl.findViewById(R.id.stdHeaderHandicapPtsBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ClickListener(v);
-            }
-        });
+        configureListeners(fl);
+
 
         // Specify that the Home/Up button should not be enabled, since there is no hierarchical parent.
         boolean dataReady = CacheCoordinator.getInstance().getCacheStatus("standings");
@@ -123,6 +108,57 @@ public class SeasonStandingListFragment extends Fragment implements OnDataReady 
         return fl;
     }
 
+    private void configureListeners(View parentView) {
+
+        Bundle args = this.getArguments();
+        final int season;
+        if (args!=null)
+            season = args.getInt(BundleProperty.SEASON_ID);
+        else {
+            Log.e("EXCEPTION", "Unable to get determine season in - " + getClass().getName());
+            season = 0;
+        }
+
+        parentView.findViewById(R.id.stdHeaderNameBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClickListener(v);
+            }
+        });
+        parentView.findViewById(R.id.stdHeaderScratchPtsBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClickListener(v);
+            }
+        });
+        parentView.findViewById(R.id.stdHeaderHandicapPtsBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ClickListener(v);
+            }
+        });
+
+        parentView.findViewById(R.id.stdScratchCompBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), SeasonStanding.class);
+                intent.putExtra(BundleProperty.TT_COMPETITION, "SCRATCH");
+                intent.putExtra(BundleProperty.TT_SEASON_ID, season);
+                getActivity().startActivity(intent);
+            }
+        });
+
+        parentView.findViewById(R.id.stdHandicapCompBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), SeasonStanding.class);
+                intent.putExtra(BundleProperty.TT_COMPETITION, "HANDICAP");
+                intent.putExtra(BundleProperty.TT_SEASON_ID, season);
+                getActivity().startActivity(intent);
+            }
+        });
+    }
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -132,7 +168,7 @@ public class SeasonStandingListFragment extends Fragment implements OnDataReady 
             listView = (ListView) getView().findViewById(R.id.standingListView);
             int position = listView.getFirstVisiblePosition();
             // Save the position o fthe first item so we know where to restore to
-            outState.putInt("POSITION", position);
+            outState.putInt(BundleProperty.POSITION, position);
         } catch (Exception x) {
             Log.i("ERROR", "Unable to find view and save position");
 
@@ -144,7 +180,7 @@ public class SeasonStandingListFragment extends Fragment implements OnDataReady 
         super.onViewStateRestored(savedInstanceState);
 
         if (savedInstanceState != null) {
-            int position = savedInstanceState.getInt("POSITION");
+            int position = savedInstanceState.getInt(BundleProperty.POSITION);
             ListView listView = (ListView) this.getView().findViewById(R.id.eventListView);
             if (position > 0) {
                 //listView.scrollListBy();
@@ -190,9 +226,9 @@ public class SeasonStandingListFragment extends Fragment implements OnDataReady 
         standingListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                listItemselected = position;
-                Intent intent = new Intent(getActivity(), CompletedEvent.class);
-                intent.putExtra(TT_ID, view.getId());
+
+                //TODO: Implement Individuals Season Results activity
+                Intent intent = new Intent(getActivity(), SeasonStanding.class);
                 getActivity().startActivity(intent);
             }
         });

@@ -1,13 +1,5 @@
 package com.inqbarna.tablefixheaders.samples;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.inqbarna.tablefixheaders.R;
-import com.inqbarna.tablefixheaders.TableFixHeaders;
-import com.inqbarna.tablefixheaders.adapters.BaseTableAdapter;
-
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,6 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.inqbarna.tablefixheaders.R;
+import com.inqbarna.tablefixheaders.TableFixHeaders;
+import com.inqbarna.tablefixheaders.adapters.BaseTableAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FamilyTable extends Fragment {
 

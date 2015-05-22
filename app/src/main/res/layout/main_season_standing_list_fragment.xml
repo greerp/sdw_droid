@@ -72,10 +72,14 @@
 
         <TableRow android:layout_height="wrap_content"
             android:layout_width="fill_parent">
-            <Button android:text="Scratch"
+            <Button
+                android:id="@+id/stdScratchCompBtn"
+                android:text="@string/std_scratch_comp_button"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5" />
-            <Button android:text="Handicap"
+            <Button
+                android:id="@+id/stdHandicapCompBtn"
+                android:text="@string/std_handicap_comp_button"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5" />
         </TableRow>
