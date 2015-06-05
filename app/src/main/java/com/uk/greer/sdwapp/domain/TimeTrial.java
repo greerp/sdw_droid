@@ -21,8 +21,11 @@ public class TimeTrial implements DomainObject{
     private int id;
     private int eventNo;
     private String notes;
+    private int seriesId;
 
-    public static TimeTrial newInstance(int id, int eventNo, String name, Date eventDate, String course, boolean onLineEntry, String notes){
+
+
+    public static TimeTrial newInstance(int id, int eventNo, String name, Date eventDate, String course, boolean onLineEntry, String notes, int seriesId){
         TimeTrial tt = new TimeTrial();
         tt.setId(id);
         tt.setEventNo(eventNo);
@@ -31,6 +34,7 @@ public class TimeTrial implements DomainObject{
         tt.setCourse(course);
         tt.setOnlineEntry(onLineEntry);
         tt.setNotes(notes);
+        tt.setSeriesId(seriesId);
         return tt;
     }
 
@@ -123,11 +127,14 @@ public class TimeTrial implements DomainObject{
         this.notes = notes;
     }
 
-    public Series getSeries() {
-        return series;
+    public int getSeriesId() {
+        return seriesId;
     }
 
-    public void setSeries(Series series) {
-        this.series = series;
+    public void setSeriesId(int seriesId) {
+        this.seriesId = seriesId;
     }
+
+
+
 }

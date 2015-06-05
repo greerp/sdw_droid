@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,17 +14,27 @@ import com.inqbarna.tablefixheaders.samples.FamilyTable;
 import com.inqbarna.tablefixheaders.samples.SimpleTable;
 import com.inqbarna.tablefixheaders.samples.StyleTable;
 import com.uk.greer.sdwapp.R;
+import com.uk.greer.sdwapp.service.TimeTrialEventService;
+import com.uk.greer.sdwapp.service.TimeTrialEventServiceFactory;
+import com.uk.greer.sdwapp.service.TimeTrialEventServiceNull;
+import com.uk.greer.sdwapp.service.TimeTrialStandingMatrix;
 
 public class SeasonStanding extends ActionBarActivity {
 
     public static Fragment newInstance() {
-        String data[][]={
-                {"Name","Last","PB","Date"},
-                {"Paul Greer","23:45","23:27","12-Sep"}
-        };
+        TimeTrialEventService trialEventService;
+
+        try {
+            trialEventService = TimeTrialEventServiceFactory.getInstance();
+        } catch (Exception e) {
+            Log.e("EXCEPTION", "Unable to create Time Trial Service, using default");
+            trialEventService = new TimeTrialEventServiceNull();
+        }
+
+        TimeTrialStandingMatrix ttMatrixService = new TimeTrialStandingMatrix(trialEventService);
+        String[][] data = ttMatrixService.createMatrixForHandicapCompetition(3, 10);
 
         return SimpleTable.newInstance(data);
-        //return FamilyTable.newInstance(data);
     }
 
 

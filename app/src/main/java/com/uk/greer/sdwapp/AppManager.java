@@ -1,7 +1,9 @@
 package com.uk.greer.sdwapp;
 
+import android.app.AlertDialog;
 import android.app.Application;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.drawable.Drawable;
@@ -50,6 +52,19 @@ public class AppManager extends Application {
         return defaultValue;
     }
 
+
+    public static void ShowMessageBox(String message){
+        new AlertDialog.Builder(ctx)
+                .setTitle(R.string.app_name)
+                .setMessage(message)
+                .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // continue with delete
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
 
 
     @Override

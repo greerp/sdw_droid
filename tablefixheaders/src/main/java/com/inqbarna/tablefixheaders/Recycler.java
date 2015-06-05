@@ -37,7 +37,7 @@ public class Recycler {
 	 *            the type of the view.
 	 */
 	public void addRecycledView(View view, int type) {
-		views[type].push(view);
+		views[type-1].push(view);
 	}
 
 	/**
@@ -50,7 +50,7 @@ public class Recycler {
 	 */
 	public View getRecycledView(int typeView) {
 		try {
-			return views[typeView].pop();
+			return views[typeView-1].pop();
 		} catch (java.util.EmptyStackException e) {
 			return null;
 

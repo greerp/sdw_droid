@@ -68,6 +68,7 @@ public class Main extends FragmentActivity
 
     private void performRequest() {
 
+        Log.i(getLocalClassName(),"Creating listener");
         spiceManager.execute(new SpiceRequest<String>(String.class) {
             @Override
             public String loadDataFromNetwork() throws Exception {
@@ -84,6 +85,7 @@ public class Main extends FragmentActivity
                 CacheCoordinator.getInstance().setCacheStatus("events", true);
                 CacheCoordinator.getInstance().setCacheStatus("standings", true);
                 List<Fragment> fl = getSupportFragmentManager().getFragments();
+                Log.i(getLocalClassName(), "Notifying fragments");
                 for (Fragment f : fl) {
                     ((OnDataReady) f).Notify();
                 }

@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 
+import com.uk.greer.sdwapp.AppManager;
 import com.uk.greer.sdwapp.OnDataReady;
 import com.uk.greer.sdwapp.R;
 import com.uk.greer.sdwapp.domain.TimeTrial;
@@ -154,8 +155,13 @@ public class UpcomingListFragment extends Fragment implements OnDataReady {
         boolean dataReady = CacheCoordinator.getInstance().getCacheStatus("events");
         if ( dataReady) {
             FrameLayout fl = (FrameLayout) this.getView();
-            showListControl(fl);
-            showList(fl);
+            if ( fl==null){
+                AppManager.ShowMessageBox("Null layout.. cannot continue!");
+            }
+            else {
+                showListControl(fl);
+                showList(fl);
+            }
         }
     }
 }

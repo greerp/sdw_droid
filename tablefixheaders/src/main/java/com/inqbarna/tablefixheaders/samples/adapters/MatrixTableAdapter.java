@@ -16,9 +16,9 @@ import android.widget.TextView;
 public class MatrixTableAdapter<T> extends BaseTableAdapter {
 
 	private final static int NAMWIDTH_DIP = 110;
-	private final static int WIDTH_DIP = 20;
+	private final static int WIDTH_DIP = 32;
 	private final static int HEIGHT_DIP = 32;
-	private final static int HDRHEIGHT_DIP = 70;
+	private final static int HDRHEIGHT_DIP = 100;
 
 	private final Context context;
 	private final int hdrHeight;
@@ -67,17 +67,31 @@ public class MatrixTableAdapter<T> extends BaseTableAdapter {
 
 	@Override
 	public View getView(int row, int column, View convertView, ViewGroup parent) {
-		if (convertView == null) {
-			if ( row==-1 && column > -1){
-				convertView = inflater.inflate(R.layout.vertical_text_view, parent, false);
-				//convertView = new VerticalTextView(context,null, R.attr.BottomToTopStyle);
-			}
-			else {
-				convertView = new TextView(context);
-				((TextView) convertView).setGravity(Gravity.CENTER_VERTICAL);
-			}
+
+        if (convertView == null) {
+            switch (getItemViewType(row, column)) {
+                case 1:
+                    convertView = inflater.inflate(R.layout.text_view_1, parent, false);
+                    break;
+                case 2:
+                    convertView = inflater.inflate(R.layout.vertical_text_view, parent, false);
+                    break;
+                case 3:
+                    convertView = inflater.inflate(R.layout.text_view_3, parent, false);
+                    break;
+                case 4:
+                    convertView = inflater.inflate(R.layout.text_view_4, parent, false);
+                    break;
+            }
+        }
+
+		T t = table[row + 1][column + 1];
+		if (t==null){
+			((TextView) convertView).setText("");
 		}
-		((TextView) convertView).setText(table[row + 1][column + 1].toString());
+		else{
+			((TextView) convertView).setText(t.toString());
+		}
 		return convertView;
 	}
 
@@ -99,14 +113,25 @@ public class MatrixTableAdapter<T> extends BaseTableAdapter {
 
 	@Override
 	public int getItemViewType(int row, int column) {
-		if ( row==-1 && column > -1)
-			return 1;
-		else
-			return 0;
+
+        // View Table Sectons
+        // -----
+        // |1|2|
+        // |4|3|
+        // -----
+
+        if ( row==-1 & column==-1)
+            return 1;
+		else if ( row==-1 && column > -1)
+			return 2;
+        else if ( row>=0 && column >=0)
+			return 3;
+        else
+            return 4;
 	}
 
 	@Override
 	public int getViewTypeCount() {
-		return 2;
+		return 4;
 	}
 }

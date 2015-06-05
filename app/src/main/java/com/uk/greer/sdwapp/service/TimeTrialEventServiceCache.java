@@ -9,6 +9,7 @@ import android.util.Log;
 import com.uk.greer.sdwapp.AppManager;
 import com.uk.greer.sdwapp.domain.DataAccess;
 import com.uk.greer.sdwapp.domain.Entry;
+import com.uk.greer.sdwapp.domain.Result;
 import com.uk.greer.sdwapp.domain.Series;
 import com.uk.greer.sdwapp.domain.Standing;
 import com.uk.greer.sdwapp.domain.TimeTrial;
@@ -18,6 +19,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import retrofit.http.GET;
 
 /**
  * Created by greepau on 17/03/2015.
@@ -32,6 +35,23 @@ public class TimeTrialEventServiceCache implements TimeTrialEventService {
             "userid", "username","firstname", "lastname", "scrpts","hcppts","entered","fin","dns","dnf","seriesid"};
 
 
+    private final String Standing_Query="select entries.userid, users.username, users.firstname,users.lastname, events.seriesid," +
+            "count(*) as entered," +
+            "sum(scrpts) as totscrpts," +
+            "(select sum(e1.hcppts) from entries e1 where e1.userid=users.id and e1.id in (select e2.id from entries e2, events v1 where e2.eventid=v1.id and v1.seriesid=events.seriesid and e2.userid=e1.userid and hcppts<>'' order by hcppts desc limit ?)) as besthcppts," +
+            "sum(hcppts) as hcppts," +
+            "(select sum(e1.scrpts) from entries e1 where e1.userid=users.id and e1.id in (select e2.id from entries e2, events v1 where e2.eventid=v1.id and v1.seriesid=events.seriesid and e2.userid=e1.userid and scrpts<>'' order by scrpts desc limit ?)) as bestscrpts," +
+            "(select count(*) from entries e2 where e2.userid=entries.userid and status='DNS') as dns," +
+            "(select count(*) from entries e2 where e2.userid=entries.userid and status='FIN') as fin, " +
+            "(select count(*) from entries e2 where e2.userid=entries.userid and status='DNF') as dnf " +
+            "from entries " +
+            "join users on entries.userid=users.id " +
+            "join events on entries.eventid=events.id " +
+            "where entries.status in ('FIN','DNS','DNF') and events.seriesid=? " +
+            "group by entries.userid, users.username, users.firstname,users.lastname,events.seriesid";
+
+
+
     public TimeTrialEventServiceCache(Context context) {
         String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
         this.dateFormat = new SimpleDateFormat(DATE_FORMAT);
@@ -41,6 +61,30 @@ public class TimeTrialEventServiceCache implements TimeTrialEventService {
     private SQLiteDatabase getReadableDatabase() {
         return ((AppManager) context.getApplicationContext()).getLocalDataStore().getReadableDatabase();
     }
+
+
+    public List<TimeTrial> getSeriesEvents(long seriesId){
+        return getTimeTrialList(
+                "seriesid = ?", new String[]{String.valueOf(seriesId)}, "eventdate");
+    }
+
+    @Override
+    public List<Result> getSeriesResults(long seriesId) {
+        final String[] fields = new String[]{
+                "id", "eventid", "userid", "scrpts", "hcppts", "status", "time", "eventname", "seriesid",
+                "eventdate", "countsforpb", "eventoutcome"};
+
+        DataSetService ds = new DataSetService<Result>("v_results", fields, "seriesid=? and status in ('DNF','FIN','DNS')",
+                new String[]{String.valueOf(seriesId)}, null, null, null) {
+            @Override
+            void addDataItem(Cursor s, List<Result> list) {
+                list.add(Result.newInstance(s.getInt(0), s.getInt(1), s.getInt(2), s.getInt(3), s.getInt(4), s.getString(5), s.getInt(6)));
+            }
+        };
+        List series = ds.execute();
+        return series;
+    }
+
 
     public List<TimeTrial> getUpcomingEvents() {
 
@@ -143,20 +187,40 @@ public class TimeTrialEventServiceCache implements TimeTrialEventService {
         return series;
     }
 
+
     @Override
-    public List<Standing> getStandings(final long seriesId) {
+    public List<Standing> getStandings(final long seriesId, final int bestHCapCount, final int bestScrCount ) {
+
+        /*
+        0-userid,
+        1-username
+        2-firstname
+        3-lastname
+        4-seriesid
+        5-entered
+        6-totscrppts
+        7-besthcappts
+        8-tothcappts
+        9-bestscrpts
+        10-dns
+        11-fin
+        12-dnf
+        */
+
+
         final List<Series>seriesList = getSeries();
-        DataSetService ds = new DataSetService<Standing>("v_ttstandings", Standing_fields,"seriesid=?",
-                new String[]{String.valueOf(seriesId)},null,null,"scrpts") {
+        RawDataSetService ds = new RawDataSetService<Standing>(Standing_Query,
+                new String[]{String.valueOf(bestHCapCount),
+                        String.valueOf(bestScrCount),
+                        String.valueOf(seriesId)}) {
             @Override
             void addDataItem(Cursor s, List<Standing> list) {
-
                 try {
-                    Series series = DataAccess.findById(s.getInt(10), seriesList);
+                    Series series = DataAccess.findById(s.getInt(4), seriesList);
                     Standing standing =
                             Standing.newInstance(s.getInt(0), s.getString(1), s.getString(2), s.getString(3),
-                                    s.getInt(4), s.getInt(5), s.getInt(6), s.getInt(7), s.getInt(8),
-                                    s.getInt(9), series);
+                                    s.getInt(9), s.getInt(7), s.getInt(5), s.getInt(11), s.getInt(12),
+                                    s.getInt(10), series, s.getInt(6), s.getInt(8));
                     list.add(standing);
                 }
                 catch (Exception e){
@@ -168,7 +232,6 @@ public class TimeTrialEventServiceCache implements TimeTrialEventService {
         return series;
     }
 
-
     private List<TimeTrial> getTimeTrialList(String where, String[] selectionArgs, String orderBy) {
         List<TimeTrial> ttList = new ArrayList<>();
         SQLiteDatabase readOnlyDb = null;
@@ -177,7 +240,7 @@ public class TimeTrialEventServiceCache implements TimeTrialEventService {
             readOnlyDb = getReadableDatabase();
 
             String[] fields = new String[]{
-                    "id", "eventdate", "coursename", "coursecode", "distance", "eventname","coursenotes"};
+                    "id", "eventdate", "coursename", "coursecode", "distance", "eventname","coursenotes", "seriesid"};
 
             s = readOnlyDb.query("v_timetrials", fields, where, selectionArgs, null, null, orderBy);
 
@@ -194,15 +257,13 @@ public class TimeTrialEventServiceCache implements TimeTrialEventService {
                     } catch (ParseException e) {
                         Log.e("EXCEPTION","Unable to parse date:"+ s.getString(1));
                     }
-
                     TimeTrial tt;
-
                     if (s.getString(5) == null | s.getString(5).isEmpty())
-                        tt = TimeTrial.newInstance( s.getInt(0), ++eventNo, s.getString(2), eventDate, s.getString(3), true, s.getString(6));
+                        tt = TimeTrial.newInstance( s.getInt(0), ++eventNo, s.getString(2), eventDate, s.getString(3), true, s.getString(6), s.getInt(7));
                     else
-                        tt = TimeTrial.newInstance( s.getInt(0), ++eventNo, s.getString(5), eventDate, s.getString(3), true, s.getString(6));
-
+                        tt = TimeTrial.newInstance( s.getInt(0), ++eventNo, s.getString(5), eventDate, s.getString(3), true, s.getString(6), s.getInt(7));
                     ttList.add(tt);
+
                     s.moveToNext();
                 } while (!s.isAfterLast());
             }
@@ -276,6 +337,47 @@ public class TimeTrialEventServiceCache implements TimeTrialEventService {
             return series;
         }
     }
+
+
+    private abstract class RawDataSetService<T> {
+
+        private String rawQuery;
+        private final String[] selectionArgs;
+
+        public RawDataSetService(String rawQuery, String[] selectionArgs){
+            this.rawQuery=rawQuery;
+            this.selectionArgs = selectionArgs;
+        }
+
+        abstract void addDataItem(Cursor s, List<T> list);
+
+        private List<T> execute() {
+            List<T> series = new ArrayList<T>();
+            SQLiteDatabase readOnlyDb = null;
+            Cursor s = null;
+
+            try {
+                readOnlyDb = getReadableDatabase();
+                s = readOnlyDb.rawQuery(rawQuery, selectionArgs);
+
+                if (s.getCount() > 0) {
+                    s.moveToFirst();
+                    do {
+                        addDataItem(s, series);
+                        s.moveToNext();
+                    } while (!s.isAfterLast());
+                }
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            } finally {
+                closeCursor(s);
+                closeDB(readOnlyDb);
+            }
+            return series;
+        }
+    }
+
 
 
 

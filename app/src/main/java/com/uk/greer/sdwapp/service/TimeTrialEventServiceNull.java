@@ -1,6 +1,7 @@
 package com.uk.greer.sdwapp.service;
 
 import com.uk.greer.sdwapp.domain.Entry;
+import com.uk.greer.sdwapp.domain.Result;
 import com.uk.greer.sdwapp.domain.Standing;
 import com.uk.greer.sdwapp.domain.TimeTrial;
 
@@ -57,7 +58,18 @@ public class TimeTrialEventServiceNull implements TimeTrialEventService {
     }
 
     @Override
-    public List<Standing> getStandings(long ttId) {
+    public List<Standing> getStandings(long seriesId, int bestHCapCount, int bestScrCount) {
         return null;
     }
+
+    @Override
+    public List<TimeTrial> getSeriesEvents(long seriesId) {
+        return null;
+    }
+
+    @Override
+    public List<Result> getSeriesResults(long seriesId) {
+        return null;
+    }
+
 }

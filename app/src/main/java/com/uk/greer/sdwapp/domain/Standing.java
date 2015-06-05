@@ -5,7 +5,9 @@ package com.uk.greer.sdwapp.domain;
  */
 public class Standing implements DomainObject{
 
-    private long userId;
+    private int totScrPts;
+    private int totHcpPts;
+    private int userId;
     private String userName;
     private String firstName;
     private String lastName;
@@ -18,9 +20,8 @@ public class Standing implements DomainObject{
     private Series series;
 
 
-    public static Standing newInstance(long userId, String userName, String firstName, String lastName,
-                                    int scrpts, int hcppts, int entered, int fin, int dnf, int dns, Series series ){
-
+    public static Standing newInstance(int userId, String userName, String firstName, String lastName,
+                                    int scrpts, int hcppts, int entered, int fin, int dnf, int dns, Series series, int totScrPts, int totHcpPts ){
         Standing standing = new Standing();
         standing.setUserName(userName);
         standing.setLastName(lastName);
@@ -33,15 +34,33 @@ public class Standing implements DomainObject{
         standing.setScrpts(scrpts);
         standing.setUserId(userId);
         standing.setSeries(series);
+        standing.setTotHcpPts(totHcpPts);
+        standing.setTotScrPts(totScrPts);
         return standing;
     }
 
+    public int getTotScrPts() {
+        return totScrPts;
+    }
 
-    public long getUserId() {
+    public void setTotScrPts(int totScrPts) {
+        this.totScrPts = totScrPts;
+    }
+
+    public int getTotHcpPts() {
+        return totHcpPts;
+    }
+
+    public void setTotHcpPts(int totHcpPts) {
+        this.totHcpPts = totHcpPts;
+    }
+
+
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 

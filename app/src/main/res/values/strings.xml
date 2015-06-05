@@ -12,7 +12,7 @@
 
     ************************************************************-->
 
-    <string name="app_name">My Application</string>
+    <string name="app_name">SDW Club App</string>
     <string name="action_settings">Settings</string>
 
     <string name="title_activity_splash_screen">SDW</string>
@@ -48,5 +48,12 @@
     <string name="std_scratch_comp_button">Scratch</string>
     <string name="std_handicap_comp_button">Handicap</string>
 
+
+
+    <string name="stdtable_dateprefix">dd/MM-</string>
+    <string name="stdtable_participant_heading">Name</string>
+    <string name="stdtable_entrycount_heading">Entered</string>
+    <string name="stdtable_best_heading">Best 10 Pts</string>
+    <string name="stdtable_total_heading">Total Pts</string>
 
 </resources>

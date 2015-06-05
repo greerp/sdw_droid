@@ -16,6 +16,7 @@ import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
+import com.uk.greer.sdwapp.AppManager;
 import com.uk.greer.sdwapp.OnDataReady;
 import com.uk.greer.sdwapp.R;
 import com.uk.greer.sdwapp.config.BundleProperty;
@@ -86,16 +87,12 @@ public class SeasonStandingListFragment extends Fragment implements OnDataReady 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
-
         RelativeLayout fl = (RelativeLayout) inflater.inflate(
                 R.layout.main_season_standing_list_fragment,
                 container,
                 false);
 
         configureListeners(fl);
-
 
         // Specify that the Home/Up button should not be enabled, since there is no hierarchical parent.
         boolean dataReady = CacheCoordinator.getInstance().getCacheStatus("standings");
@@ -211,7 +208,8 @@ public class SeasonStandingListFragment extends Fragment implements OnDataReady 
         }
 
         Bundle args = this.getArguments();
-        List<Standing> standings = timeTrialEventService.getStandings(3);
+        //TODO: replace best counts with variable
+        List<Standing> standings = timeTrialEventService.getStandings(3,10,10);
 
         // Create the list adapter that takes the list and populates the list items
         SeasonStandingListAdapter adapter =
@@ -239,8 +237,13 @@ public class SeasonStandingListFragment extends Fragment implements OnDataReady 
         boolean dataReady = CacheCoordinator.getInstance().getCacheStatus("standings");
         if (dataReady) {
             FrameLayout fl = (FrameLayout)getView();
-            showListControl(fl);
-            showList(fl);
+            if ( fl==null){
+                AppManager.ShowMessageBox("Null layout.. cannot continue!");
+            }
+            else {
+                showListControl(fl);
+                showList(fl);
+            }
         }
     }
 
