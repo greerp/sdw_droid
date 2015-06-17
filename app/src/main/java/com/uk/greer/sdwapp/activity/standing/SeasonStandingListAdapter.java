@@ -41,20 +41,20 @@ public class SeasonStandingListAdapter extends ArrayAdapter<Standing> {
             TextView stdName = (TextView) rowView.findViewById(R.id.stdName);
             TextView stdHCap = (TextView) rowView.findViewById(R.id.stdHandicapPts);
             TextView stdScr = (TextView) rowView.findViewById(R.id.stdScratchPts);
+            rowView.setId((int) std.getUserId());
+
+            stdName.setText(std.getFirstName() + " " + std.getLastName());
+            stdScr.setText( String.valueOf(std.getScrpts()));
+            stdHCap.setText(String.valueOf(std.getHcppts()));
+
 //            TextView stdDnf = (TextView) rowView.findViewById(R.id.stdDnf);
 //            TextView stdEnt = (TextView) rowView.findViewById(R.id.stdEntered);
 //            TextView stdDns = (TextView) rowView.findViewById(R.id.stdDns);
 //            TextView stdFin = (TextView) rowView.findViewById(R.id.stdFinished);
 //            ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
-
 //            imageView.setImageResource(R.drawable.ic_action_user);
-            rowView.setId((int) std.getUserId());
-
-            stdName.setText(std.getFirstName() + " " + std.getLastName());
 //            stdScr.setText( "Scr:"+String.valueOf(std.getScrpts()));
 //            stdHCap.setText("Hcp:"+String.valueOf(std.getHcppts()));
-            stdScr.setText( String.valueOf(std.getScrpts()));
-            stdHCap.setText(String.valueOf(std.getHcppts()));
 //            stdEnt.setText("Ent:"+String.valueOf(std.getEntered()));
 //            stdFin.setText("Fin:"+String.valueOf(std.getFin()));
 //            stdDns.setText("Dns:"+String.valueOf(std.getDns()));

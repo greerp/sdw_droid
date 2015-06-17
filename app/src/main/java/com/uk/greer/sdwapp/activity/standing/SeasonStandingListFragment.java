@@ -39,9 +39,6 @@ public class SeasonStandingListFragment extends Fragment implements OnDataReady 
     private SortColumn sortColumn = new SortColumn();
 
     public static SeasonStandingListFragment newInstance(int tabPosition, String tabFunction, int season) {
-
-
-
         Log.i("INFO", "Creating newInstance of: " + tabFunction);
         SeasonStandingListFragment fragment = new SeasonStandingListFragment();
         Bundle args = new Bundle();
@@ -139,7 +136,9 @@ public class SeasonStandingListFragment extends Fragment implements OnDataReady 
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), SeasonStanding.class);
-                intent.putExtra(BundleProperty.TT_COMPETITION, "SCRATCH");
+                intent.putExtra(BundleProperty.TT_COMPETITION,
+                        BundleProperty.COMPETITION.SCRATCH);
+                //intent.putExtra(BundleProperty.TT_COMPETITION, "SCRATCH");
                 intent.putExtra(BundleProperty.TT_SEASON_ID, season);
                 getActivity().startActivity(intent);
             }
@@ -149,7 +148,9 @@ public class SeasonStandingListFragment extends Fragment implements OnDataReady 
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), SeasonStanding.class);
-                intent.putExtra(BundleProperty.TT_COMPETITION, "HANDICAP");
+                //intent.putExtra(BundleProperty.TT_COMPETITION, "HANDICAP");
+                intent.putExtra(BundleProperty.TT_COMPETITION,
+                        BundleProperty.COMPETITION.HANDICAP);
                 intent.putExtra(BundleProperty.TT_SEASON_ID, season);
                 getActivity().startActivity(intent);
             }
@@ -238,7 +239,7 @@ public class SeasonStandingListFragment extends Fragment implements OnDataReady 
         if (dataReady) {
             FrameLayout fl = (FrameLayout)getView();
             if ( fl==null){
-                AppManager.ShowMessageBox("Null layout.. cannot continue!");
+                AppManager.ShowMessageBox(getActivity(), "Null layout.. cannot continue!");
             }
             else {
                 showListControl(fl);

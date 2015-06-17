@@ -1,7 +1,6 @@
 package com.uk.greer.sdwapp.activity.completed;
 
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,6 +16,7 @@ import android.widget.ListView;
 import com.uk.greer.sdwapp.AppManager;
 import com.uk.greer.sdwapp.OnDataReady;
 import com.uk.greer.sdwapp.R;
+import com.uk.greer.sdwapp.config.BundleProperty;
 import com.uk.greer.sdwapp.domain.TimeTrial;
 import com.uk.greer.sdwapp.service.CacheCoordinator;
 import com.uk.greer.sdwapp.service.TimeTrialEventService;
@@ -35,7 +35,6 @@ public class CompletedListFragment extends Fragment implements OnDataReady {
 
     private static final String ARG_PARAM1 = "tabPosition";
     private static final String ARG_PARAM2 = "tabFunction";
-    private static final String TT_ID = "tt_id";
     private int listItemselected;
 
     public static CompletedListFragment newInstance(int tabPosition, String tabFunction) {
@@ -59,11 +58,10 @@ public class CompletedListFragment extends Fragment implements OnDataReady {
                 false);
 
         boolean dataReady = CacheCoordinator.getInstance().getCacheStatus("events");
-        if ( dataReady) {
+        if (dataReady) {
             showListControl(fl);
             showList(fl);
-        }
-        else {
+        } else {
             showProgressControls(fl);
         }
 
@@ -74,14 +72,13 @@ public class CompletedListFragment extends Fragment implements OnDataReady {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        ListView listView=null;
+        ListView listView = null;
         try {
             listView = (ListView) getView().findViewById(R.id.eventListView);
             int position = listView.getFirstVisiblePosition();
             // Save the position o fthe first item so we know where to restore to
             outState.putInt("POSITION", position);
-        }
-        catch (Exception x) {
+        } catch (Exception x) {
             Log.i("ERROR", "Unable to find view and save position");
 
         }
@@ -95,7 +92,7 @@ public class CompletedListFragment extends Fragment implements OnDataReady {
         if (savedInstanceState != null) {
             int position = savedInstanceState.getInt("POSITION");
             ListView listView = (ListView) this.getView().findViewById(R.id.eventListView);
-            if ( position > 0 ){
+            if (position > 0) {
                 //listView.scrollListBy();
                 listView.setSelection(position);
             }
@@ -123,15 +120,12 @@ public class CompletedListFragment extends Fragment implements OnDataReady {
             timeTrialEventService = new TimeTrialEventServiceNull();
         }
 
-        Bundle args = this.getArguments();
-        int viewId = args.getInt(this.TT_ID);
-
-        List<TimeTrial> events=timeTrialEventService.getCompletedEvents();
+        List<TimeTrial> events = timeTrialEventService.getCompletedEvents();
 
         // Create the list adapter that takes the list and populates the list items
         CompletedListAdapter completedListAdapter = new CompletedListAdapter(
-            this.getActivity(),
-            events);
+                this.getActivity(),
+                events);
 
         ListView completedListView = (ListView) fl.findViewById(R.id.eventListView);
 
@@ -144,7 +138,7 @@ public class CompletedListFragment extends Fragment implements OnDataReady {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 listItemselected = position;
                 Intent intent = new Intent(getActivity(), CompletedEvent.class);
-                intent.putExtra(TT_ID, view.getId());
+                intent.putExtra(BundleProperty.TT_EVENT_ID, view.getId());
                 getActivity().startActivity(intent);
             }
         });
@@ -153,12 +147,11 @@ public class CompletedListFragment extends Fragment implements OnDataReady {
     @Override
     public void Notify() {
         boolean dataReady = CacheCoordinator.getInstance().getCacheStatus("events");
-        if ( dataReady) {
+        if (dataReady) {
             FrameLayout fl = (FrameLayout) this.getView();
-            if ( fl==null){
-                AppManager.ShowMessageBox("Null layout.. cannot continue!");
-            }
-            else {
+            if (fl == null) {
+                AppManager.ShowMessageBox(getActivity(), "Null layout.. cannot continue!");
+            } else {
                 showListControl(fl);
                 showList(fl);
             }

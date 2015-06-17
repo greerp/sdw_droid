@@ -12,8 +12,10 @@ public class Result implements DomainObject{
     private int hcppts;
     private String status;
     private int time;
+    private int handicappos;
+    private int scratchpos;
 
-    public static Result newInstance(int id, int eventId, int userId, int scrpts, int hcppts, String status, int time ){
+    public static Result newInstance(int id, int eventId, int userId, int scrpts, int hcppts, String status, int time, int scratchpos, int handicappos ){
         Result result = new Result();
         result.id = id;
         result.eventId = eventId;
@@ -22,6 +24,8 @@ public class Result implements DomainObject{
         result.hcppts = hcppts;
         result.status = status;
         result.time = time;
+        result.scratchpos = scratchpos;
+        result.handicappos = handicappos;
         return result;
     }
 
@@ -81,5 +85,21 @@ public class Result implements DomainObject{
 
     public void setTime(int time) {
         this.time = time;
+    }
+
+    public int getHandicappos() {
+        return handicappos;
+    }
+
+    public void setHandicappos(int handicappos) {
+        this.handicappos = handicappos;
+    }
+
+    public int getScratchpos() {
+        return scratchpos;
+    }
+
+    public void setScratchpos(int scratchpos) {
+        this.scratchpos = scratchpos;
     }
 }

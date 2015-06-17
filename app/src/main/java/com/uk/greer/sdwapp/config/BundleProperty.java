@@ -12,5 +12,10 @@ public  class BundleProperty {
 
     public static final String TT_COMPETITION = "tt_competition";
     public static final String TT_SEASON_ID = "tt_season_id";
+    public static final String TT_EVENT_ID = "tt_event_id";
+
+    public enum COMPETITION {
+        SCRATCH,
+        HANDICAP};
 
 }

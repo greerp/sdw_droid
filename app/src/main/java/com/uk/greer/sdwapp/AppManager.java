@@ -53,8 +53,8 @@ public class AppManager extends Application {
     }
 
 
-    public static void ShowMessageBox(String message){
-        new AlertDialog.Builder(ctx)
+    public static void ShowMessageBox(Context context, String message){
+        new AlertDialog.Builder(context)
                 .setTitle(R.string.app_name)
                 .setMessage(message)
                 .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {

@@ -156,7 +156,7 @@ public class UpcomingListFragment extends Fragment implements OnDataReady {
         if ( dataReady) {
             FrameLayout fl = (FrameLayout) this.getView();
             if ( fl==null){
-                AppManager.ShowMessageBox("Null layout.. cannot continue!");
+                AppManager.ShowMessageBox(getActivity(),"Null layout.. cannot continue!");
             }
             else {
                 showListControl(fl);

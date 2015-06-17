@@ -78,7 +78,7 @@ public class TimeTrialEventServiceCache implements TimeTrialEventService {
                 new String[]{String.valueOf(seriesId)}, null, null, null) {
             @Override
             void addDataItem(Cursor s, List<Result> list) {
-                list.add(Result.newInstance(s.getInt(0), s.getInt(1), s.getInt(2), s.getInt(3), s.getInt(4), s.getString(5), s.getInt(6)));
+                list.add(Result.newInstance(s.getInt(0), s.getInt(1), s.getInt(2), s.getInt(3), s.getInt(4), s.getString(5), s.getInt(6),-1,-1));
             }
         };
         List series = ds.execute();

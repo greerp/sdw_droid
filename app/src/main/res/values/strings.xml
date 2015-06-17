@@ -47,7 +47,11 @@
     <string name="club_url">southborough-wheelers.co.uk</string>
     <string name="std_scratch_comp_button">Scratch</string>
     <string name="std_handicap_comp_button">Handicap</string>
-
+    <string name="std_scrpoints_button">Pts</string>
+    <string name="std_hcppoints_button">Pts</string>
+    <string name="std_scrtime_button">Time</string>
+    <string name="std_hcptime_button">Time</string>
+    <string name="std_position_button">Pos</string>
 
 
     <string name="stdtable_dateprefix">dd/MM-</string>
@@ -55,5 +59,6 @@
     <string name="stdtable_entrycount_heading">Entered</string>
     <string name="stdtable_best_heading">Best 10 Pts</string>
     <string name="stdtable_total_heading">Total Pts</string>
+
 
 </resources>
