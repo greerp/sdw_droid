@@ -4,26 +4,17 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.samples.apps.iosched.ui.widget.SlidingTabLayout;
-import com.inqbarna.tablefixheaders.samples.SimpleTable;
 import com.uk.greer.sdwapp.R;
-import com.uk.greer.sdwapp.activity.upcoming.EventEntriesFragment;
-import com.uk.greer.sdwapp.activity.upcoming.EventInfoFragment;
 import com.uk.greer.sdwapp.activity.upcoming.EventPBsFragment;
 import com.uk.greer.sdwapp.config.BundleProperty;
-import com.uk.greer.sdwapp.service.TimeTrialEventService;
-import com.uk.greer.sdwapp.service.TimeTrialEventServiceFactory;
-import com.uk.greer.sdwapp.service.TimeTrialEventServiceNull;
-import com.uk.greer.sdwapp.service.TimeTrialStandingMatrix;
 
 
 public class CompletedEvent extends ActionBarActivity {
@@ -96,11 +87,12 @@ public class CompletedEvent extends ActionBarActivity {
 
             switch (position) {
                 case 0:
-                    return CompletedEventSummaryFragment.newInstance(0);
-
+                    return EventSummaryFragment.newInstance(0);
                 case 1:
-                    return CompletedEventScratchResultFragment.newInstance(0);
+                    return EventResultFragment.newInstance(BundleProperty.COMPETITION.SCRATCH, ttId);
 
+                case 2:
+                    return EventResultFragment.newInstance(BundleProperty.COMPETITION.HANDICAP, ttId);
                 default:
                     return EventPBsFragment.newInstance(ttId);
             }

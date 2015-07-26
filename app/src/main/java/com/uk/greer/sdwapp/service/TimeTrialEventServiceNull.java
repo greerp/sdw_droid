@@ -72,4 +72,9 @@ public class TimeTrialEventServiceNull implements TimeTrialEventService {
         return null;
     }
 
+    @Override
+    public List<Result> getEventResults(long eventId) {
+        return null;
+    }
+
 }

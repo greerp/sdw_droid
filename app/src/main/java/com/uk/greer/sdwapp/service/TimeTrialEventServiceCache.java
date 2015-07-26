@@ -72,13 +72,34 @@ public class TimeTrialEventServiceCache implements TimeTrialEventService {
     public List<Result> getSeriesResults(long seriesId) {
         final String[] fields = new String[]{
                 "id", "eventid", "userid", "scrpts", "hcppts", "status", "time", "eventname", "seriesid",
-                "eventdate", "countsforpb", "eventoutcome"};
+                "eventdate", "countsforpb", "eventoutcome", "firstname","lastname", "handicap", "scrpos","hcppos"};
 
         DataSetService ds = new DataSetService<Result>("v_results", fields, "seriesid=? and status in ('DNF','FIN','DNS')",
                 new String[]{String.valueOf(seriesId)}, null, null, null) {
             @Override
             void addDataItem(Cursor s, List<Result> list) {
-                list.add(Result.newInstance(s.getInt(0), s.getInt(1), s.getInt(2), s.getInt(3), s.getInt(4), s.getString(5), s.getInt(6),-1,-1));
+                list.add(Result.newInstance(s.getInt(0), s.getInt(1), s.getInt(2), s.getString(12),
+                        s.getString(13),s.getInt(3), s.getInt(4), s.getString(5), s.getInt(6), s.getInt(14),
+                        s.getInt(15), s.getInt(16)));
+            }
+        };
+        List series = ds.execute();
+        return series;
+    }
+
+    @Override
+    public List<Result> getEventResults(long eventId) {
+        final String[] fields = new String[]{
+                "id", "eventid", "userid", "scrpts", "hcppts", "status", "time", "eventname", "seriesid",
+                "eventdate", "countsforpb", "eventoutcome", "firstname","lastname", "handicap", "scrpos","hcppos"};
+
+        DataSetService ds = new DataSetService<Result>("v_results", fields, "eventid=? and status='FIN'",
+                new String[]{String.valueOf(eventId)}, null, null, null) {
+            @Override
+            void addDataItem(Cursor s, List<Result> list) {
+                list.add(Result.newInstance(s.getInt(0), s.getInt(1), s.getInt(2), s.getString(12),
+                        s.getString(13),s.getInt(3), s.getInt(4), s.getString(5), s.getInt(6), s.getInt(14),
+                        s.getInt(15), s.getInt(16)));
             }
         };
         List series = ds.execute();

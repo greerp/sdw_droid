@@ -1,7 +1,5 @@
 package com.uk.greer.sdwapp.activity.completed;
 
-import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,12 +12,12 @@ import com.uk.greer.sdwapp.config.BundleProperty;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link CompletedEventSummaryFragment.OnFragmentInteractionListener} interface
+ * {@link EventSummaryFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link CompletedEventSummaryFragment#newInstance} factory method to
+ * Use the {@link EventSummaryFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CompletedEventSummaryFragment extends Fragment {
+public class EventSummaryFragment extends Fragment {
 
     private int eventId;
 
@@ -30,15 +28,15 @@ public class CompletedEventSummaryFragment extends Fragment {
      * @return A new instance of fragment CompletedEventSummaryFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static CompletedEventSummaryFragment newInstance(int eventId) {
-        CompletedEventSummaryFragment fragment = new CompletedEventSummaryFragment();
+    public static EventSummaryFragment newInstance(int eventId) {
+        EventSummaryFragment fragment = new EventSummaryFragment();
         Bundle args = new Bundle();
         args.putInt(BundleProperty.TT_EVENT_ID, eventId);
         fragment.setArguments(args);
         return fragment;
     }
 
-    public CompletedEventSummaryFragment() {
+    public EventSummaryFragment() {
         // Required empty public constructor
     }
 

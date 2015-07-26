@@ -1,3 +1,14 @@
+/*
+	To update the database:
+	
+	1. run updatedb-local.cmd, tis will create the database locally and copy it to the assets source folder
+	2. run delremotedb.cmd, this will remove the existign database from the emulator.... the emultaor must be running 
+	
+	When running the application gradle will detect the database is missing from the emulator and copy it from the assets folder
+
+*/
+
+
 create table series(
 	id int,
 	name TEXT,
@@ -9,7 +20,10 @@ create table courses(
 	id INT, 
 	name TEXT, 
 	coursecode TEXT,
-	coursemapurl TEXT,	coursenotes TEXT,	distance DOUBLE);
+	coursemapurl TEXT,
+	coursenotes TEXT,
+	distance DOUBLE);
+
 create table events(
 	id INT, 
 	seriesid INT,
@@ -34,12 +48,15 @@ create table entries(
 	userid INT,
 	signondate DATETIME, 
 	signonmethod TEXT, 
-	handicap DOUBLE, 
+	handicap INT, 
 	startno INT,
 	time INT,
 	status TEXT,
     scrpts INT,
-    hcppts INT);
+    hcppts INT,
+	scrpos INT,
+	hcppos INT
+	);
 
 create index coursesidx1 on courses(id);
 create index eventsidx1 on events(id);
@@ -48,8 +65,9 @@ create index entriesidx1 on entries(id);
 
 
 CREATE VIEW v_results as select t.id, t.eventid, t.userid, t.scrpts, t.hcppts, t.status, t.time, 
-			e.name as eventname, e.seriesid, e.eventdate, e.countsforpb, e.eventoutcome 
-			from entries t join events e on t.eventid=e.id;
+			e.name as eventname, e.seriesid, e.eventdate, e.countsforpb, e.eventoutcome, u.firstname, 
+			u.lastname, t.handicap, t.scrpos, t.hcppos
+			from entries t join events e on t.eventid=e.id join users u on t.userid=u.id;
 
 
 CREATE VIEW v_timetrials as select events.id, events.eventdate, 

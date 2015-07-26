@@ -1,1 +1,1 @@
-adb -s emulator-5554 shell "cd /data/data/com.uk.greer.sdwapp/databases"
+adb -s emulator-5554 shell 

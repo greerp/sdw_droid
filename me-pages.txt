@@ -1,0 +1,21 @@
+Pages about me
+
+1. Perf on specific course - All Time
+2. Perf of specific course - Season
+3. TT entered
+4. Course PBs - All Time
+5. Course PBs - Season
+6. Competition Handicap - All seasons points tally and final position 
+7. Competition Scratch - All seasons points tally and final position 
+
+
+TT Result Page - 2 Pages - Handicap and Scratch
+-----------------------------------------------
+
+Entrant 
+Scratch Time
+Scratch Pts
+
+Entrant 
+HCap Time
+HCap Pts

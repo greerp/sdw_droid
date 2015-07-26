@@ -12,10 +12,16 @@ public class Result implements DomainObject{
     private int hcppts;
     private String status;
     private int time;
-    private int handicappos;
-    private int scratchpos;
+    private int handicap;
+    private String firstName;
+    private String lastName;
+    private int scrpos;
+    private int hcppos;
 
-    public static Result newInstance(int id, int eventId, int userId, int scrpts, int hcppts, String status, int time, int scratchpos, int handicappos ){
+
+    //public static Result newInstance(int id, int eventId, int userId, String firstName, String lastName, int scrpts, int hcppts, String status, int time, int scratchpos, int handicappos ){
+    public static Result newInstance(int id, int eventId, int userId, String firstName, String lastName,
+                                     int scrpts, int hcppts, String status, int time, int handicap, int scrpos, int hcppos){
         Result result = new Result();
         result.id = id;
         result.eventId = eventId;
@@ -24,8 +30,11 @@ public class Result implements DomainObject{
         result.hcppts = hcppts;
         result.status = status;
         result.time = time;
-        result.scratchpos = scratchpos;
-        result.handicappos = handicappos;
+        result.firstName = firstName;
+        result.lastName = lastName;
+        result.handicap = handicap;
+        result.scrpos = scrpos;
+        result.hcppos = hcppos;
         return result;
     }
 
@@ -33,7 +42,6 @@ public class Result implements DomainObject{
     public int getId() {
         return id;
     }
-
 
     public void setId(int id) {
         this.id = id;
@@ -87,19 +95,44 @@ public class Result implements DomainObject{
         this.time = time;
     }
 
-    public int getHandicappos() {
-        return handicappos;
+
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setHandicappos(int handicappos) {
-        this.handicappos = handicappos;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public int getScratchpos() {
-        return scratchpos;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setScratchpos(int scratchpos) {
-        this.scratchpos = scratchpos;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public int getHandicap() {
+        return handicap;
+    }
+
+    public void setHandicap(int handicap) {
+        this.handicap = handicap;
+    }
+
+    public int getScrpos() {
+        return scrpos;
+    }
+
+    public void setScrpos(int scrpos) {
+        this.scrpos = scrpos;
+    }
+
+    public int getHcppos() {
+        return hcppos;
+    }
+
+    public void setHcppos(int hcppos) {
+        this.hcppos = hcppos;
     }
 }

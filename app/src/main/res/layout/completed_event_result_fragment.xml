@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    tools:context="com.uk.greer.sdwapp.activity.completed.CompletedEventScratchResultFragment">
+    tools:context="com.uk.greer.sdwapp.activity.completed.EventResultFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -18,7 +18,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/stdPositionBtn"
+            android:id="@+id/resHeaderPositionBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1.5"
@@ -29,11 +29,11 @@
             android:paddingRight="5dp"
             android:singleLine="true"
             android:tag="position"
-            android:text="@string/std_position_button"
+            android:text="@string/res_position_button"
             android:textSize="12sp" />
 
         <Button
-            android:id="@+id/stdHeaderNameBtn"
+            android:id="@+id/resHeaderNameBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="7.10"
@@ -44,11 +44,11 @@
             android:paddingRight="5dp"
             android:singleLine="true"
             android:tag="firstname, lastname"
-            android:text="@string/std_name_button"
+            android:text="@string/res_name_button"
             android:textSize="12sp" />
 
         <Button
-            android:id="@+id/stdHeaderScratchTimeBtn"
+            android:id="@+id/resHeaderTimeBtn"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="3"
@@ -57,11 +57,11 @@
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:tag="scrpts"
-            android:text="@string/std_scrtime_button"
+            android:text="@string/res_time_button"
             android:textSize="12sp" />
 
         <Button
-            android:id="@+id/stdHeaderScratchPtsBtn"
+            android:id="@+id/resHeaderPointsBtn"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="2"
@@ -70,7 +70,7 @@
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:tag="scratchpoints"
-            android:text="@string/std_scrpoints_button"
+            android:text="@string/res_points_button"
             android:textSize="12sp" />
 
     </LinearLayout>
@@ -99,7 +99,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <ListView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/standingListView"
+            android:id="@+id/resultListView"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_gravity="center"

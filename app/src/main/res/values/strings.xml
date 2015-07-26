@@ -60,5 +60,10 @@
     <string name="stdtable_best_heading">Best 10 Pts</string>
     <string name="stdtable_total_heading">Total Pts</string>
 
+    <string name="res_position_button">Pos</string>
+    <string name="res_name_button">Rider</string>
+    <string name="res_time_button">Time</string>
+    <string name="res_points_button">Pts</string>
+
 
 </resources>
