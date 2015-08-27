@@ -25,8 +25,12 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.ListView;
 
 import com.google.samples.apps.iosched.ui.widget.SlidingTabLayout;
 import com.inqbarna.tablefixheaders.samples.FamilyTable;
@@ -51,8 +55,9 @@ public class Main extends FragmentActivity
     protected SpiceManager spiceManager
             = new SpiceManager(JacksonSpringAndroidSpiceService.class);
     private Intent intent;
-
-
+    ListView mDrawerList;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private DrawerLayout mDrawerLayout;
     @Override
     protected void onStart() {
         super.onStart();
@@ -68,7 +73,7 @@ public class Main extends FragmentActivity
 
     private void performRequest() {
 
-        Log.i(getLocalClassName(),"Creating listener");
+        Log.i(getLocalClassName(), "Creating listener");
         spiceManager.execute(new SpiceRequest<String>(String.class) {
             @Override
             public String loadDataFromNetwork() throws Exception {
@@ -124,7 +129,8 @@ public class Main extends FragmentActivity
         AppSectionsPagerAdapter pagerAdapter = new AppSectionsPagerAdapter(fm);
 
         // Specify that the Home/Up button should not be enabled, since there is no hierarchical parent.
-        getActionBar().setHomeButtonEnabled(false);
+        //getActionBar().setHomeButtonEnabled(false);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(new AppSectionsPagerAdapter(getSupportFragmentManager()));
@@ -134,6 +140,20 @@ public class Main extends FragmentActivity
         slidingTabLayout.setViewPager(viewPager);
         performRequest();
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Pass the event to ActionBarDrawerToggle
+        // If it returns true, then it has handled
+        // the nav drawer indicator touch event
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+
+        // Handle your other action bar items...
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
