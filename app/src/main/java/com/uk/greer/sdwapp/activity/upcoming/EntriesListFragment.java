@@ -1,7 +1,6 @@
-package com.uk.greer.sdwapp.activity.completed;
+package com.uk.greer.sdwapp.activity.upcoming;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,15 +8,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.uk.greer.sdwapp.AppManager;
 import com.uk.greer.sdwapp.OnDataReady;
 import com.uk.greer.sdwapp.R;
-import com.uk.greer.sdwapp.config.BundleProperty;
-import com.uk.greer.sdwapp.domain.TimeTrial;
+import com.uk.greer.sdwapp.domain.Entry;
 import com.uk.greer.sdwapp.service.CacheCoordinator;
 import com.uk.greer.sdwapp.service.TimeTrialEventService;
 import com.uk.greer.sdwapp.service.TimeTrialEventServiceFactory;
@@ -28,21 +25,20 @@ import java.util.List;
 /**
  * Sets up the list view of events
  */
-public class CompletedListFragment extends Fragment implements OnDataReady {
+public class EntriesListFragment extends Fragment implements OnDataReady {
 
     public static final String ARG_SECTION_NUMBER = "section_number";
 
-    private static final String ARG_PARAM1 = "tabPosition";
-    private static final String ARG_PARAM2 = "tabFunction";
+    private static final String TT_ID = "tt_id";
+
     private int listItemselected;
 
-    public static CompletedListFragment newInstance(int tabPosition, String tabFunction) {
+    public static EntriesListFragment newInstance(int ttId) {
 
-        Log.i("INFO", "Creating newInstance of: " + tabFunction);
-        CompletedListFragment fragment = new CompletedListFragment();
+        Log.i("INFO", "Creating newInstance of: " + EntriesListFragment.class);
+        EntriesListFragment fragment = new EntriesListFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_PARAM1, tabPosition);
-        args.putString(ARG_PARAM2, tabFunction);
+        args.putInt(TT_ID, ttId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -51,8 +47,8 @@ public class CompletedListFragment extends Fragment implements OnDataReady {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        FrameLayout fl = (FrameLayout) inflater.inflate(
-                R.layout.main_completed_list_fragment,
+        RelativeLayout fl = (RelativeLayout) inflater.inflate(
+                R.layout.upcoming_entries_list_fragment,
                 container,
                 false);
 
@@ -73,7 +69,7 @@ public class CompletedListFragment extends Fragment implements OnDataReady {
 
         ListView listView = null;
         try {
-            listView = (ListView) getView().findViewById(R.id.eventListView);
+            listView = (ListView) getView().findViewById(R.id.entriesListView);
             int position = listView.getFirstVisiblePosition();
             // Save the position o fthe first item so we know where to restore to
             outState.putInt("POSITION", position);
@@ -90,7 +86,7 @@ public class CompletedListFragment extends Fragment implements OnDataReady {
 
         if (savedInstanceState != null) {
             int position = savedInstanceState.getInt("POSITION");
-            ListView listView = (ListView) this.getView().findViewById(R.id.eventListView);
+            ListView listView = (ListView) this.getView().findViewById(R.id.entriesListView);
             if (position > 0) {
                 //listView.scrollListBy();
                 listView.setSelection(position);
@@ -98,56 +94,55 @@ public class CompletedListFragment extends Fragment implements OnDataReady {
         }
     }
 
-    private void showProgressControls(FrameLayout fl) {
+    private void showProgressControls(RelativeLayout fl) {
         fl.findViewById(R.id.waitingProgressBar).setVisibility(View.VISIBLE);
         fl.findViewById(R.id.waitingMessage).setVisibility(View.VISIBLE);
-        fl.findViewById(R.id.eventListView).setVisibility(View.INVISIBLE);
+        fl.findViewById(R.id.entriesListView).setVisibility(View.INVISIBLE);
     }
 
-    private void showListControl(FrameLayout fl) {
+    private void showListControl(RelativeLayout fl) {
         fl.findViewById(R.id.waitingProgressBar).setVisibility(View.GONE);
         fl.findViewById(R.id.waitingMessage).setVisibility(View.GONE);
-        fl.findViewById(R.id.eventListView).setVisibility(View.VISIBLE);
+        fl.findViewById(R.id.entriesListView).setVisibility(View.VISIBLE);
     }
 
-    private void showList(FrameLayout fl) {
+    private void showList(RelativeLayout fl) {
         TimeTrialEventService timeTrialEventService;
-        try {
-            timeTrialEventService = TimeTrialEventServiceFactory.getInstance();
-        } catch (Exception e) {
-            Log.e("EXCEPTION", "Unable to create Time Trial Service, using default");
-            timeTrialEventService = new TimeTrialEventServiceNull();
-        }
+        Bundle args = this.getArguments();
+        if ( args!=null) {
+            int ttId = args.getInt(this.TT_ID);
 
-        List<TimeTrial> events = timeTrialEventService.getCompletedEvents();
-
-        // Create the list adapter that takes the list and populates the list items
-        CompletedListAdapter completedListAdapter = new CompletedListAdapter(
-                this.getActivity(),
-                events);
-
-        ListView completedListView = (ListView) fl.findViewById(R.id.eventListView);
-
-        // Set the listView to use the adapter
-        completedListView.setAdapter(completedListAdapter);
-
-        // Create delegate that handles clicking on the list event
-        completedListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                listItemselected = position;
-                Intent intent = new Intent(getActivity(), CompletedEvent.class);
-                intent.putExtra(BundleProperty.TT_EVENT_ID, view.getId());
-                getActivity().startActivity(intent);
+            try {
+                timeTrialEventService = TimeTrialEventServiceFactory.getInstance();
+            } catch (Exception e) {
+                Log.e("EXCEPTION", "Unable to create Time Trial Service, using default");
+                timeTrialEventService = new TimeTrialEventServiceNull();
             }
-        });
+
+            //List<TimeTrial> events = timeTrialEventService.getCompletedEvents();
+            List<Entry> entries = timeTrialEventService.getEntries(ttId);
+
+            // Create the list adapter that takes the list and populates the list items
+            EntriesListAdapter entriesListAdapter = new EntriesListAdapter(
+                    this.getActivity(),
+                    entries);
+
+            ListView listView = (ListView) fl.findViewById(R.id.entriesListView);
+
+            // Set the listView to use the adapter
+            listView.setAdapter(entriesListAdapter);
+
+        }
+        else {
+            Log.e("ERROR", "No arguments, instance may have been created directly an dnot through newInstance");
+        }
     }
 
     @Override
     public void Notify() {
         boolean dataReady = CacheCoordinator.getInstance().getCacheStatus("events");
         if (dataReady) {
-            FrameLayout fl = (FrameLayout) this.getView();
+            RelativeLayout fl = (RelativeLayout) this.getView();
             if (fl == null) {
                 AppManager.ShowMessageBox(getActivity(), "Null layout.. cannot continue!");
             } else {

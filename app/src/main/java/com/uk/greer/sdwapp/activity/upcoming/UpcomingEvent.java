@@ -1,19 +1,20 @@
 package com.uk.greer.sdwapp.activity.upcoming;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.google.samples.apps.iosched.ui.widget.SlidingTabLayout;
-import com.inqbarna.tablefixheaders.samples.FamilyTable;
 import com.uk.greer.sdwapp.R;
+import com.uk.greer.sdwapp.activity.completed.EventSummaryFragment;
 
 /**
  * Displays the details for a specific TT event
@@ -41,8 +42,8 @@ public class UpcomingEvent extends ActionBarActivity {
         SlidingTabLayout slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
         // Set a custom tab item
         //slidingTabLayout.setCustomTabView(R.layout.tab_title, R.id.tabtext);
-        //slidingTabLayout.canScrollHorizontally(View.TEXT_DIRECTION_ANY_RTL);
-        slidingTabLayout.setDistributeEvenly(true);
+        slidingTabLayout.canScrollHorizontally(View.TEXT_DIRECTION_ANY_RTL);
+        //slidingTabLayout.setDistributeEvenly(true);
         slidingTabLayout.setViewPager(viewPager);
     }
 
@@ -73,7 +74,7 @@ public class UpcomingEvent extends ActionBarActivity {
 
         final int PAGE_COUNT = 4;
         private String tabtitles[] = new String[]
-                {"INFO", "ENTRIES", "Me","RECORDS"};
+               {"INFO", "ENTRIES", "ME","RECORDS"};
 
         public ViewPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -92,10 +93,10 @@ public class UpcomingEvent extends ActionBarActivity {
                     return EventInfoFragment.newInstance(ttId);
 
                 case 1:
-                    return EventEntriesFragment.newInstance(ttId);
+                    return EntriesListFragment.newInstance(ttId);
 
                 default:
-                    return EventPBsFragment.newInstance(ttId);
+                    return EventSummaryFragment.newInstance(0);
             }
         }
         @Override

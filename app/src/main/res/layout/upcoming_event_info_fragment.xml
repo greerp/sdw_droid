@@ -116,7 +116,7 @@
                     android:background="@color/sdw_subtitle_background"
                     android:textColor="@color/sdw_subtitle_foreground"
                     android:padding="3dp"
-                    android:text="DISTANCE (m/km)" />
+                    android:text="DISTANCE" />
 
                 <TextView
                     android:id="@+id/lab_ascent"

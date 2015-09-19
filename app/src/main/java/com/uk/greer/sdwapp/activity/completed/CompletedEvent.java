@@ -38,7 +38,7 @@ public class CompletedEvent extends ActionBarActivity {
         // Give the SlidingTabLayout the ViewPager, this must be done AFTER the ViewPager has had
         // it's PagerAdapter set.
         SlidingTabLayout slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
-        slidingTabLayout.setDistributeEvenly(true);
+        //slidingTabLayout.setDistributeEvenly(true);
         slidingTabLayout.setViewPager(viewPager);
     }
 
@@ -47,7 +47,8 @@ public class CompletedEvent extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_completed_event, menu);
-        return true;
+        return super.onCreateOptionsMenu(menu);
+        //return true;
     }
 
     @Override
@@ -71,7 +72,7 @@ public class CompletedEvent extends ActionBarActivity {
 
         final int PAGE_COUNT = 3;
         private String tabtitles[] = new String[]
-                {"SUMMARY","HCAP RESULT", "SCR RESULT",};
+                {"SUMMARY","HCAP RESULT", "SCR RESULT"};
 
         public ViewPagerAdapter(FragmentManager fm) {
             super(fm);

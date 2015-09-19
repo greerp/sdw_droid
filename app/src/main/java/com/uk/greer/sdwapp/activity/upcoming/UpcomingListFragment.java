@@ -23,7 +23,6 @@ import com.uk.greer.sdwapp.service.TimeTrialEventService;
 import com.uk.greer.sdwapp.service.TimeTrialEventServiceFactory;
 import com.uk.greer.sdwapp.service.TimeTrialEventServiceNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

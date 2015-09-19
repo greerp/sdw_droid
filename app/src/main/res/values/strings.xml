@@ -64,6 +64,7 @@
     <string name="res_name_button">Rider</string>
     <string name="res_time_button">Time</string>
     <string name="res_points_button">Pts</string>
+    <string name="std_date_entered_button">Entered</string>
 
 
 </resources>

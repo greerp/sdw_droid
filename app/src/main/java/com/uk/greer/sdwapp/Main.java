@@ -33,14 +33,12 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.google.samples.apps.iosched.ui.widget.SlidingTabLayout;
-import com.inqbarna.tablefixheaders.samples.FamilyTable;
 import com.octo.android.robospice.JacksonSpringAndroidSpiceService;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.SpiceRequest;
 import com.octo.android.robospice.request.listener.RequestListener;
 import com.uk.greer.sdwapp.activity.completed.CompletedListFragment;
-import com.uk.greer.sdwapp.activity.standing.SeasonStanding;
 import com.uk.greer.sdwapp.activity.standing.SeasonStandingListFragment;
 import com.uk.greer.sdwapp.activity.upcoming.UpcomingListFragment;
 import com.uk.greer.sdwapp.activity.upcoming.UpcomingRefreshFragment;
