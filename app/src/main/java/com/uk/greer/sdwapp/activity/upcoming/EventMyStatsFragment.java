@@ -12,11 +12,11 @@ import com.uk.greer.sdwapp.R;
 /**
  * Created by greepau on 13/04/2015.
  */
-public class EventPBsFragment extends Fragment {
+public class EventMyStatsFragment extends Fragment {
 
-    public static EventPBsFragment newInstance(int ttId){
+    public static EventMyStatsFragment newInstance(int ttId){
 
-        EventPBsFragment fragment = new EventPBsFragment();
+        EventMyStatsFragment fragment = new EventMyStatsFragment();
         Bundle args = new Bundle();
         //TODO: Add parameters here
         fragment.setArguments(args);
@@ -26,7 +26,7 @@ public class EventPBsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.upcoming_event_pbs_fragment, container, false);
+        View v = inflater.inflate(R.layout.upcoming_event_my_stats_fragment, container, false);
         return v;
     }
 }

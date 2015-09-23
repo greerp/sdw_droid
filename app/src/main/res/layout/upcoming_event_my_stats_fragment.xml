@@ -1,0 +1,117 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/upcomingEntriesListLayout"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    tools:context="com.uk.greer.sdwapp.activity.upcoming.EventMyStatsFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:id="@+id/stdHeader"
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/stdDateEnteredBtn"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.3"
+            android:background="@drawable/sortable_header"
+            android:gravity="center_vertical"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:tag="scrpts"
+            android:text="@string/std_date_entered_button" />
+
+        <Button
+            android:id="@+id/stdScratchTimeBtn"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.25"
+            android:background="@drawable/sortable_header"
+            android:gravity="center_vertical"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:tag="scrpts"
+            android:text="@string/std_date_entered_button" />
+        <Button
+            android:id="@+id/stdHandicapTimeBtn"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.25"
+            android:background="@drawable/sortable_header"
+            android:gravity="center_vertical"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:tag="scrpts"
+            android:text="@string/std_date_entered_button" />
+
+
+        <Button
+            android:id="@+id/stdHeaderScratchPtsBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1"
+            android:background="@drawable/sortable_header"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:singleLine="true"
+            android:tag="firstname, lastname"
+            android:text="@string/std_name_button" />
+        <Button
+            android:id="@+id/stdHandicapPts"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1"
+            android:background="@drawable/sortable_header"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:singleLine="true"
+            android:tag="firstname, lastname"
+            android:text="@string/std_name_button" />
+
+    </LinearLayout>
+
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@id/button_bar"
+        android:layout_below="@id/stdHeader">
+
+        <ProgressBar
+            android:id="@+id/waitingProgressBar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:id="@+id/waitingMessage"
+            android:layout_width="166dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:gravity="center"
+            android:paddingBottom="20dp"
+            android:text="@string/refreshing_data"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/entriesListView"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:gravity="center" />
+    </FrameLayout>
+</RelativeLayout>

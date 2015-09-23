@@ -10,11 +10,9 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.google.samples.apps.iosched.ui.widget.SlidingTabLayout;
 import com.uk.greer.sdwapp.R;
-import com.uk.greer.sdwapp.activity.completed.EventSummaryFragment;
 
 /**
  * Displays the details for a specific TT event
@@ -42,7 +40,7 @@ public class UpcomingEvent extends ActionBarActivity {
         SlidingTabLayout slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
         // Set a custom tab item
         //slidingTabLayout.setCustomTabView(R.layout.tab_title, R.id.tabtext);
-        slidingTabLayout.canScrollHorizontally(View.TEXT_DIRECTION_ANY_RTL);
+        //slidingTabLayout.canScrollHorizontally(View.TEXT_DIRECTION_ANY_RTL);
         //slidingTabLayout.setDistributeEvenly(true);
         slidingTabLayout.setViewPager(viewPager);
     }
@@ -74,7 +72,7 @@ public class UpcomingEvent extends ActionBarActivity {
 
         final int PAGE_COUNT = 4;
         private String tabtitles[] = new String[]
-               {"INFO", "ENTRIES", "ME","RECORDS"};
+               {"INFO", "ENTRIES", "MY STATS","RECORDS"};
 
         public ViewPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -96,7 +94,7 @@ public class UpcomingEvent extends ActionBarActivity {
                     return EntriesListFragment.newInstance(ttId);
 
                 default:
-                    return EventSummaryFragment.newInstance(0);
+                    return EventMyStatsFragment.newInstance(ttId);
             }
         }
         @Override

@@ -13,7 +13,7 @@ import android.view.MenuItem;
 
 import com.google.samples.apps.iosched.ui.widget.SlidingTabLayout;
 import com.uk.greer.sdwapp.R;
-import com.uk.greer.sdwapp.activity.upcoming.EventPBsFragment;
+import com.uk.greer.sdwapp.activity.upcoming.EventMyStatsFragment;
 import com.uk.greer.sdwapp.config.BundleProperty;
 
 
@@ -95,7 +95,7 @@ public class CompletedEvent extends ActionBarActivity {
                 case 2:
                     return EventResultFragment.newInstance(BundleProperty.COMPETITION.HANDICAP, ttId);
                 default:
-                    return EventPBsFragment.newInstance(ttId);
+                    return EventMyStatsFragment.newInstance(ttId);
             }
         }
 
