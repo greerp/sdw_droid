@@ -5,5 +5,5 @@ path=c:\dev\Android\sdk\platform-tools;%path%
 rem Copy files to emulator
 
 del sdw.db
-sqlite3 -init build-local.sql
+sqlite3 -init build-local.sql < quit.txt
 copy sdw.db app\src\main\assets

@@ -11,7 +11,7 @@ delete from users where id='id';
 delete from events where id='id';
 delete from entries where id='id';
 delete from series where id='id';
-.quit
+
 
 
 
