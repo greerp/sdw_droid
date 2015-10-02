@@ -18,70 +18,40 @@
         android:orientation="horizontal">
 
         <Button
+            style="@style/listbutton"
             android:id="@+id/stdDateEnteredBtn"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
             android:layout_weight="0.3"
-            android:background="@drawable/sortable_header"
-            android:gravity="center_vertical"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
             android:tag="scrpts"
             android:text="@string/std_date_entered_button" />
 
         <Button
+            style="@style/listbutton"
             android:id="@+id/stdScratchTimeBtn"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
             android:layout_weight="0.25"
-            android:background="@drawable/sortable_header"
-            android:gravity="center_vertical"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
             android:tag="scrpts"
-            android:text="@string/std_date_entered_button" />
+            android:text="@string/std_scrtime_button" />
+
         <Button
+            style="@style/listbutton"
             android:id="@+id/stdHandicapTimeBtn"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
             android:layout_weight="0.25"
-            android:background="@drawable/sortable_header"
-            android:gravity="center_vertical"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
             android:tag="scrpts"
-            android:text="@string/std_date_entered_button" />
-
+            android:text="@string/std_hcptime_button" />
 
         <Button
+            style="@style/listbutton"
             android:id="@+id/stdHeaderScratchPtsBtn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:layout_weight="0.1"
-            android:background="@drawable/sortable_header"
-            android:ellipsize="end"
-            android:gravity="center_vertical"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:singleLine="true"
             android:tag="firstname, lastname"
             android:text="@string/std_name_button" />
+
         <Button
+            style="@style/listbutton"
             android:id="@+id/stdHandicapPts"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:layout_weight="0.1"
-            android:background="@drawable/sortable_header"
-            android:ellipsize="end"
-            android:gravity="center_vertical"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:singleLine="true"
             android:tag="firstname, lastname"
             android:text="@string/std_name_button" />
-
     </LinearLayout>
-
 
     <FrameLayout
         android:id="@+id/frameLayout"
@@ -114,4 +84,5 @@
             android:layout_gravity="center"
             android:gravity="center" />
     </FrameLayout>
+
 </RelativeLayout>

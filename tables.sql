@@ -58,6 +58,8 @@ create table entries(
 	hcppos INT
 	);
 
+create table officials(id INT, eventid INT, userid INT, capacity TEXT);
+
 create index coursesidx1 on courses(id);
 create index eventsidx1 on events(id);
 create index usersidx1 on users(id);	

@@ -19,60 +19,31 @@
 
         <Button
             android:id="@+id/resHeaderPositionBtn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            style="@style/listbutton"
             android:layout_weight="1.5"
-            android:background="@drawable/sortable_header"
-            android:ellipsize="end"
-            android:gravity="center_vertical"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:singleLine="true"
             android:tag="position"
-            android:text="@string/res_position_button"
-            android:textSize="12sp" />
+            android:text="@string/res_position_button"/>
 
         <Button
+            style="@style/listbutton"
             android:id="@+id/resHeaderNameBtn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:layout_weight="7.10"
-            android:background="@drawable/sortable_header"
-            android:ellipsize="end"
-            android:gravity="center_vertical"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:singleLine="true"
             android:tag="firstname, lastname"
-            android:text="@string/res_name_button"
-            android:textSize="12sp" />
+            android:text="@string/res_name_button"/>
 
         <Button
+            style="@style/listbutton"
             android:id="@+id/resHeaderTimeBtn"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
             android:layout_weight="3"
-            android:background="@drawable/sortable_header"
-            android:gravity="center_vertical"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
             android:tag="scrpts"
-            android:text="@string/res_time_button"
-            android:textSize="12sp" />
+            android:text="@string/res_time_button"/>
 
         <Button
+            style="@style/listbutton"
             android:id="@+id/resHeaderPointsBtn"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
             android:layout_weight="2"
-            android:background="@drawable/sortable_header"
-            android:gravity="center_vertical"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
             android:tag="scratchpoints"
-            android:text="@string/res_points_button"
-            android:textSize="12sp" />
-
+            android:text="@string/res_points_button"/>
     </LinearLayout>
 
     <FrameLayout

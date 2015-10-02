@@ -30,32 +30,115 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
-import com.google.samples.apps.iosched.ui.widget.SlidingTabLayout;
 import com.octo.android.robospice.JacksonSpringAndroidSpiceService;
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.SpiceRequest;
 import com.octo.android.robospice.request.listener.RequestListener;
-import com.uk.greer.sdwapp.activity.completed.CompletedListFragment;
-import com.uk.greer.sdwapp.activity.standing.SeasonStandingListFragment;
-import com.uk.greer.sdwapp.activity.upcoming.UpcomingListFragment;
-import com.uk.greer.sdwapp.activity.upcoming.UpcomingRefreshFragment;
+import com.uk.greer.sdwapp.activity.current_season;
 import com.uk.greer.sdwapp.service.CacheCoordinator;
+import com.uk.greer.sdwapp.service.DrawerListAdapter;
+import com.uk.greer.sdwapp.service.NavItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class Main extends FragmentActivity
-        implements UpcomingRefreshFragment.OnFragmentInteractionListener {
+        implements OnFragmentInteractionListener {
 
     protected SpiceManager spiceManager
             = new SpiceManager(JacksonSpringAndroidSpiceService.class);
     private Intent intent;
-    ListView mDrawerList;
+    private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
+    private RelativeLayout mDrawerPane;
+    private ArrayList<NavItem> mNavItems = new ArrayList<NavItem>();
+
+    // http://www.codepuppet.com/2013/10/06/using-fragments-in-android-with-fragmentactivity/
+    private ViewPager viewPager;
+    private List<Fragment> _fragments = new ArrayList<Fragment>();
+    private FragmentPagerAdapter _fragmentPagerAdapter;
+
+    public static final int FRAGMENT_CURRENT_SEASON = 0;
+    public static final int FRAGMENT_ATHLETES = 1;
+    public static final int FRAGMENT_PREVII = 1;
+    public static final int FRAGMENT_ATHLETES = 1;
+
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        long ttId = getIntent().getLongExtra("TT_ID", -1);
+        Log.i("INFO", "TT ID: " + Long.toString(ttId));
+
+        // Specify that the Home/Up button should not be enabled, since there is no hierarchical parent.
+        //getActionBar().setHomeButtonEnabled(false);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        setContentView(R.layout.main);
+
+        // Create new Fragments
+        this._fragments.add(FRAGMENT_CURRENT_SEASON, current_season.newInstance("",""));
+        this._fragments.add(FRAGMENT_CURRENT_SEASON, current_season.newInstance("",""));
+
+        this._fragmentPagerAdapter = new FragmentPagerAdapter(this.getSupportFragmentManager()){
+            @Override
+            public int getCount() {
+                return Main.this._fragments.size();
+            }
+            @Override
+            public Fragment getItem(final int position) {
+                return Main.this._fragments.get(position);
+            }
+            @Override
+            public CharSequence getPageTitle(final int position) {
+                // Define titles for each fragment.
+                switch (position) {
+                    case FRAGMENT_CURRENT_SEASON:
+                        return "Example title";
+                    default:
+                        return null;
+                }
+            }
+        };
+
+        this.viewPager = (ViewPager) this.findViewById(R.id.mainpager);
+        this.viewPager.setAdapter(this._fragmentPagerAdapter);
+
+        // Set the default fragment.
+        this.openFragment(FRAGMENT_CURRENT_SEASON);
+
+        configureSlidingMenu();
+        performRequest();
+
+
+        //TODO: Insert current_season into empty fragment
+    }
+
+    /**
+     * Open the specified fragment.
+     * @param fragment
+     */
+    public void openFragment(final int fragment) {
+        this.viewPager.setCurrentItem(fragment);
+    }
+
+    /**
+     * Get the fragment object for the specified fragment.
+     * @param fragment
+     * @return
+     */
+    public Fragment getFragment(final int fragment) {
+        return this._fragments.get(fragment);
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -66,34 +149,6 @@ public class Main extends FragmentActivity
     protected void onStop() {
         spiceManager.shouldStop();
         super.onStop();
-    }
-
-
-    private void performRequest() {
-
-        Log.i(getLocalClassName(), "Creating listener");
-        spiceManager.execute(new SpiceRequest<String>(String.class) {
-            @Override
-            public String loadDataFromNetwork() throws Exception {
-                Thread.sleep(2000);
-                return "finished";
-            }
-        }, new RequestListener<String>() {
-            @Override
-            public void onRequestFailure(SpiceException spiceException) {
-            }
-
-            @Override
-            public void onRequestSuccess(String o) {
-                CacheCoordinator.getInstance().setCacheStatus("events", true);
-                CacheCoordinator.getInstance().setCacheStatus("standings", true);
-                List<Fragment> fl = getSupportFragmentManager().getFragments();
-                Log.i(getLocalClassName(), "Notifying fragments");
-                for (Fragment f : fl) {
-                    ((OnDataReady) f).Notify();
-                }
-            }
-        });
     }
 
     @Override
@@ -114,31 +169,80 @@ public class Main extends FragmentActivity
         super.onCreateOptionsMenu(menu);
         return true;
     }
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
-        long ttId = getIntent().getLongExtra("TT_ID", -1);
-        Log.i("INFO", "TT ID: " + Long.toString(ttId));
+    private void performRequest() {
 
-        setContentView(R.layout.main);
+        Log.i(getLocalClassName(), "Creating listener");
+        spiceManager.execute(new SpiceRequest<String>(String.class) {
+            @Override
+            public String loadDataFromNetwork() throws Exception {
+                Thread.sleep(2000);
+                return "finished";
+            }
+        }, new RequestListener<String>() {
+            @Override
+            public void onRequestFailure(SpiceException spiceException) {
+            }
 
-        // Create the adapter that will return a fragment for each of the three primary sections of the app.
-        FragmentManager fm = getSupportFragmentManager();
-        AppSectionsPagerAdapter pagerAdapter = new AppSectionsPagerAdapter(fm);
+            @Override
+            public void onRequestSuccess(String o) {
+                CacheCoordinator.getInstance().setCacheStatus("events", true);
+                CacheCoordinator.getInstance().setCacheStatus("standings", true);
+                List<Fragment> fl = getSupportFragmentManager().getFragments();
 
-        // Specify that the Home/Up button should not be enabled, since there is no hierarchical parent.
-        //getActionBar().setHomeButtonEnabled(false);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+                Log.i(getLocalClassName(), "Notifying fragments");
+                for (android.support.v4.app.Fragment f : fl) {
+                    ((OnDataReady) f).Notify();
+                }
+            }
+        });
+    }
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        viewPager.setAdapter(new AppSectionsPagerAdapter(getSupportFragmentManager()));
 
-        SlidingTabLayout slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
-        slidingTabLayout.setDistributeEvenly(true);
-        slidingTabLayout.setViewPager(viewPager);
-        performRequest();
+    private void configureSlidingMenu(){
+//        ActionBarDrawerToggle mDrawerToggle;
+
+        mNavItems.add(new NavItem("Current Season", "TT Events and results for 2014/15", R.drawable.ic_home_black_48dp));
+        mNavItems.add(new NavItem("Previous Seasons", "TT results from previous seasons", R.drawable.ic_action_previous_item));
+        mNavItems.add(new NavItem("Athletes", "Performnace statistics of club athletes", R.drawable.ic_action_user_add));
+        mNavItems.add(new NavItem("Me", "My performnace statistics", R.drawable.ic_action_previous_item));
+
+        // DrawerLayout
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+
+        // Populate the Navigtion Drawer with options
+        mDrawerPane = (RelativeLayout) findViewById(R.id.drawerPane);
+        mDrawerList = (ListView) findViewById(R.id.navList);
+        DrawerListAdapter adapter = new DrawerListAdapter(this, mNavItems);
+        mDrawerList.setAdapter(adapter);
+
+        // Drawer Item click listeners
+        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                selectItemFromDrawer(position);
+            }
+        });
 
     }
+
+    private void selectItemFromDrawer(int position) {
+        //TODO: Sort this Out
+
+//        Fragment fragment = Preferences.newInstance("","");
+//
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        fragmentManager.beginTransaction()
+//                .replace(R.id.maincanvas, fragment)
+//                .commit();
+//
+//        mDrawerList.setItemChecked(position, true);
+//        setTitle(mNavItems.get(position).mTitle);
+//
+//        // Close the drawer
+//        mDrawerLayout.closeDrawer(mDrawerPane);
+       };
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -148,56 +252,15 @@ public class Main extends FragmentActivity
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-
         // Handle your other action bar items...
-
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onFragmentInteraction(Uri uri) {
 
-    }
+        // Contained Fragments can call back into this
 
-
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to one of the primary
-     * sections of the app.
-     */
-    public class AppSectionsPagerAdapter extends FragmentPagerAdapter {
-
-        private String tabtitles[] = new String[] {
-            getResources().getString(R.string.page_upcoming),
-            getResources().getString(R.string.page_completed),
-            getResources().getString(R.string.page_standings)
-        };
-
-        public AppSectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int i) {
-            switch (i) {
-                case 0:
-                    return UpcomingListFragment.newInstance(i,tabtitles[i]);
-                case 1:
-                    return CompletedListFragment.newInstance(i, tabtitles[i]);
-                case 2:
-                    return SeasonStandingListFragment.newInstance(i,tabtitles[i],3);
-                default:
-                    return null;
-            }
-        }
-
-        @Override
-        public int getCount() {
-            return tabtitles.length;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return tabtitles[position];
-        }
     }
 }
+

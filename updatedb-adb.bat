@@ -3,6 +3,7 @@ rem - Builds SDW.DB and copies to emulator
 echo Ensure emulator is running or Ctrl-C to abort
 pause
 
+set oldpath=%path%
 path=c:\dev\Android\sdk\platform-tools;%path%
 
 call updatedb-local.bat
@@ -22,3 +23,6 @@ rem adb -s emulator-5554 shell "rm /data/data/com.uk.greer.sdwapp/databases/sdw.
 rem adb -s emulator-5554 shell "cd /data/data/com.uk.greer.sdwapp/databases&&sqlite3 -init ../sql/build-adb.sql"
 rem adb -s emulator-5554 shell "chmod 666 /data/data/com.uk.greer.sdwapp/databases/sdw.db"
 rem adb pull /data/data/com.uk.greer.sdwapp/databases/sdw.db app\src\main\assets
+
+path=%oldpath%
+

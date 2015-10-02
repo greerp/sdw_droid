@@ -4,7 +4,20 @@
     tools:context="com.uk.greer.sdwapp.activity.completed.EventSummaryFragment">
 
     <!-- TODO: Update blank fragment layout -->
+
+    <TextView
+        android:layout_width="324dp"
+        android:layout_height="356dp"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:id="@+id/editText"
+        android:layout_gravity="center"
+        android:text="List riders who go PB's\nRace report\nWeather and Conditions\nMarshalls\nDns\nScratch Winner\Hhandicap winner"
+        android:textAlignment="viewStart" />
+
     <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="Completed Event Summary Fragment" />
+        android:text="Completed Event Summary Fragment"
+        android:layout_gravity="right|bottom" />
+
 
 </FrameLayout>
