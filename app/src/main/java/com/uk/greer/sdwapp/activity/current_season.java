@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,17 +14,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.samples.apps.iosched.ui.widget.SlidingTabLayout;
-import com.octo.android.robospice.persistence.exception.SpiceException;
-import com.octo.android.robospice.request.SpiceRequest;
-import com.octo.android.robospice.request.listener.RequestListener;
-import com.uk.greer.sdwapp.Main;
 import com.uk.greer.sdwapp.OnDataReady;
 import com.uk.greer.sdwapp.OnFragmentInteractionListener;
 import com.uk.greer.sdwapp.R;
 import com.uk.greer.sdwapp.activity.completed.CompletedListFragment;
 import com.uk.greer.sdwapp.activity.standing.SeasonStandingListFragment;
 import com.uk.greer.sdwapp.activity.upcoming.UpcomingListFragment;
-import com.uk.greer.sdwapp.service.CacheCoordinator;
 
 import java.util.List;
 
@@ -35,16 +31,11 @@ import java.util.List;
  * Use the {@link current_season#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class current_season extends Fragment implements OnDataReady{
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+public class current_season extends Fragment implements OnDataReady {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
-
     private OnFragmentInteractionListener mListener;
 
     /**
@@ -65,9 +56,6 @@ public class current_season extends Fragment implements OnDataReady{
         return fragment;
     }
 
-    public current_season() {
-        // Required empty public constructor
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,22 +64,15 @@ public class current_season extends Fragment implements OnDataReady{
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-//        // Create the adapter that will return a fragment for each of the three primary sections of the app.
-//        FragmentManager fm = getFragmentManager();
-//        AppSectionsPagerAdapter pagerAdapter = new AppSectionsPagerAdapter(fm);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_current_season, container, false);
 
+        View v = inflater.inflate(R.layout.fragment_current_season, container, false);
         ViewPager viewPager = (ViewPager) v.findViewById(R.id.pager);
         viewPager.setAdapter(new AppSectionsPagerAdapter(getFragmentManager()));
-
         SlidingTabLayout slidingTabLayout = (SlidingTabLayout) v.findViewById(R.id.sliding_tabs);
         slidingTabLayout.setDistributeEvenly(true);
         slidingTabLayout.setViewPager(viewPager);
@@ -102,6 +83,18 @@ public class current_season extends Fragment implements OnDataReady{
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
+        }
+    }
+
+    public void Refresh(){
+
+        List<Fragment> fl = getFragmentManager().getFragments();
+
+        for (android.support.v4.app.Fragment f : fl) {
+            if ( f instanceof OnDataReady ){
+                ((OnDataReady) f).Notify();
+            }
+
         }
     }
 
@@ -132,9 +125,9 @@ public class current_season extends Fragment implements OnDataReady{
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to one of the primary
      * sections of the app.
      */
-    public class AppSectionsPagerAdapter extends FragmentPagerAdapter {
+    public class AppSectionsPagerAdapter extends FragmentStatePagerAdapter {
 
-        private String tabtitles[] = new String[] {
+        private String tabtitles[] = new String[]{
                 getResources().getString(R.string.page_upcoming),
                 getResources().getString(R.string.page_completed),
                 getResources().getString(R.string.page_standings)
@@ -142,6 +135,7 @@ public class current_season extends Fragment implements OnDataReady{
 
         public AppSectionsPagerAdapter(FragmentManager fm) {
             super(fm);
+
         }
 
         @Override

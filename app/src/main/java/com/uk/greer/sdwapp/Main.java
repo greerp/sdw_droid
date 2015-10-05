@@ -16,6 +16,7 @@
 
 package com.uk.greer.sdwapp;
 
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
@@ -23,8 +24,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.Log;
@@ -54,7 +53,6 @@ public class Main extends FragmentActivity
 
     protected SpiceManager spiceManager
             = new SpiceManager(JacksonSpringAndroidSpiceService.class);
-    private Intent intent;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
@@ -62,14 +60,7 @@ public class Main extends FragmentActivity
     private ArrayList<NavItem> mNavItems = new ArrayList<NavItem>();
 
     // http://www.codepuppet.com/2013/10/06/using-fragments-in-android-with-fragmentactivity/
-    private ViewPager viewPager;
     private List<Fragment> _fragments = new ArrayList<Fragment>();
-    private FragmentPagerAdapter _fragmentPagerAdapter;
-
-    public static final int FRAGMENT_CURRENT_SEASON = 0;
-    public static final int FRAGMENT_ATHLETES = 1;
-    public static final int FRAGMENT_PREVII = 1;
-    public static final int FRAGMENT_ATHLETES = 1;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,63 +72,19 @@ public class Main extends FragmentActivity
         //getActionBar().setHomeButtonEnabled(false);
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
-
         setContentView(R.layout.main);
 
-        // Create new Fragments
-        this._fragments.add(FRAGMENT_CURRENT_SEASON, current_season.newInstance("",""));
-        this._fragments.add(FRAGMENT_CURRENT_SEASON, current_season.newInstance("",""));
+        Fragment initialFragment  = current_season.newInstance("","");
+        FragmentManager fm =  getSupportFragmentManager();
 
-        this._fragmentPagerAdapter = new FragmentPagerAdapter(this.getSupportFragmentManager()){
-            @Override
-            public int getCount() {
-                return Main.this._fragments.size();
-            }
-            @Override
-            public Fragment getItem(final int position) {
-                return Main.this._fragments.get(position);
-            }
-            @Override
-            public CharSequence getPageTitle(final int position) {
-                // Define titles for each fragment.
-                switch (position) {
-                    case FRAGMENT_CURRENT_SEASON:
-                        return "Example title";
-                    default:
-                        return null;
-                }
-            }
-        };
-
-        this.viewPager = (ViewPager) this.findViewById(R.id.mainpager);
-        this.viewPager.setAdapter(this._fragmentPagerAdapter);
-
-        // Set the default fragment.
-        this.openFragment(FRAGMENT_CURRENT_SEASON);
+        fm.beginTransaction().replace(R.id.maincanvas, initialFragment).
+                addToBackStack(null).commit();
 
         configureSlidingMenu();
         performRequest();
 
-
-        //TODO: Insert current_season into empty fragment
     }
 
-    /**
-     * Open the specified fragment.
-     * @param fragment
-     */
-    public void openFragment(final int fragment) {
-        this.viewPager.setCurrentItem(fragment);
-    }
-
-    /**
-     * Get the fragment object for the specified fragment.
-     * @param fragment
-     * @return
-     */
-    public Fragment getFragment(final int fragment) {
-        return this._fragments.get(fragment);
-    }
 
     @Override
     protected void onStart() {
@@ -227,21 +174,37 @@ public class Main extends FragmentActivity
     }
 
     private void selectItemFromDrawer(int position) {
-        //TODO: Sort this Out
+        NavItem navItem = mNavItems.get(position);
+        Fragment content=null;
 
-//        Fragment fragment = Preferences.newInstance("","");
-//
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        fragmentManager.beginTransaction()
-//                .replace(R.id.maincanvas, fragment)
-//                .commit();
-//
-//        mDrawerList.setItemChecked(position, true);
-//        setTitle(mNavItems.get(position).mTitle);
-//
-//        // Close the drawer
-//        mDrawerLayout.closeDrawer(mDrawerPane);
-       };
+        switch (position) {
+            case 0:
+                content = current_season.newInstance("", "");
+                break;
+            case 1:
+                content = Preferences.newInstance(navItem.mTitle, "");
+                break;
+            case 2:
+                content = Preferences.newInstance(navItem.mTitle, "");
+                break;
+            case 3:
+                content = Preferences.newInstance(navItem.mTitle, "");
+                break;
+
+        }
+
+        if ( content!=null) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.maincanvas, content).addToBackStack(null).commit();
+
+            mDrawerList.setItemChecked(position, true);
+            setTitle(mNavItems.get(position).mTitle);
+
+            // Close the drawer
+            mDrawerLayout.closeDrawer(mDrawerPane);
+        }
+    };
 
 
     @Override

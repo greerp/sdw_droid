@@ -7,8 +7,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.uk.greer.sdwapp.activity.upcoming.UpcomingRefreshFragment;
+
+import org.w3c.dom.Text;
 
 
 /**
@@ -19,9 +22,7 @@ import com.uk.greer.sdwapp.activity.upcoming.UpcomingRefreshFragment;
  * Use the {@link Preferences#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Preferences extends Fragment  {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+public class Preferences extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -49,10 +50,6 @@ public class Preferences extends Fragment  {
         return fragment;
     }
 
-    public Preferences() {
-        // Required empty public constructor
-    }
-
 
 
     @Override
@@ -68,7 +65,13 @@ public class Preferences extends Fragment  {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_preferences, container, false);
+        //
+        View v = inflater.inflate(R.layout.fragment_preferences, container, false);
+
+        TextView text = (TextView)v.findViewById(R.id.text);
+        text.setText(mParam1);
+
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
