@@ -1,4 +1,4 @@
-package com.uk.greer.sdwapp;
+package com.uk.greer.sdwapp.activity;
 
 import android.app.Activity;
 import android.net.Uri;
@@ -9,9 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.uk.greer.sdwapp.activity.upcoming.UpcomingRefreshFragment;
-
-import org.w3c.dom.Text;
+import com.uk.greer.sdwapp.service.OnFragmentInteractionListener;
+import com.uk.greer.sdwapp.R;
 
 
 /**

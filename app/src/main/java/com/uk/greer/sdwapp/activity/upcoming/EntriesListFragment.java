@@ -12,7 +12,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.uk.greer.sdwapp.AppManager;
-import com.uk.greer.sdwapp.OnDataReady;
+import com.uk.greer.sdwapp.service.OnDataReady;
 import com.uk.greer.sdwapp.R;
 import com.uk.greer.sdwapp.domain.Entry;
 import com.uk.greer.sdwapp.service.CacheCoordinator;

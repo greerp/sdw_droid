@@ -36,10 +36,6 @@ public class EventSummaryFragment extends Fragment {
         return fragment;
     }
 
-    public EventSummaryFragment() {
-        // Required empty public constructor
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,10 +47,8 @@ public class EventSummaryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.completed_event_summary_fragment, container, false);
+
+        return inflater.inflate(
+                R.layout.completed_event_summary_fragment, container, false);
     }
-
-
-
 }

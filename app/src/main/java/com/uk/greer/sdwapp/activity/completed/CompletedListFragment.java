@@ -14,7 +14,7 @@ import android.widget.FrameLayout;
 import android.widget.ListView;
 
 import com.uk.greer.sdwapp.AppManager;
-import com.uk.greer.sdwapp.OnDataReady;
+import com.uk.greer.sdwapp.service.OnDataReady;
 import com.uk.greer.sdwapp.R;
 import com.uk.greer.sdwapp.config.BundleProperty;
 import com.uk.greer.sdwapp.domain.TimeTrial;

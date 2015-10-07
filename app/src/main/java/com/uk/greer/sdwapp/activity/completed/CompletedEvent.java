@@ -27,7 +27,6 @@ public class CompletedEvent extends ActionBarActivity {
         super.onCreate(savedInstanceState);
 
         Bundle bundle = this.getIntent().getExtras();
-
         if (bundle != null) {
             ttId = bundle.getInt(BundleProperty.TT_EVENT_ID);
         }
@@ -38,7 +37,6 @@ public class CompletedEvent extends ActionBarActivity {
         // Give the SlidingTabLayout the ViewPager, this must be done AFTER the ViewPager has had
         // it's PagerAdapter set.
         SlidingTabLayout slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
-        //slidingTabLayout.setDistributeEvenly(true);
         slidingTabLayout.setViewPager(viewPager);
     }
 
@@ -48,7 +46,6 @@ public class CompletedEvent extends ActionBarActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_completed_event, menu);
         return super.onCreateOptionsMenu(menu);
-        //return true;
     }
 
     @Override
@@ -88,10 +85,9 @@ public class CompletedEvent extends ActionBarActivity {
 
             switch (position) {
                 case 0:
-                    return EventSummaryFragment.newInstance(0);
+                    return EventSummaryFragment.newInstance(ttId);
                 case 1:
                     return EventResultFragment.newInstance(BundleProperty.COMPETITION.SCRATCH, ttId);
-
                 case 2:
                     return EventResultFragment.newInstance(BundleProperty.COMPETITION.HANDICAP, ttId);
                 default:

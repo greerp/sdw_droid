@@ -8,14 +8,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.samples.apps.iosched.ui.widget.SlidingTabLayout;
-import com.uk.greer.sdwapp.OnDataReady;
-import com.uk.greer.sdwapp.OnFragmentInteractionListener;
+import com.uk.greer.sdwapp.service.OnDataReady;
+import com.uk.greer.sdwapp.service.OnFragmentInteractionListener;
 import com.uk.greer.sdwapp.R;
 import com.uk.greer.sdwapp.activity.completed.CompletedListFragment;
 import com.uk.greer.sdwapp.activity.standing.SeasonStandingListFragment;

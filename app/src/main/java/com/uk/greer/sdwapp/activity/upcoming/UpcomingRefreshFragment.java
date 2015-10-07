@@ -1,14 +1,13 @@
 package com.uk.greer.sdwapp.activity.upcoming;
 
 import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.uk.greer.sdwapp.OnFragmentInteractionListener;
+import com.uk.greer.sdwapp.service.OnFragmentInteractionListener;
 import com.uk.greer.sdwapp.R;
 
 

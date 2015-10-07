@@ -16,8 +16,6 @@
 
 package com.uk.greer.sdwapp;
 
-import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
@@ -39,10 +37,13 @@ import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.SpiceRequest;
 import com.octo.android.robospice.request.listener.RequestListener;
+import com.uk.greer.sdwapp.activity.Preferences;
 import com.uk.greer.sdwapp.activity.current_season;
 import com.uk.greer.sdwapp.service.CacheCoordinator;
 import com.uk.greer.sdwapp.service.DrawerListAdapter;
 import com.uk.greer.sdwapp.service.NavItem;
+import com.uk.greer.sdwapp.service.OnDataReady;
+import com.uk.greer.sdwapp.service.OnFragmentInteractionListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,25 +63,22 @@ public class Main extends FragmentActivity
     // http://www.codepuppet.com/2013/10/06/using-fragments-in-android-with-fragmentactivity/
     private List<Fragment> _fragments = new ArrayList<Fragment>();
 
+
+
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         long ttId = getIntent().getLongExtra("TT_ID", -1);
         Log.i("INFO", "TT ID: " + Long.toString(ttId));
 
-        // Specify that the Home/Up button should not be enabled, since there is no hierarchical parent.
-        //getActionBar().setHomeButtonEnabled(false);
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
         setContentView(R.layout.main);
 
-        Fragment initialFragment  = current_season.newInstance("","");
-        FragmentManager fm =  getSupportFragmentManager();
-
-        fm.beginTransaction().replace(R.id.maincanvas, initialFragment).
-                addToBackStack(null).commit();
-
+        //TODO: Selected item should be driven by user preference
         configureSlidingMenu();
+        selectItemFromDrawer(0);
         performRequest();
 
     }
@@ -146,16 +144,40 @@ public class Main extends FragmentActivity
     }
 
 
-    private void configureSlidingMenu(){
-//        ActionBarDrawerToggle mDrawerToggle;
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
+    }
 
-        mNavItems.add(new NavItem("Current Season", "TT Events and results for 2014/15", R.drawable.ic_home_black_48dp));
-        mNavItems.add(new NavItem("Previous Seasons", "TT results from previous seasons", R.drawable.ic_action_previous_item));
-        mNavItems.add(new NavItem("Athletes", "Performnace statistics of club athletes", R.drawable.ic_action_user_add));
-        mNavItems.add(new NavItem("Me", "My performnace statistics", R.drawable.ic_action_previous_item));
+    private void configureSlidingMenu(){
 
         // DrawerLayout
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                invalidateOptionsMenu();
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+                invalidateOptionsMenu();
+            }
+        };
+
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        mNavItems.add(new NavItem("Current Season", "TT Events and results for 2014/15", R.drawable.ic_home_black_48dp));
+        mNavItems.add(new NavItem("Previous Seasons", "TT results from previous seasons", R.drawable.ic_directions_bike_black_48dp));
+        mNavItems.add(new NavItem("Athletes", "Performnace statistics of club athletes", R.drawable.ic_group_black_48dp));
+        mNavItems.add(new NavItem("Me", "My performnace statistics", R.drawable.ic_person_black_48dp));
+        mNavItems.add(new NavItem("Preferences", "user Preferences", R.drawable.ic_settings_black_48dp));
+        mNavItems.add(new NavItem("About", "About the application", R.drawable.ic_info_black_48dp));
+
 
         // Populate the Navigtion Drawer with options
         mDrawerPane = (RelativeLayout) findViewById(R.id.drawerPane);
@@ -170,7 +192,6 @@ public class Main extends FragmentActivity
                 selectItemFromDrawer(position);
             }
         });
-
     }
 
     private void selectItemFromDrawer(int position) {
@@ -190,22 +211,21 @@ public class Main extends FragmentActivity
             case 3:
                 content = Preferences.newInstance(navItem.mTitle, "");
                 break;
-
+            default:
+                content = Preferences.newInstance(navItem.mTitle, "");
+                break;
         }
 
         if ( content!=null) {
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction()
-                    .replace(R.id.maincanvas, content).addToBackStack(null).commit();
+                    .replace(R.id.maincanvas, content).commit();
 
             mDrawerList.setItemChecked(position, true);
             setTitle(mNavItems.get(position).mTitle);
-
-            // Close the drawer
             mDrawerLayout.closeDrawer(mDrawerPane);
         }
     };
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

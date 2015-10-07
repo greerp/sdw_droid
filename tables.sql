@@ -40,7 +40,8 @@ create table users(
 	id INT,
 	username TEXT,
 	firstname TEXT,
-	lastname TEXT);
+	lastname TEXT,
+	capacity TEXT);
 
 create table entries(
 	id INT, 
@@ -58,7 +59,11 @@ create table entries(
 	hcppos INT
 	);
 
-create table officials(id INT, eventid INT, userid INT, capacity TEXT);
+create table officials(
+	id INT, 
+	eventid INT, 
+	userid INT, 
+	capacity TEXT);
 
 create index coursesidx1 on courses(id);
 create index eventsidx1 on events(id);

@@ -1,4 +1,4 @@
-package com.uk.greer.sdwapp;
+package com.uk.greer.sdwapp.service;
 
 import android.net.Uri;
 

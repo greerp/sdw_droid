@@ -1,36 +1,38 @@
-id,username,firstname,lastname
-1,Paul Greer,Paul,Greer
-2,David Pettitt,David ,Pettitt
-3,Matt Kuwertz,Matt,Kuwertz
-4,Ryan Kuwertz,Ryan ,Kuwertz
-5,Ian Hodge,Ian ,Hodge
-6,Neil Couchman,Neil,Couchman
-7,Keith Henderson,Keith,Henderson
-8,Gary Sinclair,Gary,Sinclair
-9,Scott Sargeant,Scott ,Sargeant
-10,Rory Barrett,Rory ,Barret
-11,Mike Saadat,Mike ,Sadaat
-12,Ian Turner,Ian ,Turner
-13,Pip Jenkins,Pip,Jenkins
-14,Paul Hiscock,Paul,Hiscock
-15,Tim Christian,Tim,Christian
-16,Charles Dennison,Charles,Dennison
-17,Nigel Smith,Nigel ,Smith
-18,Martin Yardley,Martin ,Yardley
-19,Rob Stephenson,Rob,Stephenson
-20,Chris Wolton,Chris ,Wolton
-21,Andy Morley,Andy ,Morley
-22,Andrew Booty,Andrew,Booty
-23,Callum Clark,Callum,Clark
-24,Julia Hawksworth,Julia,Hawksworth
-25,Colin Jarman,Colin,Jarman
-26,Dan Simms,Dan,Simms
-27,Alexis Couchman,Alexis,Couchman
-28,David Rumm,David ,Rumm
-29,Dave Stocker,Dave,Stocker
-30,Jeremy Woodruff,Jeremy,Woodruff
-31,Martin Dernham,Martin ,Dernham
-32,Peter Faro,Peter,Faro
-33,Peter Watson,Peter ,Watson
-34,Jo Watson,Jo,Watson
-35,Doug Finch,Doug,Finch
+id,username,firstname,lastname,capacity
+1,Paul Greer,Paul,Greer,CM
+2,David Pettitt,David ,Pettitt,CM
+3,Matt Kuwertz,Matt,Kuwertz,CM
+4,Ryan Kuwertz,Ryan ,Kuwertz,CM
+5,Ian Hodge,Ian ,Hodge,CM
+6,Neil Couchman,Neil,Couchman,CM
+7,Keith Henderson,Keith,Henderson,CM
+8,Gary Sinclair,Gary,Sinclair,CM
+9,Scott Sargeant,Scott ,Sargeant,CM
+10,Rory Barrett,Rory ,Barret,CM
+11,Mike Saadat,Mike ,Sadaat,CM
+12,Ian Turner,Ian ,Turner,CM
+13,Pip Jenkins,Pip,Jenkins,CM
+14,Paul Hiscock,Paul,Hiscock,CM
+15,Tim Christian,Tim,Christian,CM
+16,Charles Dennison,Charles,Dennison,CM
+17,Nigel Smith,Nigel ,Smith,CM
+18,Martin Yardley,Martin ,Yardley,CM
+19,Rob Stephenson,Rob,Stephenson,CM
+20,Chris Wolton,Chris ,Wolton,CM
+21,Andy Morley,Andy ,Morley,CM
+22,Andrew Booty,Andrew,Booty,CM
+23,Callum Clark,Callum,Clark,CM
+24,Julia Hawksworth,Julia,Hawksworth,CM
+25,Colin Jarman,Colin,Jarman,CM
+26,Dan Simms,Dan,Simms,CM
+27,Alexis Couchman,Alexis,Couchman,CM
+28,David Rumm,David ,Rumm,CM
+29,Dave Stocker,Dave,Stocker,CM
+30,Jeremy Woodruff,Jeremy,Woodruff,CM
+31,Martin Dernham,Martin ,Dernham,CM
+32,Peter Faro,Peter,Faro,M
+33,Peter Watson,Peter ,Watson,TM
+34,Jo Watson,Jo,Watson,M
+35,Doug Finch,Doug,Finch,T
+36,David Watson,David ,Watson,T
+37,Laura Finch,Laura,Finch,M
