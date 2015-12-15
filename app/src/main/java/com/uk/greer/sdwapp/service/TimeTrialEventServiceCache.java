@@ -58,8 +58,23 @@ public class TimeTrialEventServiceCache implements TimeTrialEventService {
         this.context = context;
     }
 
-    private SQLiteDatabase getReadableDatabase() {
-        return ((AppManager) context.getApplicationContext()).getLocalDataStore().getReadableDatabase();
+    @Override
+    public int getEntryCount(long ttId) {
+
+        SQLiteDatabase mDb = getReadableDatabase();
+        try {
+            final SQLiteStatement stmt = mDb
+                    .compileStatement("SELECT count(id) FROM entries where eventid="+ ttId);
+
+            return (int) stmt.simpleQueryForLong();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            if ( mDb!=null)
+                closeDB(mDb);
+        }
+        return 0;
     }
 
 
@@ -68,42 +83,56 @@ public class TimeTrialEventServiceCache implements TimeTrialEventService {
                 "seriesid = ?", new String[]{String.valueOf(seriesId)}, "eventdate");
     }
 
+
     @Override
     public List<Result> getSeriesResults(long seriesId) {
-        final String[] fields = new String[]{
-                "id", "eventid", "userid", "scrpts", "hcppts", "status", "time", "eventname", "seriesid",
-                "eventdate", "countsforpb", "eventoutcome", "firstname","lastname", "handicap", "scrpos","hcppos"};
 
-        DataSetService ds = new DataSetService<Result>("v_results", fields, "seriesid=? and status in ('DNF','FIN','DNS')",
-                new String[]{String.valueOf(seriesId)}, null, null, null) {
-            @Override
-            void addDataItem(Cursor s, List<Result> list) {
-                list.add(Result.newInstance(s.getInt(0), s.getInt(1), s.getInt(2), s.getString(12),
-                        s.getString(13),s.getInt(3), s.getInt(4), s.getString(5), s.getInt(6), s.getInt(14),
-                        s.getInt(15), s.getInt(16)));
-            }
-        };
-        List series = ds.execute();
-        return series;
+        return getResults("seriesid=? and status in ('DNF','FIN','DNS')",
+                new String[]{String.valueOf(seriesId)});
+
+//        final String[] fields = new String[]{
+//                "id", "eventid", "userid", "scrpts", "hcppts", "status", "time", "eventname", "seriesid",
+//                "eventdate", "countsforpb", "eventoutcome", "firstname","lastname", "handicap", "scrpos","hcppos"};
+//
+//        DataSetService ds = new DataSetService<Result>("v_results", fields, "seriesid=? and status in ('DNF','FIN','DNS')",
+//                new String[]{String.valueOf(seriesId)}, null, null, null) {
+//            @Override
+//            void addDataItem(Cursor s, List<Result> list) {
+//                list.add(Result.newInstance(s.getInt(0), s.getInt(1), s.getInt(2), s.getString(12),
+//                        s.getString(13),s.getInt(3), s.getInt(4), s.getString(5), s.getInt(6), s.getInt(14),
+//                        s.getInt(15), s.getInt(16)));
+//            }
+//        };
+//        List series = ds.execute();
+//        return series;
     }
 
     @Override
-    public List<Result> getEventResults(long eventId) {
-        final String[] fields = new String[]{
-                "id", "eventid", "userid", "scrpts", "hcppts", "status", "time", "eventname", "seriesid",
-                "eventdate", "countsforpb", "eventoutcome", "firstname","lastname", "handicap", "scrpos","hcppos"};
+    public List<Result> getEventFinishers(long eventId) {
+        return getResults("eventid=? and status='FIN'",
+                new String[]{String.valueOf(eventId)});
 
-        DataSetService ds = new DataSetService<Result>("v_results", fields, "eventid=? and status='FIN'",
-                new String[]{String.valueOf(eventId)}, null, null, null) {
-            @Override
-            void addDataItem(Cursor s, List<Result> list) {
-                list.add(Result.newInstance(s.getInt(0), s.getInt(1), s.getInt(2), s.getString(12),
-                        s.getString(13),s.getInt(3), s.getInt(4), s.getString(5), s.getInt(6), s.getInt(14),
-                        s.getInt(15), s.getInt(16)));
-            }
-        };
-        List series = ds.execute();
-        return series;
+//        final String[] fields = new String[]{
+//                "id", "eventid", "userid", "scrpts", "hcppts", "status", "time", "eventname", "seriesid",
+//                "eventdate", "countsforpb", "eventoutcome", "firstname","lastname", "handicap", "scrpos","hcppos"};
+//
+//        DataSetService ds = new DataSetService<Result>("v_results", fields, "eventid=? and status='FIN'",
+//                new String[]{String.valueOf(eventId)}, null, null, null) {
+//            @Override
+//            void addDataItem(Cursor s, List<Result> list) {
+//                list.add(Result.newInstance(s.getInt(0), s.getInt(1), s.getInt(2), s.getString(12),
+//                        s.getString(13),s.getInt(3), s.getInt(4), s.getString(5), s.getInt(6), s.getInt(14),
+//                        s.getInt(15), s.getInt(16)));
+//            }
+//        };
+//        List series = ds.execute();
+//        return series;
+    }
+
+    @Override
+    public List<Result> getEventNonFinishers(long eventId) {
+        return getResults("eventid=? and status in ('DNS','DNF')",
+                new String[]{String.valueOf(eventId)});
     }
 
 
@@ -164,51 +193,6 @@ public class TimeTrialEventServiceCache implements TimeTrialEventService {
         }
         return entries;
     }
-
-    private Date convertSqlStrToDate(String d) {
-        Date eventDate = null;
-        try {
-
-            eventDate = dateFormat.parse(d);
-        } catch (ParseException e) {
-            Log.e("EXCEPTION", "Unable to parse date:" + d);
-        }
-        return eventDate;
-    }
-
-    @Override
-    public int getEntryCount(long ttId) {
-
-        SQLiteDatabase mDb = getReadableDatabase();
-        try {
-            final SQLiteStatement stmt = mDb
-                    .compileStatement("SELECT count(id) FROM entries where eventid="+ ttId);
-
-            return (int) stmt.simpleQueryForLong();
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        } finally {
-            if ( mDb!=null)
-                closeDB(mDb);
-        }
-        return 0;
-    }
-
-
-    private List<Series> getSeries() {
-        DataSetService ds = new DataSetService<Series>("series", Series_Fields, null, null, null, null, "id") {
-            @Override
-            void addDataItem(Cursor s, List<Series> list) {
-                list.add(Series.newInstance(s.getInt(0), s.getString(1),
-                         convertSqlStrToDate(s.getString(3)), convertSqlStrToDate(s.getString(3))));
-            }
-        };
-        List series = ds.execute();
-        return series;
-    }
-
-
     @Override
     public List<Standing> getStandings(final long seriesId, final int bestHCapCount, final int bestScrCount ) {
 
@@ -252,6 +236,57 @@ public class TimeTrialEventServiceCache implements TimeTrialEventService {
         List<Standing> series = ds.execute();
         return series;
     }
+
+    private SQLiteDatabase getReadableDatabase() {
+        return ((AppManager) context.getApplicationContext()).getLocalDataStore().getReadableDatabase();
+    }
+
+    private List<Result> getResults(String where, String[] selectionArgs){
+        final String[] fields = new String[]{
+                "id", "eventid", "userid", "scrpts", "hcppts", "status", "time", "eventname", "seriesid",
+                "eventdate", "countsforpb", "eventoutcome", "firstname","lastname", "handicap", "scrpos","hcppos"};
+
+        DataSetService ds = new DataSetService<Result>("v_results", fields, where,
+                selectionArgs, null, null, null) {
+            @Override
+            void addDataItem(Cursor s, List<Result> list) {
+                list.add(Result.newInstance(s.getInt(0), s.getInt(1), s.getInt(2), s.getString(12),
+                        s.getString(13),s.getInt(3), s.getInt(4), s.getString(5), s.getInt(6), s.getInt(14),
+                        s.getInt(15), s.getInt(16)));
+            }
+        };
+        List series = ds.execute();
+        return series;
+
+    }
+
+    private Date convertSqlStrToDate(String d) {
+        Date eventDate = null;
+        try {
+
+            eventDate = dateFormat.parse(d);
+        } catch (ParseException e) {
+            Log.e("EXCEPTION", "Unable to parse date:" + d);
+        }
+        return eventDate;
+    }
+
+
+
+    private List<Series> getSeries() {
+        DataSetService ds = new DataSetService<Series>("series", Series_Fields, null, null, null, null, "id") {
+            @Override
+            void addDataItem(Cursor s, List<Series> list) {
+                list.add(Series.newInstance(s.getInt(0), s.getString(1),
+                         convertSqlStrToDate(s.getString(3)), convertSqlStrToDate(s.getString(3))));
+            }
+        };
+        List series = ds.execute();
+        return series;
+    }
+
+
+
 
     private List<TimeTrial> getTimeTrialList(String where, String[] selectionArgs, String orderBy) {
         List<TimeTrial> ttList = new ArrayList<>();

@@ -85,7 +85,12 @@ public class TimeTrialEventServiceLocal implements TimeTrialEventService {
     }
 
     @Override
-    public List<Result> getEventResults(long eventId) {
+    public List<Result> getEventFinishers(long eventId) {
+        return null;
+    }
+
+    @Override
+    public List<Result> getEventNonFinishers(long eventId) {
         return null;
     }
 

@@ -4,12 +4,12 @@
     android:layout_height="match_parent"
     tools:context="com.uk.greer.sdwapp.activity.completed.EventSummaryFragment">
 
-<!--
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
--->
+    <!--
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+    -->
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -40,11 +40,9 @@
             android:text="Thu 22nd April 2015 19:00"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-
-
-        <!-- Course Stats Label -->
+        <!-- Race Report -->
         <LinearLayout
-            android:id="@+id/courseInfoLayout"
+            android:id="@+id/raceReportSection"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -52,124 +50,22 @@
             android:layout_below="@+id/event_date"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/courseLabelLayout"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <GridLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:columnCount="3"
-                    android:rowCount="1">
-
-
-
-                </GridLayout>
-
-
-                <TextView
-                    android:id="@+id/lab_competition"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.2"
-                    android:background="@color/sdw_subtitle_background"
-                    android:textColor="@color/sdw_subtitle_foreground"
-                    android:padding="3dp"
-                    android:text="@string/std_competition" />
-
-                <TextView
-                    android:id="@+id/lab_winner"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.6"
-                    android:background="@color/sdw_subtitle_background"
-                    android:textColor="@color/sdw_subtitle_foreground"
-                    android:padding="3dp"
-                    android:text="@string/std_winner" />
-
-                <TextView
-                    android:id="@+id/lab_time"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.2"
-                    android:background="@color/sdw_subtitle_background"
-                    android:textColor="@color/sdw_subtitle_foreground"
-                    android:padding="3dp"
-                    android:text="@string/sdw_gen_time" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/courseinfo"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/course"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.2"
-                    android:padding="3dp"
-                    android:text="GS898" />
-
-
-                <TextView
-                    android:id="@+id/distance"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.4"
-                    android:padding="3dp"
-                    android:text="11.45m/17.67km" />
-
-                <TextView
-                    android:id="@+id/ascent"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.4"
-                    android:padding="3dp"
-                    android:text="1067ft/318m" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <!-- Course Description -->
-        <LinearLayout
-            android:id="@+id/courseDescriptionLayout"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/courseInfoLayout"
-            android:orientation="vertical">
-
+            <!-- Race Header -->
             <TextView
-                android:id="@+id/lab_course_description"
+                android:id="@+id/lab_racereport_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="10dp"
                 android:background="@color/sdw_subtitle_background"
-                android:textColor="@color/sdw_subtitle_foreground"
                 android:padding="3dp"
-                android:text="DESCRIPTION"
-                />
+                android:text="@string/std_racereport"
+                android:textColor="@color/sdw_subtitle_foreground" />
 
 
             <TextView
-                android:id="@+id/course_description"
+                android:id="@+id/raceReport"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -179,44 +75,162 @@
                 android:paddingTop="5dp"
                 android:text="...."
                 />
+
+
         </LinearLayout>
 
 
-        <!-- Course Description -->
+
+        <!-- Race Winners -->
         <LinearLayout
-            android:id="@+id/coursEntrantsInfoLayout"
+            android:id="@+id/courseSection"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/courseDescriptionLayout"
+            android:layout_below="@+id/raceReportSection"
             android:orientation="vertical">
 
+
+            <!-- Winners Header -->
+            <LinearLayout
+                android:id="@+id/hdrWinners"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal">
+
+                <TextView
+                    android:id="@+id/lab_competition"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:background="@color/sdw_subtitle_background"
+                    android:padding="3dp"
+                    android:text="@string/std_competition"
+                    android:textColor="@color/sdw_subtitle_foreground" />
+
+                <TextView
+                    android:id="@+id/lab_winner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="fill"
+                    android:layout_weight="6"
+                    android:background="@color/sdw_subtitle_background"
+                    android:padding="3dp"
+                    android:text="@string/std_winner"
+                    android:textColor="@color/sdw_subtitle_foreground" />
+
+                <TextView
+                    android:id="@+id/lab_time"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="fill"
+                    android:layout_weight="2"
+                    android:background="@color/sdw_subtitle_background"
+                    android:padding="3dp"
+                    android:text="@string/sdw_gen_time"
+                    android:textColor="@color/sdw_subtitle_foreground" />
+            </LinearLayout>
+
+            <GridLayout
+                android:id="@+id/winners"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:columnCount="1">
+                    <!-- Winners Placeholder -->
+            </GridLayout>
+
+        </LinearLayout>
+
+        <!-- Race Marshalls  -->
+        <LinearLayout
+            android:id="@+id/raceOfficialsSection"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/courseSection"
+            android:orientation="vertical">
+
+            <!-- Race Header -->
             <TextView
-                android:id="@+id/lab_course_entrants_info"
+                android:id="@+id/lab_officials_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="10dp"
                 android:background="@color/sdw_subtitle_background"
-                android:textColor="@color/sdw_subtitle_foreground"
                 android:padding="3dp"
-                android:text="EVENT ENTRIES"
-                />
+                android:text="@string/std_officials"
+                android:textColor="@color/sdw_subtitle_foreground" />
 
 
+            <GridLayout
+                android:id="@+id/officials"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:columnCount="1">
+            </GridLayout>
+
+        </LinearLayout>
+
+
+
+        <!-- PB Section -->
+        <LinearLayout
+            android:id="@+id/pbSection"
+            android:layout_width="fill_parent"
+            android:background="@drawable/border"
+            android:layout_below="@+id/raceOfficialsSection"
+            android:orientation="vertical"
+            android:layout_height="30dp">
+
+
+
+
+
+
+        </LinearLayout>
+
+
+        <!-- DNS  -->
+        <LinearLayout
+            android:id="@+id/raceDnsSection"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/pbSection"
+            android:orientation="vertical">
+
+            <!-- Race Header -->
             <TextView
-                android:id="@+id/course_entrants_info"
-                android:layout_width="wrap_content"
+                android:id="@+id/lab_dns_description"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginTop="5dp"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp"
-                android:text="@string/no_tt_entries"
-                />
+                android:layout_marginTop="10dp"
+                android:background="@color/sdw_subtitle_background"
+                android:padding="3dp"
+                android:text="@string/std_dns"
+                android:textColor="@color/sdw_subtitle_foreground" />
+
+
+            <GridLayout
+                android:id="@+id/dnsRiders"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:columnCount="1">
+            </GridLayout>
+
         </LinearLayout>
 
     </RelativeLayout>

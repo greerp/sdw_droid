@@ -8,6 +8,7 @@ import android.content.res.Resources;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.drawable.Drawable;
 import android.os.StrictMode;
+import android.view.LayoutInflater;
 
 import com.uk.greer.sdwapp.persist.DatabaseHelper;
 import com.uk.greer.sdwapp.persist.LocalDataStore;
@@ -36,6 +37,12 @@ public class AppManager extends Application {
             }
         }
         return localDataStore;
+    }
+
+
+    public static LayoutInflater getLayoutInflater() {
+        return (LayoutInflater) getContext()
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     public static Context getContext(){

@@ -37,8 +37,11 @@ public interface TimeTrialEventService {
     @GET("/seriesresults")
     List<Result> getSeriesResults(long seriesId);
 
-    @GET("/eventresults")
-    List<Result> getEventResults(long eventId);
+    @GET("/eventfinishers")
+    List<Result> getEventFinishers(long eventId);
+
+    @GET("/eventnonfinishers")
+    List<Result> getEventNonFinishers(long eventId);
 
 
 

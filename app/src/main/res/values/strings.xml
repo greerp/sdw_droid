@@ -73,6 +73,9 @@
     <string name="std_competition">Comp</string>
     <string name="std_winner">Winner</string>
     <string name="sdw_gen_time">Time</string>
+    <string name="std_dns">DNS/DNF</string>
+    <string name="std_officials">Race Officials</string>
+    <string name="std_racereport">Race Report</string>
 
 
 </resources>

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
 import android.widget.TextView;
 
 import com.uk.greer.sdwapp.R;
@@ -12,6 +13,7 @@ import com.uk.greer.sdwapp.config.BundleProperty;
 import com.uk.greer.sdwapp.domain.Result;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,7 +22,7 @@ import java.util.List;
  */
 public class EventResultAdapter extends ArrayAdapter<Result> {
     private final Context context;
-    private final List<Result> resultList;
+    private List<Result> resultList;
     private final BundleProperty.COMPETITION compType;
 
     public EventResultAdapter(Context context, List<Result> resultList,
@@ -30,6 +32,37 @@ public class EventResultAdapter extends ArrayAdapter<Result> {
         this.context = context;
         this.resultList = resultList;
         this.compType = compType;
+    }
+
+
+    @Override
+    public Filter getFilter() {
+
+        return new Filter() {
+
+            private List<Result> filteredList = new ArrayList<>();
+
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                for (Result r : resultList) {
+                    if (r.getStatus() != "FIN") {
+                        filteredList.add(r);
+                    }
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.count = filteredList.size();
+                filterResults.values = filteredList;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                resultList = (List<Result>) results.values;
+                notifyDataSetChanged();
+            }
+        };
+
     }
 
     @Override

@@ -65,6 +65,21 @@ create table officials(
 	userid INT, 
 	capacity TEXT);
 
+
+/* 
+	This strcuture will accomodate multiple PB's however there is a constraint for an individual 
+	the times must improve with later dates 
+*/
+create table personalbest(
+	id INT,
+	userid INT,
+	courseid INT,
+	eventid INT, /* Nullable - Not necessarily an evet that has been recorded in this application */
+	time INT,
+	eventdate DATETIME
+)
+
+
 create index coursesidx1 on courses(id);
 create index eventsidx1 on events(id);
 create index usersidx1 on users(id);	

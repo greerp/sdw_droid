@@ -147,7 +147,7 @@ public class EventResultFragment extends Fragment implements OnDataReady {
 
         Bundle args = this.getArguments();
         //TODO: replace best counts with variable
-        List<Result> results = timeTrialEventService.getEventResults(eventId);
+        List<Result> results = timeTrialEventService.getEventFinishers(eventId);
 
         Collections.sort(results, new Comparator<Result>() {
             @Override
