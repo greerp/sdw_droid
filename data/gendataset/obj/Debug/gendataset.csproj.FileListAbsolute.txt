@@ -1,0 +1,6 @@
+C:\Users\greepau\AndroidStudioProjects\sdw_droid\data\gendataset\bin\Debug\gendataset.exe.config
+C:\Users\greepau\AndroidStudioProjects\sdw_droid\data\gendataset\obj\Debug\gendataset.csprojResolveAssemblyReference.cache
+C:\Users\greepau\AndroidStudioProjects\sdw_droid\data\gendataset\bin\Debug\gendataset.exe
+C:\Users\greepau\AndroidStudioProjects\sdw_droid\data\gendataset\bin\Debug\gendataset.pdb
+C:\Users\greepau\AndroidStudioProjects\sdw_droid\data\gendataset\obj\Debug\gendataset.exe
+C:\Users\greepau\AndroidStudioProjects\sdw_droid\data\gendataset\obj\Debug\gendataset.pdb
