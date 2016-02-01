@@ -31,7 +31,7 @@ public class CacheService {
 
     public boolean cacheCourse(int id, String name, String coursecode, String coursemapurl, String coursenotes, double distance) {
 
-        SQLiteDatabase db=null;
+        SQLiteDatabase db = null;
         try {
             db = getWriteableDatabase();
 
@@ -72,9 +72,8 @@ public class CacheService {
 
                 }
             }
-        }
-        finally{
-            if ( db!=null){
+        } finally {
+            if (db != null) {
                 if (db.isOpen()) db.close();
             }
         }

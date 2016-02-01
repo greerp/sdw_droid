@@ -2,15 +2,17 @@
 .read tables.sql
 .mode csv
 .headers on
-.import courses.csv courses
-.import events.csv events
-.import users.csv users
-.import entries.csv entries
+.import course.csv course
+.import event.csv event
+.import user.csv user
+.import entry.csv entry
 .import series.csv series
-delete from users where id='id';
-delete from events where id='id';
-delete from entries where id='id';
+.import official.csv official
+delete from user where id='id';
+delete from event where id='id';
+delete from entry where id='id';
 delete from series where id='id';
+delete from official where id='id';
 
 
 

@@ -16,7 +16,7 @@ create table series(
 	seriesend DATETIME
 );
 
-create table courses(
+create table course(
 	id INT, 
 	name TEXT, 
 	coursecode TEXT,
@@ -24,7 +24,7 @@ create table courses(
 	coursenotes TEXT,
 	distance DOUBLE);
 
-create table events(
+create table event(
 	id INT, 
 	seriesid INT,
 	name TEXT,            
@@ -36,14 +36,14 @@ create table events(
 	notes TEXT, 
 	countsforpb BOOLEAN );  
 
-create table users(
+create table user(
 	id INT,
 	username TEXT,
 	firstname TEXT,
 	lastname TEXT,
 	capacity TEXT);
 
-create table entries(
+create table entry(
 	id INT, 
 	eventid INT, 
 	userid INT,
@@ -59,49 +59,52 @@ create table entries(
 	hcppos INT
 	);
 
-create table officials(
+create table official(
 	id INT, 
 	eventid INT, 
 	userid INT, 
-	capacity TEXT);
+	capacity TEXT
+	);
 
 
 /* 
 	This strcuture will accomodate multiple PB's however there is a constraint for an individual 
 	the times must improve with later dates 
 */
+
 create table personalbest(
 	id INT,
 	userid INT,
 	courseid INT,
-	eventid INT, /* Nullable - Not necessarily an evet that has been recorded in this application */
+	eventid INT, 
 	time INT,
 	eventdate DATETIME
-)
+);
 
 
-create index coursesidx1 on courses(id);
-create index eventsidx1 on events(id);
-create index usersidx1 on users(id);	
-create index entriesidx1 on entries(id);	
+
+create index coursesidx1 on course(id);
+create index eventsidx1 on event(id);
+create index usersidx1 on user(id);	
+create index entriesidx1 on entry(id);	
 
 
-CREATE VIEW v_results as select t.id, t.eventid, t.userid, t.scrpts, t.hcppts, t.status, t.time, 
+CREATE VIEW v_result as select t.id, t.eventid, t.userid, t.scrpts, t.hcppts, t.status, t.time, 
 			e.name as eventname, e.seriesid, e.eventdate, e.countsforpb, e.eventoutcome, u.firstname, 
 			u.lastname, t.handicap, t.scrpos, t.hcppos
-			from entries t join events e on t.eventid=e.id join users u on t.userid=u.id;
+			from entry t join event e on t.eventid=e.id join user u on t.userid=u.id;
 
 
-CREATE VIEW v_timetrials as select events.id, events.eventdate, 
-				courses.name as coursename, courses.coursecode, courses.distance, 
-				events.name as eventname, coursenotes, events.seriesid  from events join courses 
-				on events.courseid=courses.id order by events.eventdate;
+CREATE VIEW v_timetrial as select event.id, event.eventdate, 
+				course.name as coursename, course.coursecode, course.distance, 
+				event.name as eventname, coursenotes, event.seriesid  from event join course 
+				on event.courseid=course.id order by event.eventdate;
 
 
-create view v_ttentries as select entries.id, entries.eventid, 
-				entries.userid, users.username, users.firstname,
-				users.lastname, entries.signondate, entries.signonmethod, entries.handicap 
-				from entries join users on entries.userid=users.id;
+create view v_ttentry as select entry.id, entry.eventid, 
+				entry.userid, user.username, user.firstname,
+				user.lastname, entry.signondate, entry.signonmethod, entry.handicap 
+				from entry join user on entry.userid=user.id;
 
 /*				
 CREATE VIEW v_ttstandings as

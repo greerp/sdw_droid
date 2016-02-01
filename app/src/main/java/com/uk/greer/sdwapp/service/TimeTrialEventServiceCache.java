@@ -35,20 +35,20 @@ public class TimeTrialEventServiceCache implements TimeTrialEventService {
             "userid", "username","firstname", "lastname", "scrpts","hcppts","entered","fin","dns","dnf","seriesid"};
 
 
-    private final String Standing_Query="select entries.userid, users.username, users.firstname,users.lastname, events.seriesid," +
+    private final String Standing_Query="select entry.userid, user.username, user.firstname,user.lastname, event.seriesid," +
             "count(*) as entered," +
             "sum(scrpts) as totscrpts," +
-            "(select sum(e1.hcppts) from entries e1 where e1.userid=users.id and e1.id in (select e2.id from entries e2, events v1 where e2.eventid=v1.id and v1.seriesid=events.seriesid and e2.userid=e1.userid and hcppts<>'' order by hcppts desc limit ?)) as besthcppts," +
+            "(select sum(e1.hcppts) from entry e1 where e1.userid=user.id and e1.id in (select e2.id from entry e2, event v1 where e2.eventid=v1.id and v1.seriesid=event.seriesid and e2.userid=e1.userid and hcppts<>'' order by hcppts desc limit ?)) as besthcppts," +
             "sum(hcppts) as hcppts," +
-            "(select sum(e1.scrpts) from entries e1 where e1.userid=users.id and e1.id in (select e2.id from entries e2, events v1 where e2.eventid=v1.id and v1.seriesid=events.seriesid and e2.userid=e1.userid and scrpts<>'' order by scrpts desc limit ?)) as bestscrpts," +
-            "(select count(*) from entries e2 where e2.userid=entries.userid and status='DNS') as dns," +
-            "(select count(*) from entries e2 where e2.userid=entries.userid and status='FIN') as fin, " +
-            "(select count(*) from entries e2 where e2.userid=entries.userid and status='DNF') as dnf " +
-            "from entries " +
-            "join users on entries.userid=users.id " +
-            "join events on entries.eventid=events.id " +
-            "where entries.status in ('FIN','DNS','DNF') and events.seriesid=? " +
-            "group by entries.userid, users.username, users.firstname,users.lastname,events.seriesid";
+            "(select sum(e1.scrpts) from entry e1 where e1.userid=user.id and e1.id in (select e2.id from entry e2, event v1 where e2.eventid=v1.id and v1.seriesid=event.seriesid and e2.userid=e1.userid and scrpts<>'' order by scrpts desc limit ?)) as bestscrpts," +
+            "(select count(*) from entry e2 where e2.userid=entry.userid and status='DNS') as dns," +
+            "(select count(*) from entry e2 where e2.userid=entry.userid and status='FIN') as fin, " +
+            "(select count(*) from entry e2 where e2.userid=entry.userid and status='DNF') as dnf " +
+            "from entry " +
+            "join user on entry.userid=user.id " +
+            "join event on entry.eventid=event.id " +
+            "where entry.status in ('FIN','DNS','DNF') and event.seriesid=? " +
+            "group by entry.userid, user.username, user.firstname,user.lastname,event.seriesid";
 
 
 
@@ -89,22 +89,6 @@ public class TimeTrialEventServiceCache implements TimeTrialEventService {
 
         return getResults("seriesid=? and status in ('DNF','FIN','DNS')",
                 new String[]{String.valueOf(seriesId)});
-
-//        final String[] fields = new String[]{
-//                "id", "eventid", "userid", "scrpts", "hcppts", "status", "time", "eventname", "seriesid",
-//                "eventdate", "countsforpb", "eventoutcome", "firstname","lastname", "handicap", "scrpos","hcppos"};
-//
-//        DataSetService ds = new DataSetService<Result>("v_results", fields, "seriesid=? and status in ('DNF','FIN','DNS')",
-//                new String[]{String.valueOf(seriesId)}, null, null, null) {
-//            @Override
-//            void addDataItem(Cursor s, List<Result> list) {
-//                list.add(Result.newInstance(s.getInt(0), s.getInt(1), s.getInt(2), s.getString(12),
-//                        s.getString(13),s.getInt(3), s.getInt(4), s.getString(5), s.getInt(6), s.getInt(14),
-//                        s.getInt(15), s.getInt(16)));
-//            }
-//        };
-//        List series = ds.execute();
-//        return series;
     }
 
     @Override
@@ -112,21 +96,7 @@ public class TimeTrialEventServiceCache implements TimeTrialEventService {
         return getResults("eventid=? and status='FIN'",
                 new String[]{String.valueOf(eventId)});
 
-//        final String[] fields = new String[]{
-//                "id", "eventid", "userid", "scrpts", "hcppts", "status", "time", "eventname", "seriesid",
-//                "eventdate", "countsforpb", "eventoutcome", "firstname","lastname", "handicap", "scrpos","hcppos"};
-//
-//        DataSetService ds = new DataSetService<Result>("v_results", fields, "eventid=? and status='FIN'",
-//                new String[]{String.valueOf(eventId)}, null, null, null) {
-//            @Override
-//            void addDataItem(Cursor s, List<Result> list) {
-//                list.add(Result.newInstance(s.getInt(0), s.getInt(1), s.getInt(2), s.getString(12),
-//                        s.getString(13),s.getInt(3), s.getInt(4), s.getString(5), s.getInt(6), s.getInt(14),
-//                        s.getInt(15), s.getInt(16)));
-//            }
-//        };
-//        List series = ds.execute();
-//        return series;
+
     }
 
     @Override
@@ -170,7 +140,7 @@ public class TimeTrialEventServiceCache implements TimeTrialEventService {
             String[] fields = new String[]{
                     "id", "username", "firstname","lastname","signondate", "signonmethod", "handicap"};
 
-            s = readOnlyDb.query("v_ttentries",
+            s = readOnlyDb.query("v_ttentry",
                     fields,"eventid = ?", new String[]{Long.toString(ttId)},null,null,"signondate");
 
             if (s.getCount() > 0) {
@@ -212,7 +182,6 @@ public class TimeTrialEventServiceCache implements TimeTrialEventService {
         12-dnf
         */
 
-
         final List<Series>seriesList = getSeries();
         RawDataSetService ds = new RawDataSetService<Standing>(Standing_Query,
                 new String[]{String.valueOf(bestHCapCount),
@@ -246,7 +215,7 @@ public class TimeTrialEventServiceCache implements TimeTrialEventService {
                 "id", "eventid", "userid", "scrpts", "hcppts", "status", "time", "eventname", "seriesid",
                 "eventdate", "countsforpb", "eventoutcome", "firstname","lastname", "handicap", "scrpos","hcppos"};
 
-        DataSetService ds = new DataSetService<Result>("v_results", fields, where,
+        DataSetService ds = new DataSetService<Result>("v_result", fields, where,
                 selectionArgs, null, null, null) {
             @Override
             void addDataItem(Cursor s, List<Result> list) {
@@ -298,7 +267,7 @@ public class TimeTrialEventServiceCache implements TimeTrialEventService {
             String[] fields = new String[]{
                     "id", "eventdate", "coursename", "coursecode", "distance", "eventname","coursenotes", "seriesid"};
 
-            s = readOnlyDb.query("v_timetrials", fields, where, selectionArgs, null, null, orderBy);
+            s = readOnlyDb.query("v_timetrial", fields, where, selectionArgs, null, null, orderBy);
 
             int i = s.getCount();
             if (i <= 0) {
